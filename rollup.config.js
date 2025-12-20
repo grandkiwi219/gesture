@@ -47,7 +47,7 @@ const tsconfig_path = './tsconfig.json';
 
 const content_scripts_output = outPut('src');
 const content_scripts = {
-    input: 'src/content-scripts',
+    input: 'src/main',
     output: {
         dir: content_scripts_output,
         entryFileNames: '[name].js',

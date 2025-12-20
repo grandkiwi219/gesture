@@ -23,7 +23,7 @@ export default {
         {
             matches: ["<all_urls>"],
             js: [
-                "src/content-scripts.js"
+                "src/main.js"
             ],
             run_at: "document_start",
             all_frames: true,
