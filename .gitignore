@@ -1,0 +1,15 @@
+# .env
+.env
+
+# node_modules
+node_modules
+
+# output
+output
+dev
+dist
+tests
+
+# etc
+package-lock.json
+.vscode
