@@ -58,6 +58,4 @@ export function mouseMove(event: MouseEvent,
     const data = getCommandData();
 
     showCommandDrawing(data?.description);
-
-    logger.log(data)
 }
