@@ -28,8 +28,9 @@ $ git clone https://github.com/grandkiwi219/gestrue.git
 - build
 ```bash
 $ npm run build
-# 폴더 위치 → output/chrome
 ```
+> 폴더 위치 → output/chrome
+
 본 스크립트는 크롬 확장프로그램만 빌드할 시 입니다.
 파이어폭스 애드온을 빌드할 시 `npm run build-ff` 를 입력하셔야 합니다.
 
