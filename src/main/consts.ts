@@ -46,11 +46,7 @@ export const drawing_elements: {
             left: '50%',
             transform: 'translate(-50%, -50%)',
             backgroundColor: '#0000004b',
-            color: 'white',
             textAlign: 'center',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
             zIndex: '99999',
             display: 'none',
             flexDirection: 'column',
@@ -71,7 +67,12 @@ export const drawing_elements: {
         style: {
             width: '100%',
             height: 'fit-content',
-            display: 'block'
+            display: 'block',
+            color: 'white',
+            fontSize: '14px',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
         }
     }
 }
