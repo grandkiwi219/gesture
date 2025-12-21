@@ -40,6 +40,8 @@ $ npm run build
 ```bash
 $ npm run zip
 ```
+> 폴더 위치 → dist/\<version>
+
 먼저 build를 실행 후 zip을 실행하셔야 합니다.
 
 <br>
