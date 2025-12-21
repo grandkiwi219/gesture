@@ -1,11 +1,15 @@
 import { gesture_type } from "service/consts";
 import logger from "./utils/logger";
 import { variable } from "./variable";
-import scripts from "./scripts/";
+import { scripts } from "./scripts";
+import { stopDrawing } from "./drawing";
+import { messages } from "../repeater/message-type";
 
-export function exit() {
+export function exitRun() {
 
-    const result_command = variable.command_store.get(variable.directions.data.join(''));
+    window.postMessage(messages.acknowledge_context_menu, location.origin);
+
+    const result_command = getCommandData();
 
     if (result_command) {
         const script_type = gesture_type[result_command.type as keyof typeof gesture_type];
@@ -20,30 +24,42 @@ export function exit() {
                 break;
         }
     }
+}
 
-    logger.log(variable.directions.data);
-    logger.log(result_command);
-    logger.log(variable.command_store);
+export function getCommandData() {
+    return variable.command_store.get(variable.directions.data.join(''));
+}
 
+export function exitReset() {
     variable.directions.reset();
     variable.starting = false;
     variable.executing = false;
     variable.position = {
-        x: 0,
-        y: 0,
+        x: -1,
+        y: -1,
+    };
+    variable.initial_pos = {
+        x: -1,
+        y: -1,
+    };
+    variable.last_pos = {
+        x: -1,
+        y: -1
     }
+
+    stopDrawing();
 }
 
 function gestureScript(script_key: string) {
     const result = scripts[script_key as keyof typeof scripts];
-    if (!result) return logger.warn(script_key, '→ 본 확장프로그램이 지닌 스크립트 중에 이러한 것은 존재하지 않습니다.', );
+    if (!result) return logger.warn(script_key, '→ 본 확장프로그램이 지닌 스크립트 중에 이러한 것은 존재하지 않습니다.');
 
-    logger.log(result);
+    // logger.log(result);
 
     try {
         result.script();
     } catch (error) {
-        logger.error(result.key, '→ Error:', error);
+        logger.error(result.key, error);
     }
 }
 

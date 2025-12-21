@@ -1,22 +1,22 @@
 export class DirectionBundle {
-    _bundle: Direction[] = [];
+    private bundle: Direction[] = [];
 
     push(direction: Direction): boolean {
-        if (this._bundle.at(-1) == direction) {
+        if (this.bundle.at(-1) == direction) {
             return false;
         }
         else {
-            this._bundle.push(direction);
+            this.bundle.push(direction);
             return true;
         }
     }
 
     reset() {
-        this._bundle = []; 
+        this.bundle = []; 
     }
 
     get data() {
-        const data = this._bundle;
+        const data = this.bundle;
         return data;
     }
 }

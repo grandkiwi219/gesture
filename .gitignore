@@ -13,3 +13,4 @@ tests
 # etc
 package-lock.json
 .vscode
+memo.txt

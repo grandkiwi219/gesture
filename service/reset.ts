@@ -1,5 +1,5 @@
 import initial_gesture from "./initial_gesture";
-import { store } from "../src/consts";
+import { store } from "../src/main/consts";
 
 export function setInitialGesture() {
 
@@ -8,8 +8,7 @@ export function setInitialGesture() {
     let key_list: any[] = [];
 
     Object.keys(initial_gesture).forEach((ges) => {
-        const key = ges as keyof typeof initial_gesture;
-        chrome.storage.local.set({ [ges]: initial_gesture[key] });
+        chrome.storage.local.set({ [ges]: initial_gesture[ges] });
         key_list.push(ges);
     });
     

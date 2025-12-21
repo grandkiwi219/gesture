@@ -45,29 +45,38 @@ const erroring = chalk.hex('#ff4848ff');
 
 const tsconfig_path = './tsconfig.json';
 
-const content_scripts_output = outPut('src');
-const content_scripts = {
-    input: 'src/main',
-    output: {
-        dir: content_scripts_output,
-        entryFileNames: '[name].js',
-        format: 'es'
-    },
-    plugins: [
-        typescript({
-            tsconfig: tsconfig_path,
-            outDir: content_scripts_output
-        }),
-        cleanup({
-            extensions: ['.js', '.ts']
-        }),
-        resolve({
-            browser: true,
-            extensions: ['.js', '.ts']
-        }),
-        commonjs()
-    ]
+const content_output_dir = outPut('src');
+const content_output = {
+    dir: content_output_dir,
+    entryFileNames: '[name].js',
+    format: 'es'
 }
+const content_plugin = [
+    typescript({
+        tsconfig: tsconfig_path,
+        outDir: content_output_dir
+    }),
+    cleanup({
+        extensions: ['.js', '.ts']
+    }),
+    resolve({
+        browser: true,
+        extensions: ['.js', '.ts']
+    }),
+    commonjs()
+]
+const content_scripts = {
+    input: 'src/main/main',
+    output: content_output,
+    plugins: content_plugin
+}
+const content_repeater = {
+    input: 'src/repeater/repeater',
+    output: content_output,
+    plugins: content_plugin
+}
+
+const contents = [content_scripts, content_repeater];
 
 const background_service_output = outPut('service');
 const background_service = {
@@ -138,7 +147,7 @@ const options_page = {
     plugins: options_page_plugin
 }
 
-let result = [content_scripts, background_service, options_page];
+let result = [...contents, background_service, options_page];
 
 if (parseInt(process.env.DEV) === 2) {
     clean();

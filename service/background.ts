@@ -1,6 +1,8 @@
 import { setInitialGesture } from "./reset.js";
 
 import { command_keys } from "./commands.js";
+import { scripts } from "src/main/scripts/index.js";
+import { messages } from "./message-types.js";
 
 chrome.runtime.onInstalled.addListener(async d => {
     if (d.reason === 'install') {
@@ -27,3 +29,30 @@ chrome.commands.onCommand.addListener(command => {
             break;
     }
 });
+
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
+    switch (msg.type) {
+        case messages.tabs:
+            tabsState(msg, sender, response);
+            break;
+        case messages.windows:
+            if (sender.tab && sender.tab.windowId) {
+                chrome.windows.update(sender.tab.windowId, { state: msg.state });
+            }
+            break;
+        default:
+            break;
+    }
+});
+
+function tabsState(msg: any, sender: chrome.runtime.MessageSender, response?: any) {
+    switch (msg.state) {
+        case 'remove':
+            if (sender.tab && sender.tab.id) {
+                chrome.tabs.remove(sender.tab.id);
+            }
+            break;
+        default:
+            break;
+    }
+}

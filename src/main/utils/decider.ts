@@ -1,4 +1,5 @@
-import { variable } from "src/variable";
+import { variable } from "src/main/variable";
+import { calcAngleDegrees } from "./utils";
 
 export function decidePos(event: MouseEvent) {
 
@@ -46,14 +47,3 @@ export function measureDistanceSq(event: MouseEvent): number {
 
     return distance_sq;
 }
-
-export function calcAngleDegrees({ x, y }: Coordinate): Angle {
-    return (Math.atan2(y, x) * 180) / Math.PI;
-}
-
-export default {
-    decidePos,
-    decideDir,
-    measureDistanceSq,
-    calcAngleDegrees,
-};

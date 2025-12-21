@@ -22,22 +22,22 @@ export default {
     content_scripts: [
         {
             matches: ["<all_urls>"],
+            css: [
+                "css/main.css"
+            ],
             js: [
                 "src/main.js"
             ],
             run_at: "document_start",
-            all_frames: true,
-            /* world: "MAIN" */
         },
-        /* {
+        {
             matches: ["<all_urls>"],
             js: [
                 "src/repeater.js"
             ],
             run_at: "document_start",
-            all_frames: true,
-            world: "ISOLATED"
-        } */
+            world: "MAIN"
+        }
     ],
     background: process.env.BROWSER == 'firefox'
         ? { scripts: [service_worker] }
@@ -48,7 +48,8 @@ export default {
     },
     permissions: [
         "storage",
-        "unlimitedStorage"
+        "unlimitedStorage",
+        "tabs"
     ],
     default_locale: 'ko',
     action: {

@@ -16,7 +16,7 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "esModuleInterop": true,
-    "typeRoots": ["./node_modules/@types", "./src/types", "./page/types", "./service/types"]
+    "typeRoots": ["./node_modules/@types", "src/main/types", "src/repeater/types", "./page/types", "./service/types"]
   },
   "include": ["src/**/*", "page/**/*", "service/**/*"],
   "exclude": ["node_modules"]

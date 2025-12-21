@@ -25,57 +25,69 @@
     }
 } */
 
-import { gesture_type } from './consts';
-import scripts from 'src/scripts';
+import { gesture_type } from "./consts";
+import { scripts } from "src/main/scripts";
 
-const r: Gesture = {
-    description: scripts.next_page.description,
-    type: gesture_type.script,
-    script: scripts.next_page.key
-}
+const initial_gesture: { [key: string]: Gesture } = {
+    r: {
+        description: scripts.next_page.description,
+        type: gesture_type.script,
+        script: scripts.next_page.key,
+    },
+    
+    l: {
+        description: scripts.previous_page.description,
+        type: gesture_type.script,
+        script: scripts.previous_page.key,
+    },
 
-const l: Gesture = {
-    description: scripts.previous_page.description,
-    type: gesture_type.script,
-    script: scripts.previous_page.key
-}
+    u: {
+        description: scripts.go_to_up.description,
+        type: gesture_type.script,
+        script: scripts.go_to_up.key,
+    },
 
-const u: Gesture = {
-    description: scripts.go_to_up.description,
-    type: gesture_type.script,
-    script: scripts.go_to_up.key
-}
+    d: {
+        description: scripts.go_to_down.description,
+        type: gesture_type.script,
+        script: scripts.go_to_down.key,
+    },
 
-const d: Gesture = {
-    description: scripts.go_to_down.description,
-    type: gesture_type.script,
-    script: scripts.go_to_down.key
-}
+    dr: {
+        description: scripts.close_tap.description,
+        type: gesture_type.script,
+        script: scripts.close_tap.key,
+    },
 
-const dr: Gesture = {
-    description: scripts.close_tap.description,
-    type: gesture_type.script,
-    script: scripts.close_tap.key
-}
+    rd: {
+        description: scripts.minimized_window.description,
+        type: gesture_type.script,
+        script: scripts.minimized_window.key,
+    },
 
-const rd: Gesture = {
-    description: scripts.minimize_window.description,
-    type: gesture_type.script,
-    script: scripts.minimize_window.key
-}
+    ud: {
+        description: scripts.refresh.description,
+        type: gesture_type.script,
+        script: scripts.refresh.key,
+    },
 
-const ud: Gesture = {
-    description: scripts.refresh.description,
-    type: gesture_type.script,
-    script: scripts.refresh.key
-}
+    du: {
+        description: scripts.refresh.description,
+        type: gesture_type.script,
+        script: scripts.refresh.key,
+    },
 
-const du: Gesture = {
-    description: scripts.refresh.description,
-    type: gesture_type.script,
-    script: scripts.refresh.key
-}
+    ru: {
+        description: scripts.maximized_window.description,
+        type: gesture_type.script,
+        script: scripts.maximized_window.key,
+    },
 
-export default {
-    r, l, u, d, dr, rd, ud, du
-}
+    lu: {
+        description: scripts.fullscreen_window.description,
+        type: gesture_type.script,
+        script: scripts.fullscreen_window.key,
+    },
+};
+
+export default initial_gesture;

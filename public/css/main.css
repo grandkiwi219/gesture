@@ -1,0 +1,9 @@
+gesture-paper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    user-select: none;
+    z-index: 99990;
+    overflow: hidden;
+}

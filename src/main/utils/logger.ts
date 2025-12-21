@@ -7,7 +7,7 @@ function log(...data: any[]) {
 }
 
 function error(...data: any[]) {
-    console.error(logger_mark, ...data);
+    console.error(logger_mark, 'An Error occurred →', ...data);
 }
 
 function warn(...data: any[]) {

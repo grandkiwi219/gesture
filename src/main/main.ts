@@ -1,8 +1,9 @@
-import { mouseDown, mouseMove, mouseUp } from "./event";
+import { messageEv, mouseDown, mouseMove, mouseUp } from "./event";
 import { variable } from "./variable";
 import consts from "./consts";
 import { setInitialGesture } from "service/reset";
 import logger from "./utils/logger";
+
 
 void function main() {
     
@@ -33,4 +34,6 @@ void function main() {
             });
         });
     });
+
+    window.addEventListener('message', messageEv);
 }();
