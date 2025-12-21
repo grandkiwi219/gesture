@@ -1,6 +1,5 @@
 import { acknowledgeContextMenu, contextMenuEvent, ignoreContextMenu } from "./message-normal-events";
-import { messageScript } from "./message-script-events";
-import { credits, messages } from "./message-type";
+import { messages } from "./message-type";
 import logger from "src/main/utils/logger";
 
 window.addEventListener('message', event => {
