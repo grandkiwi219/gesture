@@ -1,4 +1,4 @@
-# <div style="text-align: center;"><자급자족 프로젝트 2> <br> gesture; 제스쳐</div> 
+# <div style="align: center;"><자급자족 프로젝트 2> <br> gesture; 제스쳐</div> 
 
 타 브라우저 내장 제스쳐 기능을 크롬에서 사용하고자 하는 목적으로 제작
 
