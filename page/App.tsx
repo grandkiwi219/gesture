@@ -8,7 +8,7 @@ import Sidebar from './components/Sidebar';
 import Home from './page/Home';
 import Settings from './page/Settings';
 
-const paths = [
+/* const paths = [
 	{
 		path: '/',
 		element: <Home></Home>,
@@ -17,7 +17,7 @@ const paths = [
 		path: '/settings',
 		element: <Settings></Settings>,
 	},
-];
+]; */
 
 export default function () {
 	return (
@@ -35,3 +35,7 @@ export default function () {
 		</>
 	);
 }
+
+// 제스쳐 설정 -> 말 그대로 제스쳐 설정
+// 사용 설정 -> 커맨드 표시 크기 조절 혹은 펜 색 변경 등
+// 페이지 설정 -> 차단할 페이지
