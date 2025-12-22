@@ -9,6 +9,7 @@ import { script_msg_event } from "src/msg/message-type";
 
 void function main() {
 
+    // 파이어폭스에서'도' 사용 가능케 하기 위한 최선?의 방법
     scriptInjection(document.documentElement, 'src/repeater.js');
 
     window.addEventListener('mousemove', mouseMove, true);
