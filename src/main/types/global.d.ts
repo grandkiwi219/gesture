@@ -3,9 +3,9 @@ interface Coordinate {
     y: number;
 }
 
-type Angle = number;
-
 type Direction = 'r' | 'l' | 'u' | 'd';
+
+type Angle = number;
 
 interface Script {
     key: string;
@@ -20,4 +20,8 @@ interface Drawing {
     command: Element | null;
     command_canvas: Element | null;
     command_text: Element | null;
+}
+
+interface MouseExit {
+    run?: boolean
 }

@@ -3,7 +3,7 @@ import { messages, repeater_msg_event } from "../../msg/message-type";
 import { variable } from "src/main/variable";
 import { decidePos, decideDir, measureDistanceSq } from "../utils/decider";
 import { continueDrawing, showCommandDrawing, startDrawing } from "src/main/drawing";
-import { getCommandData } from "src/main/process";
+import { exitReset, exitRun, getCommandData } from "src/main/process";
 import logger from "../utils/logger";
 
 export function mouseMove(event: MouseEvent,
@@ -18,6 +18,11 @@ export function mouseMove(event: MouseEvent,
     = {}
 ) {
     if (!variable.executing) return;
+
+    if (event.buttons != 2) {
+        exitReset();
+        return;
+    }
 
     const distance = measureDistanceSq(event);
 

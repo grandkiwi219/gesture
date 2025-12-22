@@ -1,28 +1,35 @@
-import { messageEv, mouseDown, mouseMove, mouseUp } from "./event";
+import { mouseDown, mouseMove, mouseUp, scriptMessage } from "./event";
 import { variable } from "./variable";
 import consts from "./consts";
 import { setInitialGesture } from "service/reset";
 import logger from "./utils/logger";
 import { scriptInjection } from "./utils/assets";
+import { script_msg_event } from "src/msg/message-type";
 
 
 void function main() {
 
     scriptInjection(document.documentElement, 'src/repeater.js');
-    
+
     window.addEventListener('mousemove', mouseMove, true);
-    
+
     window.addEventListener('mousedown', mouseDown, true);
 
-    window.addEventListener('mouseup', mouseUp, true);
+    window.addEventListener('mouseup', mouseUp);
+
+    window.addEventListener(script_msg_event, scriptMessage);
 
     chrome.storage.local.get([consts.store]).then(results => {
         const keys = results[consts.store];
         if (!keys || !Array.isArray(keys)) {
+
             logger.warn('키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작 후 재시작합니다.');
+
             window.removeEventListener('mousemove', mouseMove);
             window.removeEventListener('mousedown', mouseDown);
             window.removeEventListener('mouseup', mouseUp);
+            window.removeEventListener(script_msg_event, scriptMessage);
+
             setInitialGesture();
             main();
             return;
@@ -36,6 +43,6 @@ void function main() {
             });
         });
     });
-
-    window.addEventListener('message', messageEv);
 }();
+
+// innerWith와 outerWidth 차이 사용
