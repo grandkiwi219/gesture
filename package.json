@@ -22,7 +22,7 @@
     "clean": "cross-env DEV=2 rollup -c",
     "clean-ff": "cross-env DEV=2 BROWSER=firefox rollup -c",
     "clean-all": "npm run clean & npm run clean-ff",
-    "process": "npm run build-all && npm run zip-all"
+    "process": "npm run build && npm run zip & npm run build-ff && npm run zip-ff"
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
