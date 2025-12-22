@@ -89,13 +89,7 @@ const initial_gesture: { [key: string]: Gesture } = {
         script: scripts.fullscreen_window.key,
     },
 
-    rl: {
-        description: scripts.restore_tap.description,
-        type: gesture_type.script,
-        script: scripts.restore_tap.key,
-    },
-
-    lr: {
+    ld: {
         description: scripts.restore_tap.description,
         type: gesture_type.script,
         script: scripts.restore_tap.key,
