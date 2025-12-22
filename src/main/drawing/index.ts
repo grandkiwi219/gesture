@@ -20,8 +20,8 @@ export function startDrawing() {
     else {
         target = document.documentElement;
         coord = {
-            x: window.innerWidth,
-            y: window.innerHeight
+            x: window.outerWidth,
+            y: window.outerHeight
         }
     }
 
