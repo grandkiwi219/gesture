@@ -66,15 +66,15 @@ const initial_gesture: { [key: string]: Gesture } = {
     },
 
     ud: {
-        description: scripts.refresh.description,
+        description: scripts.refresh_tap.description,
         type: gesture_type.script,
-        script: scripts.refresh.key,
+        script: scripts.refresh_tap.key,
     },
 
     du: {
-        description: scripts.refresh.description,
+        description: scripts.refresh_tap.description,
         type: gesture_type.script,
-        script: scripts.refresh.key,
+        script: scripts.refresh_tap.key,
     },
 
     ru: {
@@ -87,6 +87,18 @@ const initial_gesture: { [key: string]: Gesture } = {
         description: scripts.fullscreen_window.description,
         type: gesture_type.script,
         script: scripts.fullscreen_window.key,
+    },
+
+    rl: {
+        description: scripts.restore_tap.description,
+        type: gesture_type.script,
+        script: scripts.restore_tap.key,
+    },
+
+    lr: {
+        description: scripts.restore_tap.description,
+        type: gesture_type.script,
+        script: scripts.restore_tap.key,
     },
 };
 

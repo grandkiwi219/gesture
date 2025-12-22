@@ -18,6 +18,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import packages from './package.json' with { type: 'json' };
+import json from '@rollup/plugin-json';
 
 /**
  * @param {string} root 
@@ -49,7 +50,6 @@ const content_output_dir = outPut('src');
 const content_output = {
     dir: content_output_dir,
     entryFileNames: '[name].js',
-    format: 'es'
 }
 const content_plugin = [
     typescript({
@@ -63,16 +63,23 @@ const content_plugin = [
         browser: true,
         extensions: ['.js', '.ts']
     }),
-    commonjs()
+    commonjs(),
+    json(),
 ]
 const content_scripts = {
     input: 'src/main/main',
-    output: content_output,
+    output: {
+        ...content_output,
+        format: 'es'
+    },
     plugins: content_plugin
 }
 const content_repeater = {
     input: 'src/repeater/repeater',
-    output: content_output,
+    output: {
+        ...content_output,
+        format: 'iife'
+    },
     plugins: content_plugin
 }
 
@@ -93,7 +100,8 @@ const background_service = {
         }),
         cleanup({
             extensions: ['.js', '.ts']
-        })
+        }),
+        json(),
     ]
 }
 
@@ -135,7 +143,8 @@ const options_page_plugin = [
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
     }),
     html(options_page_html),
-    postcss()
+    postcss(),
+    json(),
 ]
 
 const options_page = {

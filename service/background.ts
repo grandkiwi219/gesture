@@ -2,7 +2,7 @@ import { setInitialGesture } from "./reset.js";
 
 import { command_keys } from "./commands.js";
 import { scripts } from "src/main/scripts/index.js";
-import { messages } from "./message-types.js";
+import { messages } from "./msg/message-types.js";
 
 chrome.runtime.onInstalled.addListener(async d => {
     if (d.reason === 'install') {
@@ -51,6 +51,9 @@ function tabsState(msg: any, sender: chrome.runtime.MessageSender, response?: an
             if (sender.tab && sender.tab.id) {
                 chrome.tabs.remove(sender.tab.id);
             }
+            break;
+        case 'restore':
+            chrome.sessions.restore();
             break;
         default:
             break;

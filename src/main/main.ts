@@ -3,15 +3,18 @@ import { variable } from "./variable";
 import consts from "./consts";
 import { setInitialGesture } from "service/reset";
 import logger from "./utils/logger";
+import { scriptInjection } from "./utils/assets";
 
 
 void function main() {
-    
-    window.addEventListener('mousemove', mouseMove);
-    
-    window.addEventListener('mousedown', mouseDown);
 
-    window.addEventListener('mouseup', mouseUp);
+    scriptInjection(document.documentElement, 'src/repeater.js');
+    
+    window.addEventListener('mousemove', mouseMove, true);
+    
+    window.addEventListener('mousedown', mouseDown, true);
+
+    window.addEventListener('mouseup', mouseUp, true);
 
     chrome.storage.local.get([consts.store]).then(results => {
         const keys = results[consts.store];

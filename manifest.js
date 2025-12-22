@@ -30,14 +30,14 @@ export default {
             ],
             run_at: "document_start",
         },
-        {
+        /* {
             matches: ["<all_urls>"],
             js: [
                 "src/repeater.js"
             ],
             run_at: "document_start",
             world: "MAIN"
-        }
+        } */
     ],
     background: process.env.BROWSER == 'firefox'
         ? { scripts: [service_worker] }
@@ -49,7 +49,8 @@ export default {
     permissions: [
         "storage",
         "unlimitedStorage",
-        "tabs"
+        "tabs",
+        "sessions"
     ],
     default_locale: 'ko',
     action: {
@@ -66,5 +67,13 @@ export default {
         48: "/img/icon.png",
         128: "/img/icon.png"
     }, */
-    commands: commands ?? {}
+    commands: commands ?? {},
+    web_accessible_resources: [
+        {
+            resources: [
+                "src/*"
+            ],
+            matches: ["<all_urls>"]
+        }
+    ],
 }

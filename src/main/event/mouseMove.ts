@@ -1,5 +1,5 @@
 import consts from "src/main/consts";
-import { messages } from "../../repeater/message-type";
+import { messages, repeater_msg_event } from "../../msg/message-type";
 import { variable } from "src/main/variable";
 import { decidePos, decideDir, measureDistanceSq } from "../utils/decider";
 import { continueDrawing, showCommandDrawing, startDrawing } from "src/main/drawing";
@@ -24,7 +24,7 @@ export function mouseMove(event: MouseEvent,
     if (!variable.starting) {
         if (distance > consts.start_range**2) {
             variable.starting = true;
-            window.postMessage(messages.ignore_context_menu, location.origin);
+            window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(messages.ignore_context_menu) }));
         }
         return;
     }

@@ -3,11 +3,9 @@ import logger from "./utils/logger";
 import { variable } from "./variable";
 import { scripts } from "./scripts";
 import { stopDrawing } from "./drawing";
-import { messages } from "../repeater/message-type";
+import { messages, repeater_msg_event } from "../msg/message-type";
 
 export function exitRun() {
-
-    window.postMessage(messages.acknowledge_context_menu, location.origin);
 
     const result_command = getCommandData();
 

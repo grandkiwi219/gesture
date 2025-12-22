@@ -5,6 +5,6 @@ interface Gesture {
 }
 
 interface BgMsg {
-    type: 'tabs' | 'windows';
+    type: string;
     state: string;
 }

@@ -1,4 +1,4 @@
 export const messages = {
     windows: 'windows',
-    tabs: 'tabs'
+    tabs: 'tabs',
 }

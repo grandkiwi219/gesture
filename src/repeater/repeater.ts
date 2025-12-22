@@ -1,18 +1,16 @@
-import { acknowledgeContextMenu, contextMenuEvent, ignoreContextMenu } from "./message-normal-events";
-import { messages } from "./message-type";
+import { contextMenuEvent, ignoreContextMenu } from "../msg/message-repeater-events";
+import { credits, messages, repeater_msg_event } from "../msg/message-type";
 import logger from "src/main/utils/logger";
 
-window.addEventListener('message', event => {
-    const data = event.data;
+window.addEventListener(repeater_msg_event, event => {
+
+    const data = JSON.parse((event as CustomEvent).detail);
 
     if (!data.credit || typeof data.script != 'string') return;
 
     switch (data.credit) {
-        case messages.ignore_context_menu.credit:
-            ignoreContextMenu();
-            break;
-        case messages.acknowledge_context_menu.credit:
-            acknowledgeContextMenu();
+        case credits.context_menu:
+            ignoreContextMenu(data.data);
             break;
 
         default:
@@ -22,4 +20,4 @@ window.addEventListener('message', event => {
     return;
 });
 
-window.addEventListener('contextmenu', contextMenuEvent);
+window.addEventListener('contextmenu', contextMenuEvent, true);

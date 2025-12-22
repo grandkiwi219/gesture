@@ -1,5 +1,6 @@
 import { variable } from "src/main/variable";
 import { excludePaper, findScrollable } from "./supports";
+import { messages } from "service/msg/message-types";
 
 const next_page: Script = {
     key: 'next_page',
@@ -56,7 +57,7 @@ const close_tap: Script = {
     description: '탭 닫기',
     script: async function() {
         const msg: BgMsg = {
-            type: 'tabs',
+            type: messages.tabs,
             state: 'remove'
         }
         chrome.runtime.sendMessage(msg);
@@ -68,7 +69,7 @@ const minimized_window: Script = {
     description: '창 최소화',
     script: function() {
         const msg: BgMsg = {
-            type: 'windows',
+            type: messages.windows,
             state: 'minimized'
         }
         chrome.runtime.sendMessage(msg);
@@ -80,7 +81,7 @@ const maximized_window: Script = {
     description: '창 최대화',
     script: function() {
         const msg: BgMsg = {
-            type: 'windows',
+            type: messages.windows,
             state: 'maximized'
         }
         chrome.runtime.sendMessage(msg);
@@ -92,18 +93,30 @@ const fullscreen_window: Script = {
     description: '전체화면',
     script: function() {
         const msg: BgMsg = {
-            type: 'windows',
+            type: messages.windows,
             state: 'fullscreen'
         }
         chrome.runtime.sendMessage(msg);
     }
 }
 
-const refresh: Script = {
-    key: 'refresh',
+const refresh_tap: Script = {
+    key: 'refresh_tap',
     description: '새로고침',
     script: function() {
         location.reload();
+    }
+}
+
+const restore_tap: Script = {
+    key: 'restore_tap',
+    description: '최근 탭 복원',
+    script: function() {
+        const msg: BgMsg = {
+            type: messages.tabs,
+            state: 'restore'
+        }
+        chrome.runtime.sendMessage(msg);
     }
 }
 
@@ -111,11 +124,15 @@ const refresh: Script = {
 export const scripts = {
     next_page,
     previous_page,
+
     go_to_up,
     go_to_down,
+
     close_tap,
+    refresh_tap,
+    restore_tap,
+
     minimized_window,
     maximized_window,
     fullscreen_window,
-    refresh
 }

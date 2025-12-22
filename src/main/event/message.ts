@@ -1,7 +1,7 @@
-import { messageScript } from "src/repeater/message-script-events";
-import { credits } from "src/repeater/message-type";
+import { messageScript } from "src/msg/message-script-events";
+import { credits } from "src/msg/message-type";
 
-export function messageEv(event: MessageEvent<Message>) {
+export function messageEv(event: MessageEvent<RepeaterMessage>) {
         const data = event.data;
     
         if (!data.credit || typeof data.script != 'string') return;

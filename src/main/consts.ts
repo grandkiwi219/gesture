@@ -1,4 +1,6 @@
-export const initial: string = 'gesture';
+import packages from "../../package.json" with { type: 'json' };
+
+export const initial: string = packages.name;
 
 export const start_range: number = 3;
 export const decide_range: number = 20;
