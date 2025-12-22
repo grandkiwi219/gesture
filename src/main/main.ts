@@ -32,8 +32,7 @@ void function main() {
 
         chrome.storage.local.get(filtered_keys).then(result => {
             filtered_keys.forEach(key => {
-                const re = result[key] as Gesture;
-                variable.command_store.set(key, re);
+                variable.command_store.set(key, result[key] as Gesture);
             });
         });
     });
