@@ -1,9 +1,8 @@
 import { mouseDown, mouseMove, mouseUp, scriptMessage, storageChanged } from "./event";
 import { scriptInjection } from "./utils/assets";
-import { messages, repeater_msg_event, script_msg_event } from "src/repeater/msg/message-type";
-import { mainAddEvent, mainRemoveEvent, setCommand } from "./process";
+import { script_msg_event } from "src/repeater/msg/message-type";
+import { mainAddEvent, mainRemoveEvent } from "./process";
 import logger from "./utils/logger";
-import { variable } from "./variable";
 
 
 void function main() {

@@ -14,7 +14,7 @@ export function mouseDown(event: MouseEvent) {
 
     window.addEventListener('mousemove', mouseMove, true);
 
-    window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: messages.acknowledge_context_menu }));
+    window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(messages.acknowledge_context_menu) }));
 
     variable.executing = true;
     decidePos(event);

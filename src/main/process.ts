@@ -6,7 +6,7 @@ import { stopDrawing } from "./drawing";
 import { mouseMove } from "./event";
 import consts, { storage_area } from "./consts";
 import { setInitialGesture } from "service/reset";
-import { messages, repeater_msg_event } from "src/repeater/msg/message-type";
+import { credits, messages, repeater_msg_event } from "src/repeater/msg/message-type";
 
 export function mainAddEvent(removeEvent: Function, addEvent: Function): Function {
     return function() {
@@ -19,7 +19,7 @@ export function mainAddEvent(removeEvent: Function, addEvent: Function): Functio
 export function mainRemoveEvent(removeEvent: Function): Function {
     return function() {
         variable.main_running = false;
-        window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: messages.acknowledge_context_menu }));
+        window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(messages.acknowledge_context_menu) }));
         removeEvent();
     }
 }
@@ -112,6 +112,12 @@ function gestureScript(script_key: string) {
     }
 }
 
-function gestureCustomScript(script_key: string) {
+function gestureCustomScript(custom_script: string) {
+    const message: RepeaterMessage = {
+        credit: credits.custom_script_message,
+        script: custom_script,
+        data: null
+    }
 
+    window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(message) }));
 }
