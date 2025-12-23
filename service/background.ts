@@ -57,6 +57,28 @@ function tabsState(msg: any, sender: chrome.runtime.MessageSender, response?: an
             chrome.sessions.restore();
             break;
 
+        case 'focus': 
+            chrome.tabs.query({currentWindow: true}).then(tabs => {
+                const activeTab = tabs.find(tab => tab.active);
+            
+                if (!activeTab) return;
+
+                let newIndex;
+                if (msg.data.direction == 'left') {
+                    newIndex = (activeTab.index - (parseInt(msg.data.pages) || 0) + tabs.length) % tabs.length;
+                }
+                else {
+                    newIndex = (activeTab.index + (parseInt(msg.data.pages) || 0)) % tabs.length;
+                }
+
+                const targetTab = tabs.find(tab => tab.index === newIndex);
+                if (targetTab) {
+                    chrome.tabs.update(targetTab.id, {active: true});
+                }
+            });
+            break;
+            
+
         case 'move': 
             chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
                 let current_tab = tabs[0];

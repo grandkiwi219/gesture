@@ -96,15 +96,15 @@ const initial_gesture: { [key: string]: Gesture } = {
     },
 
     lr: {
-        description: scripts.move_left_tap.description,
+        description: scripts.focus_left_tap.description,
         type: gesture_type.script,
-        script: scripts.move_left_tap.key,
+        script: scripts.focus_left_tap.key,
     },
 
     rl: {
-        description: scripts.move_right_tap.description,
+        description: scripts.focus_right_tap.description,
         type: gesture_type.script,
-        script: scripts.move_right_tap.key,
+        script: scripts.focus_right_tap.key,
     },
 };
 

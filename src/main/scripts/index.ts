@@ -1,6 +1,7 @@
 import { variable } from "src/main/variable";
 import { excludePaper, findScrollable } from "./supports";
 import { messages } from "service/msg/message-types";
+import { direction } from "../consts";
 
 const next_page: Script = {
     key: 'next_page',
@@ -84,9 +85,41 @@ const restore_tap: Script = {
     }
 }
 
+const focus_left_tap: Script = {
+    key: 'focus_right_tap',
+    description: '왼쪽 탭으로 이동',
+    script: function() {
+        const msg: BgMsg = {
+            type: messages.tabs,
+            state: 'focus',
+            data: {
+                direction: 'left',
+                pages: 1
+            }
+        }
+        chrome.runtime.sendMessage(msg);
+    }
+}
+
+const focus_right_tap: Script = {
+    key: 'focus_right_tap',
+    description: '오른쪽 탭으로 이동',
+    script: function() {
+        const msg: BgMsg = {
+            type: messages.tabs,
+            state: 'focus',
+            data: {
+                direction: 'right',
+                pages: 1
+            }
+        }
+        chrome.runtime.sendMessage(msg);
+    }
+}
+
 const move_left_tap: Script = {
     key: 'move_left_tap',
-    description: '왼쪽 탭 이동',
+    description: '탭을 왼쪽으로 이동',
     script: function() {
         const msg: BgMsg = {
             type: messages.tabs,
@@ -99,7 +132,7 @@ const move_left_tap: Script = {
 
 const move_right_tap: Script = {
     key: 'move_right_tap',
-    description: '왼쪽 탭 이동',
+    description: '탭을 오른쪽으로 이동',
     script: function() {
         const msg: BgMsg = {
             type: messages.tabs,
@@ -158,6 +191,8 @@ export const scripts = {
     close_tap,
     refresh_tap,
     restore_tap,
+    focus_left_tap,
+    focus_right_tap,
     move_left_tap,
     move_right_tap,
 
