@@ -9,7 +9,11 @@ export enum direction {
     Right = 'r',
     Left = 'l',
     Up = 'u',
-    Down = 'd'
+    Down = 'd',
+    Right_Up = 'RU',
+    Right_Down = 'RD',
+    Left_Up = 'LU',
+    Left_Down = 'LD'
 }
 
 export const direction_regex = /^[rlud]+$/;

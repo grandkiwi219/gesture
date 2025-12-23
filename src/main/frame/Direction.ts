@@ -1,7 +1,9 @@
-export class DirectionBundle {
-    private bundle: Direction[] = [];
+import { direction } from "../consts";
 
-    push(direction: Direction): boolean {
+export class DirectionBundle {
+    private bundle: direction[] = [];
+
+    push(direction: direction): boolean {
         if (this.bundle.at(-1) == direction) {
             return false;
         }

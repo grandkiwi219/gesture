@@ -1,5 +1,6 @@
 import { variable } from "src/main/variable";
 import { calcAngleDegrees } from "./utils";
+import { direction } from "../consts";
 
 export function decidePos(event: MouseEvent) {
 
@@ -9,7 +10,7 @@ export function decidePos(event: MouseEvent) {
     }
 }
 
-export function decideDir(event: MouseEvent): Direction {
+export function decideDir(event: MouseEvent): direction {
     
     const triangle: Coordinate = {
         x: event.clientX - variable.position.x,
@@ -19,16 +20,16 @@ export function decideDir(event: MouseEvent): Direction {
     const degree = calcAngleDegrees(triangle);
 
     if ($(-45, 45)) {
-       return 'r'; 
+       return direction.Right; 
     }
     else if ($(45, 135)) {
-        return 'u';
+        return direction.Up;
     }
     else if ($(-135, -45)) {
-        return 'd';
+        return direction.Down;
     }
     else {
-        return 'l';
+        return direction.Left;
     }
 
     function $(angle1: Angle, angle2: Angle): boolean {

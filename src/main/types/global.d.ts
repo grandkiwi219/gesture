@@ -3,8 +3,6 @@ interface Coordinate {
     y: number;
 }
 
-type Direction = 'r' | 'l' | 'u' | 'd';
-
 type Angle = number;
 
 interface Script {
