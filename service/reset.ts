@@ -5,12 +5,8 @@ export function setInitialGesture() {
 
     chrome.storage[storage_area].clear();
 
-    let key_list: any[] = [];
-
-    Object.keys(initial_gesture).forEach((ges) => {
-        chrome.storage[storage_area].set({ [ges]: initial_gesture[ges] });
-        key_list.push(ges);
+    chrome.storage[storage_area].set({
+        ...initial_gesture,
+        [store]: Object.keys(initial_gesture)
     });
-    
-    chrome.storage[storage_area].set({ [store]: key_list });
 }
