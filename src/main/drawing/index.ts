@@ -91,7 +91,7 @@ export function continueDrawing({ x, y }: Coordinate) {
 
     const size_coord: Coordinate = decideSize(variable.drawing_store.target);
 
-    if (canvas.width !== size_coord.x && canvas.height !== size_coord.y) {
+    if (canvas.width < size_coord.x && canvas.height < size_coord.y) {
         const tempImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
         setSizeCanvas(size_coord);
         ctx.putImageData(tempImage, 0, 0);
