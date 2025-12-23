@@ -35,7 +35,8 @@ export function findScrollable(target: Element | null, coord: 'x' | 'y' = 'y'): 
 }
 
 export function excludePaper(el: Element) {
-    return el !== variable.drawing_store.main
-        && el !== variable.drawing_store.paper
-        && el !== variable.drawing_store.command;
+    const paper = variable.drawing_store?.main;
+    return paper
+        && el !== paper
+        && paper?.contains(el)
 }
