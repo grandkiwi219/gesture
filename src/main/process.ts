@@ -4,6 +4,8 @@ import { variable } from "./variable";
 import { scripts } from "./scripts";
 import { stopDrawing } from "./drawing";
 import { mouseMove } from "./event";
+import consts, { storage_area } from "./consts";
+import { setInitialGesture } from "service/reset";
 
 export function exitRun() {
 
@@ -22,10 +24,6 @@ export function exitRun() {
                 break;
         }
     }
-}
-
-export function getCommandData() {
-    return variable.command_store.get(variable.directions.data.join(''));
 }
 
 export function exitReset() {
@@ -49,6 +47,31 @@ export function exitReset() {
 
     stopDrawing();
 }
+
+export function getCommandData() {
+    return variable.command_store.get(variable.directions.data.join(''));
+}
+
+export async function setCommand() {
+    chrome.storage[storage_area].get([consts.store]).then(results => {
+        const keys = results[consts.store];
+        if (!keys || !Array.isArray(keys)) {
+            logger.warn('키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
+
+            setInitialGesture();
+            setCommand();
+            return;
+        }
+
+        const filtered_keys = keys.filter((r) => typeof r == 'string');
+
+        chrome.storage[storage_area].get(filtered_keys).then(result => {
+            filtered_keys.forEach(key => {
+                variable.command_store.set(key, result[key] as Gesture);
+            });
+        });
+    });
+} 
 
 function gestureScript(script_key: string) {
     const result = scripts[script_key as keyof typeof scripts];

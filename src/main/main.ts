@@ -1,17 +1,17 @@
-import { mouseDown, mouseMove, mouseUp, scriptMessage } from "./event";
-import { variable } from "./variable";
-import consts from "./consts";
-import { setInitialGesture } from "service/reset";
-import logger from "./utils/logger";
+import { mouseDown, mouseMove, mouseUp, scriptMessage, storageChanged } from "./event";
 import { scriptInjection } from "./utils/assets";
-import { messages, repeater_msg_event, script_msg_event } from "src/msg/message-type";
-import { exitReset } from "./process";
+import { script_msg_event } from "src/msg/message-type";
+import { setCommand } from "./process";
+import logger from "./utils/logger";
 
 
-void function main() {
+void function once() {
 
     // 파이어폭스에서'도' 사용 가능케 하기 위한 최선?의 방법
     scriptInjection(document.documentElement, 'src/repeater.js');
+}();
+
+void function main() {
 
     // window.addEventListener('mousemove', mouseMove, true);
 
@@ -21,33 +21,9 @@ void function main() {
 
     window.addEventListener(script_msg_event, scriptMessage);
 
-    chrome.storage.local.get([consts.store]).then(results => {
-        const keys = results[consts.store];
-        if (!keys || !Array.isArray(keys)) {
-
-            logger.warn('키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작 후 재시작합니다.');
-
-            // window.removeEventListener('mousemove', mouseMove);
-            window.removeEventListener('mousedown', mouseDown);
-            window.removeEventListener('mouseup', mouseUp);
-            window.removeEventListener(script_msg_event, scriptMessage);
-
-            window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: messages.acknowledge_context_menu }));
-
-            exitReset();
-            setInitialGesture();
-            main();
-            return;
-        }
-
-        const filtered_keys = keys.filter(r => typeof r == 'string');
-
-        chrome.storage.local.get(filtered_keys).then(result => {
-            filtered_keys.forEach(key => {
-                variable.command_store.set(key, result[key] as Gesture);
-            });
-        });
-    });
+    setCommand();
+    
+    chrome.storage.onChanged.addListener(storageChanged);
 }();
 
 // storage onChanged, 사용 미사용 감지
