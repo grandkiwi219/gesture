@@ -14,3 +14,10 @@ export async function contextMenuEvent(event: PointerEvent) {
 export function ignoreContextMenu(data: boolean) {
     ignore_context_menu = data;
 }
+
+export function executeCustomScript(data_script: string) {
+    const script = document.createElement('script');
+    script.textContent = data_script;
+    const target = document.head || document.documentElement;
+    target.appendChild(script);
+}
