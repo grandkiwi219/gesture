@@ -1,5 +1,7 @@
 import { DirectionBundle } from "./frame/Direction";
 
+let main_running: boolean = false;
+
 let starting: boolean = false;
 let executing: boolean = false;
 
@@ -30,6 +32,7 @@ let drawing_store: Drawing = {
 };
 
 export const variable = {
+    main_running,
     starting,
     executing,
     position,

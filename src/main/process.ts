@@ -6,6 +6,23 @@ import { stopDrawing } from "./drawing";
 import { mouseMove } from "./event";
 import consts, { storage_area } from "./consts";
 import { setInitialGesture } from "service/reset";
+import { messages, repeater_msg_event } from "src/msg/message-type";
+
+export function mainAddEvent(removeEvent: Function, addEvent: Function): Function {
+    return function() {
+        variable.main_running = true;
+        addEvent();
+        setCommand(removeEvent);
+    }
+}
+
+export function mainRemoveEvent(removeEvent: Function): Function {
+    return function() {
+        variable.main_running = false;
+        window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: messages.acknowledge_context_menu }));
+        removeEvent();
+    }
+}
 
 export function exitRun() {
 
@@ -52,18 +69,27 @@ export function getCommandData() {
     return variable.command_store.get(variable.directions.data.join(''));
 }
 
-export async function setCommand() {
-    chrome.storage[storage_area].get([consts.store]).then(results => {
-        const keys = results[consts.store];
-        if (!keys || !Array.isArray(keys)) {
+export async function setCommand(removeEvent: Function) {
+    chrome.storage[storage_area].get([consts.store, consts.ignore]).then(results => {
+        const ignore_keys = results[consts.ignore] as unknown as string[];
+        if (ignore_keys || Array.isArray(ignore_keys)) {
+            if (new Set(ignore_keys).has(location.origin)) {
+                removeEvent();
+                exitReset();
+                return;
+            }
+        }
+
+        const store_keys = results[consts.store];
+        if (!store_keys || !Array.isArray(store_keys)) {
             logger.warn('키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
 
             setInitialGesture();
-            setCommand();
+            setCommand(removeEvent);
             return;
         }
 
-        const filtered_keys = keys.filter((r) => typeof r == 'string');
+        const filtered_keys = store_keys.filter((r) => typeof r == 'string');
 
         chrome.storage[storage_area].get(filtered_keys).then(result => {
             filtered_keys.forEach(key => {

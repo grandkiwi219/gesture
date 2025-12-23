@@ -17,6 +17,7 @@ export const direction_regex = /^[rlud]+$/;
 export const storage_area: chrome.storage.AreaName = 'local';
 
 export const store = 'store';
+export const ignore = 'ignore';
 
 const command_size = 150;
 export const drawing_elements: {
@@ -95,7 +96,10 @@ export default {
     start_range,
     decide_range,
     direction,
+    direction_regex,
+    storage_area,
     store,
+    ignore,
     drawing_elements,
     drawing_options
 }

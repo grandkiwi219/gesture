@@ -1,29 +1,38 @@
 import { mouseDown, mouseMove, mouseUp, scriptMessage, storageChanged } from "./event";
 import { scriptInjection } from "./utils/assets";
-import { script_msg_event } from "src/msg/message-type";
-import { setCommand } from "./process";
+import { messages, repeater_msg_event, script_msg_event } from "src/msg/message-type";
+import { mainAddEvent, mainRemoveEvent, setCommand } from "./process";
 import logger from "./utils/logger";
+import { variable } from "./variable";
 
-
-void function once() {
-
-    // 파이어폭스에서'도' 사용 가능케 하기 위한 최선?의 방법
-    scriptInjection(document.documentElement, 'src/repeater.js');
-}();
 
 void function main() {
 
-    // window.addEventListener('mousemove', mouseMove, true);
+    // 파이어폭스에서'도' 사용 가능케 하기 위한 최선?의 방법
+    scriptInjection(document.documentElement, 'src/repeater.js');
 
-    window.addEventListener('mousedown', mouseDown, true);
+    const removeEvent = mainRemoveEvent(() => {
+        window.removeEventListener('mousedown', mouseDown);
+        window.removeEventListener('mouseup', mouseUp);
+        window.removeEventListener(script_msg_event, scriptMessage);
+    });
 
-    window.addEventListener('mouseup', mouseUp);
+    const addEvent = mainAddEvent(removeEvent, () => {
+        window.addEventListener('mousedown', mouseDown, true);
 
-    window.addEventListener(script_msg_event, scriptMessage);
+        window.addEventListener('mouseup', mouseUp);
 
-    setCommand();
+        window.addEventListener(script_msg_event, scriptMessage);
+    });
+    addEvent();
     
-    chrome.storage.onChanged.addListener(storageChanged);
+    chrome.storage.onChanged.addListener(mainStorageChanged);
+    function mainStorageChanged(
+        changes: { [key: string]: chrome.storage.StorageChange; },
+        area: chrome.storage.AreaName
+    ) {
+        storageChanged(changes, area, addEvent, removeEvent);
+    }
 }();
 
 // storage onChanged, 사용 미사용 감지

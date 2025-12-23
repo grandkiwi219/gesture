@@ -1,22 +1,40 @@
 import { setInitialGesture } from "service/reset";
-import { direction_regex, storage_area, store } from "../consts";
+import { direction_regex, ignore, storage_area, store } from "../consts";
 import logger from "../utils/logger";
-import { setCommand } from "../process";
+import { exitReset, setCommand } from "../process";
 import { variable } from "../variable";
 
 export function storageChanged(
     changes: { [key: string]: chrome.storage.StorageChange; },
-    area: chrome.storage.AreaName
+    area: chrome.storage.AreaName,
+    addEvent: Function,
+    removeEvent: Function
 ) {
     if (area != storage_area) return;
 
     let changed_items = Object.keys(changes);
+    const changed_items_set = new Set(changed_items)
 
-    /* if (changed_items.includes()) {
+    if (changed_items_set.has(ignore)) {
+        const ignore_keys = changes[ignore].newValue as string[];
+        if (ignore_keys || Array.isArray(ignore_keys)) {
+            if (new Set(ignore_keys).has(location.origin)) {
+                removeEvent();
+                exitReset();
+                return;
+            }
+        }
 
-    } */
+        if (!variable.main_running) {
+            addEvent();
+        }
+        const ignore_index = changed_items.indexOf(ignore);
+        if (ignore_index > -1) {
+            changed_items.splice(ignore_index, 1);
+        }
+    }
 
-    if (changed_items.includes(store)) {
+    if (changed_items_set.has(store)) {
         const old_value = (changes[store].oldValue as string[]) || [];
         const new_value = (changes[store].newValue as string[]) || [];
 
@@ -24,7 +42,7 @@ export function storageChanged(
             logger.warn('키 값이 변경되었습니다. 하짐나 키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
 
             setInitialGesture();
-            setCommand();
+            setCommand(removeEvent);
             return;
         }
 
@@ -38,11 +56,6 @@ export function storageChanged(
         removed.forEach(item => {
             variable.command_store.delete(item);
         });
-
-        const store_index = changed_items.indexOf(store);
-        if (store_index > -1) {
-            changed_items.splice(store_index, 1);
-        }
 
         const added_set = new Set(added);
         changed_items = changed_items.filter(r => 
