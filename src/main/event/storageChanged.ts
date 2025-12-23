@@ -1,5 +1,5 @@
 import { setInitialGesture } from "service/reset";
-import { direction_regex, sites, storage_area, store } from "../consts";
+import { regex, sites, storage_area, store } from "../consts";
 import logger from "../utils/logger";
 import { decideThisSIte, setCommand } from "../process";
 import { variable } from "../variable";
@@ -65,7 +65,7 @@ export function storageChanged(
     }
 
     function itemChecker(item_key: string) {
-        if (!direction_regex.test(item_key)) return;
+        if (!regex.direction.test(item_key)) return;
 
         const change = changes[item_key];
         if (!change || !change.newValue) return;

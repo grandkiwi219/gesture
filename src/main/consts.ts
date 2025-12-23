@@ -10,13 +10,22 @@ export enum direction {
     Left = 'l',
     Up = 'u',
     Down = 'd',
+}
+
+export enum directionDiagonal {
     Right_Up = 'RU',
     Right_Down = 'RD',
     Left_Up = 'LU',
     Left_Down = 'LD'
 }
 
-export const direction_regex = /^[rlud]+$/;
+export const regex = {
+    direction: /^[rlud]+$/,
+    directionDiagonal: new RegExp(`^(?:${Object.values(directionDiagonal).join('|')})+$`),
+    directionAll: new RegExp(`^(?:${Object.values(directionDiagonal).join('|')+Object.values(direction).join('|')})+$`),
+    host: /(?<=:\/\/)[^\/:]+/,
+    hostname: /(?<=:\/\/)[^\/]+/
+}
 
 export const storage_area: chrome.storage.AreaName = 'local';
 
@@ -100,7 +109,7 @@ export default {
     start_range,
     decide_range,
     direction,
-    direction_regex,
+    regex,
     storage_area,
     store,
     sites,
