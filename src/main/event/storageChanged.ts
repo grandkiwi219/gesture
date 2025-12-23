@@ -12,7 +12,7 @@ export function storageChanged(
 
     let changed_items = Object.keys(changes);
 
-    /* if (changed_items.has()) {
+    /* if (changed_items.includes()) {
 
     } */
 
