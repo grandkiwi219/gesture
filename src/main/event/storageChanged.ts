@@ -25,6 +25,7 @@ export function storageChanged(
 
             setInitialGesture();
             setCommand();
+            return;
         }
 
         const old_set = new Set(old_value);
@@ -43,8 +44,12 @@ export function storageChanged(
             changed_items.splice(store_index, 1);
         }
 
-        const maintained = new_value.filter(r => old_set.has(r));
-        changed_items = changed_items.filter(r => maintained.includes(r));
+        const added_set = new Set(added);
+        changed_items = changed_items.filter(r => 
+            r != store
+            && !added_set.has(r)
+            && new_set.has(r)
+        );
     }
 
     for (const item of changed_items) {
