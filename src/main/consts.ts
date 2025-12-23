@@ -17,7 +17,7 @@ export const direction_regex = /^[rlud]+$/;
 export const storage_area: chrome.storage.AreaName = 'local';
 
 export const store = 'store';
-export const ignore = 'ignore';
+export const sites = 'sites';
 
 const command_size = 150;
 export const drawing_elements: {
@@ -99,7 +99,7 @@ export default {
     direction_regex,
     storage_area,
     store,
-    ignore,
+    sites,
     drawing_elements,
     drawing_options
 }

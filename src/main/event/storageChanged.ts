@@ -1,7 +1,7 @@
 import { setInitialGesture } from "service/reset";
-import { direction_regex, ignore, storage_area, store } from "../consts";
+import { direction_regex, sites, storage_area, store } from "../consts";
 import logger from "../utils/logger";
-import { exitReset, setCommand } from "../process";
+import { decideThisSIte, setCommand } from "../process";
 import { variable } from "../variable";
 
 export function storageChanged(
@@ -15,20 +15,15 @@ export function storageChanged(
     let changed_items = Object.keys(changes);
     const changed_items_set = new Set(changed_items);
 
-    if (changed_items_set.has(ignore)) {
-        const ignore_keys = changes[ignore].newValue as string[];
-        if (ignore_keys || Array.isArray(ignore_keys)) {
-            if (new Set(ignore_keys).has(location.origin)) {
-                removeEvent();
-                exitReset();
-                return;
-            }
-        }
+    if (changed_items_set.has(sites)) {
+        const ignore_keys = changes[sites].newValue as string[];
+        if (decideThisSIte(ignore_keys, removeEvent))
+            return;
 
         if (!variable.main_running) {
             addEvent();
         }
-        const ignore_index = changed_items.indexOf(ignore);
+        const ignore_index = changed_items.indexOf(sites);
         if (ignore_index > -1) {
             changed_items.splice(ignore_index, 1);
         }

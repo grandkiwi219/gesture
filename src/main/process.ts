@@ -4,7 +4,7 @@ import { variable } from "./variable";
 import { scripts } from "./scripts";
 import { stopDrawing } from "./drawing";
 import { mouseMove } from "./event";
-import consts, { storage_area } from "./consts";
+import consts, { sites, storage_area } from "./consts";
 import { setInitialGesture } from "service/reset";
 import { credits, messages, repeater_msg_event } from "src/repeater/msg/message-type";
 
@@ -70,15 +70,10 @@ export function getCommandData() {
 }
 
 export async function setCommand(removeEvent: Function) {
-    chrome.storage[storage_area].get([consts.store, consts.ignore]).then(results => {
-        const ignore_keys = results[consts.ignore] as unknown as string[];
-        if (ignore_keys || Array.isArray(ignore_keys)) {
-            if (new Set(ignore_keys).has(location.origin)) {
-                removeEvent();
-                exitReset();
-                return;
-            }
-        }
+    chrome.storage[storage_area].get([consts.store, sites]).then(results => {
+        const ignore_keys = results[sites] as unknown as string[];
+        if (decideThisSIte(ignore_keys, removeEvent))
+            return;
 
         const store_keys = results[consts.store];
         if (!store_keys || !Array.isArray(store_keys)) {
@@ -97,7 +92,19 @@ export async function setCommand(removeEvent: Function) {
             });
         });
     });
-} 
+}
+
+export function decideThisSIte(ignore_keys: string[], removeEvent: Function) {
+    if (ignore_keys || Array.isArray(ignore_keys)) {
+        if (new Set(ignore_keys).has(location.hostname)) {
+            removeEvent();
+            exitReset();
+            return true;
+        }
+    }
+
+    return false;
+}
 
 function gestureScript(script_key: string) {
     const result = scripts[script_key as keyof typeof scripts];
