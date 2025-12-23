@@ -1,49 +1,31 @@
 import { drawing_elements, drawing_options } from "src/main/consts";
 import { variable } from "src/main/variable";
+import { decideSize, drawCommand, setSizeCanvas } from "./supports";
 import logger from "../utils/logger";
 
 export function startDrawing() {
     if (!variable.drawing_store.target) return;
 
     let target = variable.drawing_store.target;
-    let coord: Coordinate = {
-        x: 0,
-        y: 0
-    }
+    const coord: Coordinate = decideSize(target);
 
-    if (target instanceof Element) {
-        coord = {
-            x: target.clientWidth,
-            y: target.clientHeight
-        }
-    }
-    else {
+    if (!(target instanceof Element)) {
         target = document.documentElement;
-        coord = {
-            x: window.outerWidth,
-            y: window.outerHeight
-        }
     }
 
     const main = document.createElement(drawing_elements.main.tag);
-    main.style.width = `${coord.x}px`;
-    main.style.height = `${coord.y}px`;
     variable.drawing_store.main = main;
 
     const shadow = main.attachShadow({ mode: "open" });
 
     const paper = document.createElement(drawing_elements.paper.tag);
-    paper.style.width = `${coord.x}px`;
-    paper.style.height = `${coord.y}px`;
     if (drawing_elements.paper?.style && typeof drawing_elements.paper?.style == 'object') {
         Object.assign(paper.style, drawing_elements.paper.style);
     }
-    if (paper instanceof HTMLCanvasElement) {
-        paper.width = coord.x;
-        paper.height = coord.y;
-    }
     variable.drawing_store.paper = paper;
     shadow.appendChild(paper);
+
+    setSizeCanvas(coord);
 
     const command = document.createElement(drawing_elements.command.tag);
     if (drawing_elements.command?.style && typeof drawing_elements.command?.style == 'object') {
@@ -100,10 +82,19 @@ export function continueDrawing({ x, y }: Coordinate) {
         ctx.moveTo(variable.last_pos.x - rect.left, variable.last_pos.y - rect.top);
         ctx.lineTo(coord.x, coord.y);
         ctx.stroke();
-    } else {
+    }
+    else {
         ctx.fillStyle = drawing_options.pen.color;
         ctx.arc(coord.x, coord.y, size / 2, 0, Math.PI * 2);
         ctx.fill();
+    }
+
+    const size_coord: Coordinate = decideSize(variable.drawing_store.target);
+
+    if (canvas.width !== size_coord.x && canvas.height !== size_coord.y) {
+        const tempImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        setSizeCanvas(size_coord);
+        ctx.putImageData(tempImage, 0, 0);
     }
 }
 
@@ -126,9 +117,9 @@ export function showCommandDrawing(description: string | undefined) {
         return;
     }
 
-    if (cvs instanceof HTMLCanvasElement) {
+    /* if (cvs instanceof HTMLCanvasElement) {
         drawCommand(cvs);
-    }
+    } */
 
     //temp
     cvs.style.display = 'none';
@@ -159,16 +150,4 @@ export function stopDrawing() {
         variable.drawing_store.command_text.remove();
         variable.drawing_store.command_text = null;
     }
-}
-
-function drawCommand(cvs: HTMLCanvasElement) {
-    const ctx = cvs.getContext('2d');
-    if (!ctx) return;
-    
-    ctx.reset();
-
-    if (variable.directions.data.length < 1) return;
-    const commands = variable.directions.data;
-
-    // ...
 }
