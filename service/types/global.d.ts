@@ -7,4 +7,5 @@ interface Gesture {
 interface BgMsg {
     type: string;
     state: string;
+    data?: any;
 }

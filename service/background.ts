@@ -30,14 +30,14 @@ chrome.commands.onCommand.addListener(command => {
     }
 });
 
-chrome.runtime.onMessage.addListener((msg, sender, response) => {
+chrome.runtime.onMessage.addListener((msg: BgMsg, sender, response) => {
     switch (msg.type) {
         case messages.tabs:
             tabsState(msg, sender, response);
             break;
         case messages.windows:
             if (sender.tab && sender.tab.windowId) {
-                chrome.windows.update(sender.tab.windowId, { state: msg.state });
+                chrome.windows.update(sender.tab.windowId, { state: msg.state as chrome.windows.UpdateInfo["state"] });
             }
             break;
         default:
@@ -52,9 +52,20 @@ function tabsState(msg: any, sender: chrome.runtime.MessageSender, response?: an
                 chrome.tabs.remove(sender.tab.id);
             }
             break;
+
         case 'restore':
             chrome.sessions.restore();
             break;
+
+        case 'move': 
+            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+                let current_tab = tabs[0];
+                if (current_tab.id && current_tab.index > 0) {
+                    chrome.tabs.move(current_tab.id, { index: current_tab.index + msg.data });
+                }
+            });
+            break;
+
         default:
             break;
     }

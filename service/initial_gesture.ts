@@ -94,6 +94,18 @@ const initial_gesture: { [key: string]: Gesture } = {
         type: gesture_type.script,
         script: scripts.restore_tap.key,
     },
+
+    lr: {
+        description: scripts.move_left_tap.description,
+        type: gesture_type.script,
+        script: scripts.move_left_tap.key,
+    },
+
+    rl: {
+        description: scripts.move_right_tap.description,
+        type: gesture_type.script,
+        script: scripts.move_right_tap.key,
+    },
 };
 
 export default initial_gesture;

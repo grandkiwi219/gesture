@@ -64,6 +64,52 @@ const close_tap: Script = {
     }
 }
 
+const refresh_tap: Script = {
+    key: 'refresh_tap',
+    description: '새로고침',
+    script: function() {
+        location.reload();
+    }
+}
+
+const restore_tap: Script = {
+    key: 'restore_tap',
+    description: '최근 탭 복원',
+    script: function() {
+        const msg: BgMsg = {
+            type: messages.tabs,
+            state: 'restore'
+        }
+        chrome.runtime.sendMessage(msg);
+    }
+}
+
+const move_left_tap: Script = {
+    key: 'move_left_tap',
+    description: '왼쪽 탭 이동',
+    script: function() {
+        const msg: BgMsg = {
+            type: messages.tabs,
+            state: 'move',
+            data: -1
+        }
+        chrome.runtime.sendMessage(msg);
+    }
+}
+
+const move_right_tap: Script = {
+    key: 'move_right_tap',
+    description: '왼쪽 탭 이동',
+    script: function() {
+        const msg: BgMsg = {
+            type: messages.tabs,
+            state: 'move',
+            data: 1
+        }
+        chrome.runtime.sendMessage(msg);
+    }
+}
+
 const minimized_window: Script = {
     key: 'minimized_window',
     description: '창 최소화',
@@ -100,25 +146,6 @@ const fullscreen_window: Script = {
     }
 }
 
-const refresh_tap: Script = {
-    key: 'refresh_tap',
-    description: '새로고침',
-    script: function() {
-        location.reload();
-    }
-}
-
-const restore_tap: Script = {
-    key: 'restore_tap',
-    description: '최근 탭 복원',
-    script: function() {
-        const msg: BgMsg = {
-            type: messages.tabs,
-            state: 'restore'
-        }
-        chrome.runtime.sendMessage(msg);
-    }
-}
 
 
 export const scripts = {
@@ -131,6 +158,8 @@ export const scripts = {
     close_tap,
     refresh_tap,
     restore_tap,
+    move_left_tap,
+    move_right_tap,
 
     minimized_window,
     maximized_window,
