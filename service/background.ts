@@ -61,7 +61,7 @@ function tabsState(msg: any, sender: chrome.runtime.MessageSender, response?: an
             chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
                 let current_tab = tabs[0];
                 if (current_tab.id && current_tab.index > 0) {
-                    chrome.tabs.move(current_tab.id, { index: current_tab.index + msg.data });
+                    chrome.tabs.move(current_tab.id, { index: current_tab.index + (parseInt(msg.data) || 0) });
                 }
             });
             break;
