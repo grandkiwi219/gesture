@@ -4,7 +4,7 @@ import consts from "./consts";
 import { setInitialGesture } from "service/reset";
 import logger from "./utils/logger";
 import { scriptInjection } from "./utils/assets";
-import { script_msg_event } from "src/msg/message-type";
+import { messages, repeater_msg_event, script_msg_event } from "src/msg/message-type";
 import { exitReset } from "./process";
 
 
@@ -31,6 +31,8 @@ void function main() {
             window.removeEventListener('mousedown', mouseDown);
             window.removeEventListener('mouseup', mouseUp);
             window.removeEventListener(script_msg_event, scriptMessage);
+
+            window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: messages.acknowledge_context_menu }));
 
             exitReset();
             setInitialGesture();
