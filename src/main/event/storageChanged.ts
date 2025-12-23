@@ -12,11 +12,11 @@ export function storageChanged(
 
     let changed_items = Object.keys(changes);
 
-    /* if (changed_items.indexOf('') != -1) {
+    /* if (changed_items.has()) {
 
     } */
 
-    if (changed_items.indexOf(store) != -1) {
+    if (changed_items.includes(store)) {
         const old_value = (changes[store].oldValue as string[]) || [];
         const new_value = (changes[store].newValue as string[]) || [];
 
@@ -27,13 +27,13 @@ export function storageChanged(
             setCommand();
         }
 
-        const oldSet = new Set(old_value);
-        const newSet = new Set(new_value);
+        const old_set = new Set(old_value);
+        const new_set = new Set(new_value);
 
-        const added = new_value.filter(r => !oldSet.has(r));
+        const added = new_value.filter(r => !old_set.has(r));
         added.forEach(item => itemChecker(item));
 
-        const removed = old_value.filter(r => !newSet.has(r));
+        const removed = old_value.filter(r => !new_set.has(r));
         removed.forEach(item => {
             variable.command_store.delete(item);
         });
@@ -43,7 +43,7 @@ export function storageChanged(
             changed_items.splice(store_index, 1);
         }
 
-        const maintained = new_value.filter(r => oldSet.has(r));
+        const maintained = new_value.filter(r => old_set.has(r));
         changed_items = changed_items.filter(r => maintained.includes(r));
     }
 
