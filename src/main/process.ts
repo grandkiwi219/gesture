@@ -6,7 +6,7 @@ import { stopDrawing } from "./drawing";
 import { mouseMove } from "./event";
 import consts, { storage_area } from "./consts";
 import { setInitialGesture } from "service/reset";
-import { messages, repeater_msg_event } from "src/msg/message-type";
+import { messages, repeater_msg_event } from "src/repeater/msg/message-type";
 
 export function mainAddEvent(removeEvent: Function, addEvent: Function): Function {
     return function() {

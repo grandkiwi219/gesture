@@ -1,7 +1,7 @@
 import { variable } from "src/main/variable";
 import { decidePos } from "src/main/utils/decider";
 import { exitReset } from "src/main/process";
-import { messages, repeater_msg_event } from "src/msg/message-type";
+import { messages, repeater_msg_event } from "src/repeater/msg/message-type";
 import { mouseMove } from "./mouseMove";
 
 export function mouseDown(event: MouseEvent) {

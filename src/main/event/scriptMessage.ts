@@ -1,5 +1,5 @@
-import { scriptMessageRun } from "src/msg/message-script-events";
-import { credits } from "src/msg/message-type";
+import { scriptMessageRun } from "src/repeater/msg/message-script-events";
+import { credits } from "src/repeater/msg/message-type";
 
 export function scriptMessage(event: Event) {
     const data = (event as CustomEvent).detail;

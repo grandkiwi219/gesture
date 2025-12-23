@@ -1,6 +1,6 @@
 import { mouseDown, mouseMove, mouseUp, scriptMessage, storageChanged } from "./event";
 import { scriptInjection } from "./utils/assets";
-import { messages, repeater_msg_event, script_msg_event } from "src/msg/message-type";
+import { messages, repeater_msg_event, script_msg_event } from "src/repeater/msg/message-type";
 import { mainAddEvent, mainRemoveEvent, setCommand } from "./process";
 import logger from "./utils/logger";
 import { variable } from "./variable";
@@ -35,9 +35,7 @@ void function main() {
     }
 }();
 
-// storage onChanged, 사용 미사용 감지
 // 크기 변경 감지
-// 특정 사이트에서 사용 금지
 // 커스텀 스크립트일 경우 메세지를 보내서 실행하게 하기
 // 일치 혹은 일치 가능한 커맨드 보여주는 거 만들기
 // 지금 커맨드 보여주는 요소 위치 설정

@@ -1,5 +1,5 @@
 import consts from "src/main/consts";
-import { messages, repeater_msg_event } from "../../msg/message-type";
+import { messages, repeater_msg_event } from "../../repeater/msg/message-type";
 import { variable } from "src/main/variable";
 import { decidePos, decideDir, measureDistanceSq } from "../utils/decider";
 import { continueDrawing, showCommandDrawing, startDrawing } from "src/main/drawing";
