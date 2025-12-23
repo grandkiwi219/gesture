@@ -3,7 +3,7 @@ import logger from "./utils/logger";
 import { variable } from "./variable";
 import { scripts } from "./scripts";
 import { stopDrawing } from "./drawing";
-import { messages, repeater_msg_event } from "../msg/message-type";
+import { mouseMove } from "./event";
 
 export function exitRun() {
 
@@ -29,6 +29,8 @@ export function getCommandData() {
 }
 
 export function exitReset() {
+    window.removeEventListener('mousemove', mouseMove);
+    
     variable.directions.reset();
     variable.starting = false;
     variable.executing = false;

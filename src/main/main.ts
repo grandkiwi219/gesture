@@ -5,6 +5,7 @@ import { setInitialGesture } from "service/reset";
 import logger from "./utils/logger";
 import { scriptInjection } from "./utils/assets";
 import { script_msg_event } from "src/msg/message-type";
+import { exitReset } from "./process";
 
 
 void function main() {
@@ -12,7 +13,7 @@ void function main() {
     // 파이어폭스에서'도' 사용 가능케 하기 위한 최선?의 방법
     scriptInjection(document.documentElement, 'src/repeater.js');
 
-    window.addEventListener('mousemove', mouseMove, true);
+    // window.addEventListener('mousemove', mouseMove, true);
 
     window.addEventListener('mousedown', mouseDown, true);
 
@@ -26,11 +27,12 @@ void function main() {
 
             logger.warn('키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작 후 재시작합니다.');
 
-            window.removeEventListener('mousemove', mouseMove);
+            // window.removeEventListener('mousemove', mouseMove);
             window.removeEventListener('mousedown', mouseDown);
             window.removeEventListener('mouseup', mouseUp);
             window.removeEventListener(script_msg_event, scriptMessage);
 
+            exitReset();
             setInitialGesture();
             main();
             return;
