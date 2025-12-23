@@ -86,7 +86,7 @@ const restore_tap: Script = {
 }
 
 const focus_left_tap: Script = {
-    key: 'focus_right_tap',
+    key: 'focus_left_tap',
     description: '왼쪽 탭으로 이동',
     script: function() {
         const msg: BgMsg = {
