@@ -11,7 +11,7 @@ void function main() {
     scriptInjection(document.documentElement, 'src/repeater.js');
 
     const removeEvent = mainRemoveEvent(() => {
-        window.removeEventListener('mousedown', mouseDown);
+        window.removeEventListener('mousedown', mouseDown, true);
         window.removeEventListener('mouseup', mouseUp);
         window.removeEventListener(script_msg_event, scriptMessage);
     });
