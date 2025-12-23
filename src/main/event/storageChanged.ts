@@ -13,7 +13,9 @@ export function storageChanged(
     if (area != storage_area) return;
 
     let changed_items = Object.keys(changes);
-    const changed_items_set = new Set(changed_items)
+    const changed_items_set = new Set(changed_items);
+
+    logger.log(changes)
 
     if (changed_items_set.has(ignore)) {
         const ignore_keys = changes[ignore].newValue as string[];
@@ -39,7 +41,7 @@ export function storageChanged(
         const new_value = (changes[store].newValue as string[]) || [];
 
         if (!Array.isArray(new_value)) {
-            logger.warn('키 값이 변경되었습니다. 하짐나 키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
+            logger.warn('키 값이 변경되었으나, 키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
 
             setInitialGesture();
             setCommand(removeEvent);
@@ -71,6 +73,9 @@ export function storageChanged(
 
     function itemChecker(item_key: string) {
         if (!direction_regex.test(item_key)) return;
+
+        const change = changes[item_key];
+        if (!change || !change.newValue) return;
 
         const gesture = changes[item_key].newValue as Gesture;
 
