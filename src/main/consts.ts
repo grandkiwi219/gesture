@@ -12,6 +12,10 @@ export enum direction {
     Down = 'd'
 }
 
+export const direction_regex = /^[rlud]+$/;
+
+export const storage_area: chrome.storage.AreaName = 'local';
+
 export const store = 'store';
 
 const command_size = 150;
