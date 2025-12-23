@@ -29,7 +29,7 @@ export function mouseMove(event: MouseEvent,
     if (!variable.starting) {
         if (distance > consts.start_range**2) {
             variable.starting = true;
-            window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(messages.ignore_context_menu) }));
+            window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: messages.ignore_context_menu }));
         }
         return;
     }

@@ -4,9 +4,13 @@ import logger from "src/main/utils/logger";
 
 window.addEventListener(repeater_msg_event, event => {
 
-    const data = JSON.parse((event as CustomEvent).detail);
+    const data = (event as CustomEvent).detail;
 
-    if (!data.credit || typeof data.script != 'string') return;
+    if (
+        typeof data != 'object'
+        || !data.credit
+        || typeof data.script != 'string'
+    ) return;
 
     switch (data.credit) {
         case credits.context_menu:
