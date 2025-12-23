@@ -15,8 +15,6 @@ export function storageChanged(
     let changed_items = Object.keys(changes);
     const changed_items_set = new Set(changed_items);
 
-    logger.log(changes)
-
     if (changed_items_set.has(ignore)) {
         const ignore_keys = changes[ignore].newValue as string[];
         if (ignore_keys || Array.isArray(ignore_keys)) {
