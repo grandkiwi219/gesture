@@ -1,94 +1,75 @@
 import { setInitialGesture } from "./reset.js";
 
-import { command_keys } from "./commands.js";
-import { scripts } from "src/main/scripts/index.js";
-import { messages } from "./msg/message-types.js";
+import { backgroundCommand } from "./cmd/command-events";
+import { backgroundMessageScript } from "./msg/message-script-events.js";
+import { contextMenuEvent, contextMenuStartEvent } from "./contextMenu/context-menu-event.js";
+import { createContextMenu } from "./contextMenu/context-menu-create.js";
+import { decideIgnore_this_site_title, setIgnore_this_site_set } from "./contextMenu/context-menu-supports.js";
+import { sites, storage_area } from "src/main/consts.js";
 
 chrome.runtime.onInstalled.addListener(async d => {
     if (d.reason === 'install') {
         chrome.runtime.openOptionsPage();
         setInitialGesture();
     }
+    
+    createContextMenu();
+
+    // context-menu
+    contextMenuStartEvent();
+    chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+        if (tabs[0]) {
+            decideIgnore_this_site_title(tabs[0].url);
+        }
+    });
+});
+
+chrome.runtime.onStartup.addListener(() => {
+    // context-menu
+    contextMenuStartEvent();
+    chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+        if (tabs[0]) {
+            decideIgnore_this_site_title(tabs[0].url);
+        }
+    });
 });
 
 chrome.action.onClicked.addListener(() => {
     chrome.runtime.openOptionsPage();
 });
 
-chrome.commands.onCommand.addListener(command => {
-    switch (command) {
-        case command_keys.run_options: 
-            chrome.runtime.openOptionsPage();
-            break;
-        case command_keys.reset:
-            console.log('옵션을 재설정합니다.');
-            setInitialGesture();
-            break;
-        default:
-            console.warn('알 수 없는 명령어');
-            break;
+chrome.commands.onCommand.addListener(backgroundCommand);
+
+chrome.contextMenus.onClicked.addListener(contextMenuEvent);
+
+chrome.runtime.onMessage.addListener(backgroundMessageScript);
+
+chrome.tabs.onActivated.addListener(activeInfo => {
+    // context-menu
+    chrome.tabs.get(activeInfo.tabId, tab => {
+        decideIgnore_this_site_title(tab.url);
+    });
+});
+
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+    // context-menu
+    if (changeInfo.status === 'complete') {
+        chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+        if (tabs[0] && tabs[0].id == tabId) {
+            decideIgnore_this_site_title(tabs[0].url);
+        }
+    });
     }
 });
 
-chrome.runtime.onMessage.addListener((msg: BgMsg, sender, response) => {
-    switch (msg.type) {
-        case messages.tabs:
-            tabsState(msg, sender, response);
-            break;
-        case messages.windows:
-            if (sender.tab && sender.tab.windowId) {
-                chrome.windows.update(sender.tab.windowId, { state: msg.state as chrome.windows.UpdateInfo["state"] });
+chrome.storage.onChanged.addListener(async (changes, area) => {
+    // context-menu
+    if (area == storage_area) {
+        setIgnore_this_site_set(changes[sites].newValue);
+        chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+            if (tabs[0]) {
+                decideIgnore_this_site_title(tabs[0].url);
             }
-            break;
-        default:
-            break;
+        });
     }
 });
-
-function tabsState(msg: any, sender: chrome.runtime.MessageSender, response?: any) {
-    switch (msg.state) {
-        case 'remove':
-            if (sender.tab && sender.tab.id) {
-                chrome.tabs.remove(sender.tab.id);
-            }
-            break;
-
-        case 'restore':
-            chrome.sessions.restore();
-            break;
-
-        case 'focus': 
-            chrome.tabs.query({currentWindow: true}).then(tabs => {
-                const activeTab = tabs.find(tab => tab.active);
-            
-                if (!activeTab) return;
-
-                let newIndex;
-                if (msg.data.direction == 'left') {
-                    newIndex = (activeTab.index - (parseInt(msg.data.pages) || 0) + tabs.length) % tabs.length;
-                }
-                else {
-                    newIndex = (activeTab.index + (parseInt(msg.data.pages) || 0)) % tabs.length;
-                }
-
-                const targetTab = tabs.find(tab => tab.index === newIndex);
-                if (targetTab) {
-                    chrome.tabs.update(targetTab.id, {active: true});
-                }
-            });
-            break;
-            
-
-        case 'move': 
-            chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-                let current_tab = tabs[0];
-                if (current_tab.id && current_tab.index > 0) {
-                    chrome.tabs.move(current_tab.id, { index: current_tab.index + (parseInt(msg.data) || 0) });
-                }
-            });
-            break;
-
-        default:
-            break;
-    }
-}

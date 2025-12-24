@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 
 import config from './package.json' with { type: 'json' };
-import { commands } from './service/commands.js';
+import { commands } from './service/cmd/commands-types.js';
 
 dotenv.config();
 
@@ -43,14 +43,15 @@ export default {
         ? { scripts: [service_worker] }
         : { service_worker: service_worker },
     options_ui: {
-        "page": "page/options.html",
-        "open_in_tab": true
+        page: "page/options.html",
+        open_in_tab: true
     },
     permissions: [
         "storage",
         "unlimitedStorage",
         "tabs",
-        "sessions"
+        "sessions",
+        "contextMenus"
     ],
     default_locale: 'ko',
     action: {

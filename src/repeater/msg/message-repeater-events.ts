@@ -1,6 +1,6 @@
 import logger from "src/main/utils/logger";
 
-let ignore_context_menu = true;
+let ignore_context_menu = false;
 
 export async function contextMenuEvent(event: PointerEvent) {
     if (!ignore_context_menu) {
