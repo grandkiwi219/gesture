@@ -96,7 +96,7 @@ export async function setCommand(removeEvent: Function) {
 
 export function decideThisSIte(ignore_keys: string[], removeEvent: Function) {
     if (ignore_keys || Array.isArray(ignore_keys)) {
-        if (new Set(ignore_keys).has(location.hostname)) {
+        if (ignore_keys.includes(location.hostname)) {
             removeEvent();
             exitReset();
             return true;

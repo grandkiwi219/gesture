@@ -13,9 +13,8 @@ export function storageChanged(
     if (area != storage_area) return;
 
     let changed_items = Object.keys(changes);
-    const changed_items_set = new Set(changed_items);
 
-    if (changed_items_set.has(sites)) {
+    if (changed_items.includes(sites)) {
         const ignore_keys = changes[sites].newValue as string[];
         if (decideThisSIte(ignore_keys, removeEvent))
             return;
@@ -29,7 +28,7 @@ export function storageChanged(
         }
     }
 
-    if (changed_items_set.has(store)) {
+    if (changed_items.includes(store)) {
         const old_value = (changes[store].oldValue as string[]) || [];
         const new_value = (changes[store].newValue as string[]) || [];
 
