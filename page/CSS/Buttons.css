@@ -1,0 +1,40 @@
+button, nav#menu > a {
+    width: fit-content;
+    height: fit-content;
+    margin: 0;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    color: var(--color);
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+button:hover, nav#menu > a:hover {
+    background-color: var(--background-color-hover);
+}
+
+button:active {
+    background-color: var(--background-color-active);
+    transition: background-color 0s;
+}
+
+
+button.opacity {
+    background-color: transparent;
+    opacity: 1;
+    transition: opacity var(--transition-speed);
+}
+
+button.opacity:hover {
+    opacity: var(--opacity-hover);
+}
+
+button.opacity:active {
+    opacity: var(--opacity-active);
+    transition: opacity 0s;
+}

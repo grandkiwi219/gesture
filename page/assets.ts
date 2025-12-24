@@ -1,4 +1,4 @@
-import constants from './constants';
+import constants from './p_consts';
 
 function decideTheme() {
     const is_dark_mode: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;

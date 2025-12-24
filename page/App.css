@@ -1,4 +1,5 @@
-html[theme=dark] {
-    color: white;
-    background-color: #0f0f0f;
+html {
+    color: var(--color);
+    background-color: var(--background-color);
+    scrollbar-color: grey var(--background-color);
 }

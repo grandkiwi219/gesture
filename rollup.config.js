@@ -20,6 +20,7 @@ dotenv.config();
 import packages from './package.json' with { type: 'json' };
 import json from '@rollup/plugin-json';
 
+
 /**
  * @param {string} root 
  * @returns {function}
@@ -125,10 +126,6 @@ const options_page_plugin = [
         'process.env.NODE_ENV': JSON.stringify('production'),
         preventAssignment: true
     }),
-    typescript({
-        tsconfig: tsconfig_path,
-        outDir: options_page_output
-    }),
     terser(),
     babel({
         babelHelpers: 'bundled',
@@ -146,6 +143,15 @@ const options_page_plugin = [
     postcss(),
     json(),
 ]
+
+if (parseInt(process.env.DEV) < 1) {
+    options_page_plugin.push(
+        typescript({
+            tsconfig: tsconfig_path,
+            outDir: options_page_output
+        })
+    );
+}
 
 const options_page = {
     input: 'page/index',
@@ -178,9 +184,13 @@ else if (parseInt(process.env.DEV)) {
     });
     options_page.plugins = [
         ...options_page.plugins,
+        typescript({
+            tsconfig: tsconfig_path,
+            outDir: base
+        }),
         html(options_page_html),
         serve(base),
-        livereload(base)
+        livereload(base),
     ]
 
     result = options_page;

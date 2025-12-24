@@ -1,0 +1,19 @@
+:root {
+    --color: #000;
+    --background-color: #fff;
+    --background-color-hover: #b4b4b44b;
+    --background-color-active: #9494944b;
+    --opacity-hover: 0.45;
+    --opacity-active: 0.25;
+
+    --transition-speed: .24s;
+}
+
+html[theme=dark] {
+    --color: white;
+    --background-color: #0f0f0f;
+    --background-color-hover: #7474744b;
+    --background-color-active: #8b8b8b4b;
+    --opacity-hover: 0.75;
+    --opacity-active: 0.5;
+}

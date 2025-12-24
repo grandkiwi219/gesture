@@ -1,36 +1,65 @@
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css' with { type: 'css' };
+import './CSS/Buttons.css' with { type: 'css' };
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 
-import Home from './page/Home';
-import Settings from './page/Settings';
+import GestureSettings, { gestureSetting } from './page/GestureSettings';
+import UsageSettings, { usageSetting } from './page/UsageSettings';
+import PageSettings, { pageSetting } from './page/PageSettings';
+import Page from './components/Page';
+import { useReducer } from 'react';
+import p_consts from './p_consts';
 
-/* const paths = [
-	{
-		path: '/',
-		element: <Home></Home>,
-	},
-	{
-		path: '/settings',
-		element: <Settings></Settings>,
-	},
-]; */
 
-export default function () {
+export default function() {
+
+	function navMenuReducer(state: any, action: string) {
+		switch (action) {
+    		case p_consts.state.nav.short:
+				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.short);
+      			return p_consts.state.nav.short;
+
+			case p_consts.state.nav.none:
+				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.none);
+				return p_consts.state.nav.none;
+
+			case p_consts.state.nav.none_open:
+				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.none);
+				return p_consts.state.nav.none_open;
+
+			default:
+				localStorage.removeItem(p_consts.key.nav);
+      			return p_consts.state.nav.long;
+
+  		}
+	}
+
+	const init_nav_state = localStorage.getItem(p_consts.key.nav);
+
+	const [navMenuState, setNavMenuState] = useReducer(navMenuReducer, 
+		typeof init_nav_state == 'string'
+		? init_nav_state
+		: p_consts.state.nav.long
+	);
+
 	return (
 		<>
-			<Header></Header>
+			<Header navMenuState={navMenuState} setNavMenuState={setNavMenuState}></Header>
 
 			<HashRouter>
-				<Sidebar></Sidebar>
-				<Routes>
-					<Route path="/" element={<Home></Home>}></Route>
-					<Route path="/settings" element={<Settings></Settings>}></Route>
-					<Route path="*" element={<Navigate to="/" replace={true} />} />
-				</Routes>
+				<Sidebar state={navMenuState}></Sidebar>
+
+				<Page>
+					<Routes>
+						<Route path={gestureSetting.path} element={<GestureSettings></GestureSettings>}></Route>
+						<Route path={usageSetting.path} element={<UsageSettings></UsageSettings>}></Route>
+						<Route path={pageSetting.path} element={<PageSettings></PageSettings>}></Route>
+						<Route path="*" element={<Navigate to={gestureSetting.path} replace={true} />} />
+					</Routes>
+				</Page>
 			</HashRouter>
 		</>
 	);
