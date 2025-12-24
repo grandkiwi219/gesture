@@ -30,7 +30,7 @@ export function storageChanged(
 
     if (changed_items.includes(store)) {
         const old_value = (changes[store].oldValue as string[]) || [];
-        const new_value = (changes[store].newValue as string[]) || [];
+        const new_value = (changes[store].newValue as string[]);
 
         if (!Array.isArray(new_value)) {
             logger.warn('키 값이 변경되었으나, 키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
