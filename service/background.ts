@@ -55,10 +55,10 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     // context-menu
     if (changeInfo.status === 'complete') {
         chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
-        if (tabs[0] && tabs[0].id == tabId) {
-            decideIgnore_this_site_title(tabs[0].url);
-        }
-    });
+            if (tabs[0] && tabs[0].id == tabId) {
+                decideIgnore_this_site_title(tabs[0].url);
+            }
+        });
     }
 });
 
