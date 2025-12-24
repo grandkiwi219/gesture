@@ -63,6 +63,5 @@ export function contextMenuEvent(info: chrome.contextMenus.OnClickData, tab: chr
 export function contextMenuStartEvent() {
     chrome.storage[consts.storage_area].get([sites]).then(r => {
         setIgnore_this_site_set(r[sites]);
-        console.log('sites:', r[sites]);
     });
 }

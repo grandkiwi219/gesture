@@ -20,10 +20,12 @@ export function decideIgnore_this_site_title(url: string | null | undefined) {
     const host = url.match(regex.host);
 
     if (host && bg_variable.sites.has(host[0])) {
+        console.log(`storage[${sites}]:`, host, '-', true);
         updateIgnore_this_site_title(true);
         return;
         // return { state: true, host: host };
     }
+    console.log(`storage[${sites}]:`, host, '-', false);
     updateIgnore_this_site_title(false);
     // return { state: true, host: host };
 }
