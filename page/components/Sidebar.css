@@ -1,5 +1,7 @@
 :root {
-    --nav-width: 200px;
+    --nav-native-width: 200px;
+
+    --nav-width: var(--nav-native-width);
 }
 
 :root:has(nav#menu.short) {
@@ -38,7 +40,9 @@ nav#menu.none.open {
 }
 
 nav#menu.none.open > #menu-wrap {
-    width: var(--nav-width);
+    width: var(--nav-native-width);
+    background-color: var(--background-color);
+    box-shadow: 20px 0px 20px var(--background-color);
 }
 
 #menu-top {
@@ -50,7 +54,7 @@ nav#menu.none.open > #menu-wrap {
 }
 
 #menu-top > a {
-    --padding-vertical: 5px;
+    --padding-vertical: 10px;
     --padding-horizontal: 10px;
     
     width: 100%;
@@ -83,10 +87,6 @@ nav#menu.none.open > #menu-wrap {
 }
 
 nav#menu.short #menu-top > a {
-    font-size: 0;
-}
-
-nav#menu.short #menu-top > a:active, nav#menu.short #menu-top > a.active {
     padding: var(--padding-horizontal);
     justify-content: center;
     font-size: 0;

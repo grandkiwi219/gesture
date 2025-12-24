@@ -43,7 +43,7 @@ export default function({ navMenuState, setNavMenuState }: HeaderProps) {
                                 setNavMenuState(p_consts.state.nav.none_open);
                                 break;
 
-                            case p_consts.state.nav.none:
+                            case p_consts.state.nav.none_open:
                                 setNavMenuState(p_consts.state.nav.none);
                                 break;
 

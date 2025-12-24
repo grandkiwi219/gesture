@@ -20,7 +20,7 @@
 
     border-radius: 20px;
 
-    /* background-color: var(--background-color-hover); */
+    background-color: var(--background-color-hover);
 
     display: flex;
     justify-content: center;
