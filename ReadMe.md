@@ -24,14 +24,14 @@
 
 - git clone
 ```bash
-$ git clone https://github.com/grandkiwi219/gestrue.git
+git clone https://github.com/grandkiwi219/gestrue.git
 ```
 
 <br>
 
 - 빌드
 ```bash
-$ npm run build
+npm run build
 ```
 > 폴더 위치 → output/chrome
 
@@ -42,7 +42,7 @@ $ npm run build
 
 - 압축
 ```bash
-$ npm run zip
+npm run zip
 ```
 > 폴더 위치 → dist/\<version>
 
@@ -54,7 +54,7 @@ $ npm run zip
 
 - 한 번에 실행
 ```bash
-$ npm run process
+npm run process
 ```
 
 <br>
