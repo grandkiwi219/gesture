@@ -30,7 +30,6 @@ export function decideIgnore_this_site_title(url: string | null | undefined) {
 
 export function setIgnore_this_site_set(result: string[] | undefined | unknown) {
     if (!result || !Array.isArray(result)) {
-        chrome.storage[consts.storage_area].remove([sites]);
         return;
         // return false;
     }

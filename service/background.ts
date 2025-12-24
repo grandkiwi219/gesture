@@ -52,8 +52,8 @@ chrome.tabs.onActivated.addListener(activeInfo => {
 });
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-    // context-menu
     if (changeInfo.status === 'complete') {
+        // context-menu
         chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
             if (tabs[0] && tabs[0].id == tabId) {
                 decideIgnore_this_site_title(tabs[0].url);
@@ -63,13 +63,15 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 });
 
 chrome.storage.onChanged.addListener(async (changes, area) => {
-    // context-menu
     if (area == storage_area) {
-        setIgnore_this_site_set(changes[sites].newValue);
-        chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
-            if (tabs[0]) {
-                decideIgnore_this_site_title(tabs[0].url);
-            }
-        });
+        // context-menu
+        if (changes[sites]) {
+            setIgnore_this_site_set(changes[sites].newValue);
+            chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+                if (tabs[0]) {
+                    decideIgnore_this_site_title(tabs[0].url);
+                }
+            });
+        }
     }
 });
