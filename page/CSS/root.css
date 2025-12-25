@@ -1,8 +1,8 @@
 :root {
     --color: #000;
     --background-color: #fff;
-    --background-color-hover: #b4b4b44b;
-    --background-color-active: #9494944b;
+    --background-color-hover: #d6d6d64b;
+    --background-color-active: #a3a3a34b;
     --selection: rgba(40, 40, 40, 0.12);
     --opacity-hover: 0.45;
     --opacity-active: 0.25;
@@ -13,7 +13,7 @@
 html[theme=dark] {
     --color: white;
     --background-color: #0f0f0f;
-    --background-color-hover: #7474744b;
+    --background-color-hover: #6464644b;
     --background-color-active: #8b8b8b4b;
     --selection: rgba(215, 215, 215, 0.12);
     --opacity-hover: 0.75;

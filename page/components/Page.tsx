@@ -12,9 +12,9 @@ export default function() {
         <div id="page">
             <div className="paper">
                 <Routes>
-                    <Route path={gestureSetting.path} element={<GestureSettings></GestureSettings>}></Route>
-                    <Route path={usageSetting.path} element={<UsageSettings></UsageSettings>}></Route>
-                    <Route path={pageSetting.path} element={<PageSettings></PageSettings>}></Route>
+                    <Route path={gestureSetting.path} element={<GestureSettings />}></Route>
+                    <Route path={usageSetting.path} element={<UsageSettings />}></Route>
+                    <Route path={pageSetting.path} element={<PageSettings />}></Route>
                     <Route path="*" element={<Navigate to={gestureSetting.path} replace={true} />} />
                 </Routes>
             </div>

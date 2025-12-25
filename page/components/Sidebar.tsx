@@ -23,6 +23,9 @@ const menu = {
     active: 'active',
 }
 
+/* import { MdOutlineOpenInNew } from "react-icons/md";
+<MdOutlineOpenInNew /> */
+
 function NavA({ Icon, setting }: NavProps) {
 
     return (
@@ -75,7 +78,7 @@ function NavMenu({ state, setState }: NavMenuProps) {
     
                 <div id={menu.bottom}>
                     <a href={packages.homepage} target='_blank'><FaGithub /> GitHub</a>
-                    <p>Copyright ⓒ 2025. {packages.author} All rights reserved.</p>
+                    <p>Copyright ⓒ 2025. grandkiwi219 All rights reserved.</p>
                 </div>
     
             </div>
