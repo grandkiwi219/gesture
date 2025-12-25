@@ -1,0 +1,83 @@
+:root {
+    --container-gap: 20px;
+    --container-padding: 15px;
+}
+
+.container {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--container-gap);
+}
+
+.display-container {
+    flex-grow: calc(var(--paper-max-width) / 1px);
+    flex-basis: var(--paper-min-width);
+
+    height: fit-content;
+
+    padding: var(--container-padding);
+
+    background-color: var(--background-color);
+
+    border-radius: var(--paper-border-radius);
+}
+
+.display {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    /* background-color: rgb(237, 237, 237); */
+    border-radius: var(--paper-border-radius);
+}
+
+.options-container {
+    flex-grow: 1;
+    flex-basis: var(--paper-min-width);
+
+    height: fit-content;
+
+    padding: var(--container-padding);
+
+    background-color: var(--background-color);
+
+    border-radius: var(--paper-border-radius);
+
+    display: flex;
+    flex-flow: column wrap;
+    gap: 10px;
+}
+
+.option {
+    max-width: var(--paper-min-width);
+    width: 100%;
+    height: 100px;
+
+    background-color: var(--background-color-hover) !important;
+
+    cursor: grab;
+}
+
+.option.grabbing {
+    cursor: grabbing;
+}
+
+.options-container > .option:first-child {
+    border-radius: 10px 10px 0 0;
+}
+
+.options-container > .option:last-child {
+    border-radius: 0 0 10px 10px;
+}
+
+.option.generate {
+    height: 70px;
+    color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

@@ -6,7 +6,7 @@ header {
     width: 100%;
     height: var(--header-height);
     padding: 0 20px;
-    background-color: var(--background-color);
+    background-color: var(--background-color-translucent);
     position: fixed;
     top: 0;
     left: 0;
@@ -15,6 +15,7 @@ header {
     justify-content: space-between;
     align-items: center;
     /* z-index: 2; */
+    backdrop-filter: blur(18px);
 }
 
 #title {

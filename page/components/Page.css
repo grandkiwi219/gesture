@@ -1,3 +1,10 @@
+:root {
+    --paper-max-width: 960px;
+    --paper-min-width: 300px;
+    --paper-padding: 20px;
+    --paper-border-radius: 20px;
+}
+
 #page {
     width: calc(100% - var(--nav-width));
     margin-top: var(--header-height);
@@ -13,14 +20,15 @@
 .paper {
     --paper-margin-vertical: 20px;
 
-    max-width: 1000px;
+    max-width: calc(var(--paper-max-width) + var(--paper-padding) * 2);
+    min-width: calc(var(--paper-min-width) + var(--paper-padding) * 2);
     width: 90%;
     min-height: calc(100vh - var(--header-height) - (var(--paper-margin-vertical) * 2));
 
     margin: var(--paper-margin-vertical) 0;
-    padding: 20px;
+    padding: var(--paper-padding);
 
-    border-radius: 20px;
+    border-radius: var(--paper-border-radius);
 
     background-color: var(--background-color-hover);
 

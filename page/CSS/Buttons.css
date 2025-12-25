@@ -1,10 +1,14 @@
+:root {
+    --button-border-radius: 8px;
+}
+
 button, nav#menu > a {
     width: fit-content;
     height: fit-content;
     margin: 0;
     padding: 8px;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--button-border-radius);
     color: var(--color);
     background-color: transparent;
     display: flex;

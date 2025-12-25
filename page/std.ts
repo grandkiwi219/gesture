@@ -23,7 +23,9 @@ const size = {
 		long: 1320,
 		short: 1000,
 		icon: 700,
-	}
+	},
+
+	display: 1000
 }
 
 enum Theme {

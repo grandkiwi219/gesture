@@ -34,7 +34,23 @@ function getIsValidEnumValue(enumObject: any, value: number | string) {
       .some((key) => enumObject[key] === value);
 }
 
+function drawBoard(ctx: CanvasRenderingContext2D) {
+    const p = -2;
+    for (var x = 1; x <= std.size.display; x += 40) {
+        ctx.moveTo(0.5 + x + p, p);
+        ctx.lineTo(0.5 + x + p, std.size.display + p);
+    }
+
+    for (var x = 1; x <= std.size.display; x += 40) {
+        ctx.moveTo(p, 0.5 + x + p);
+        ctx.lineTo(std.size.display + p, 0.5 + x + p);
+    }
+    ctx.strokeStyle = "gray";
+    ctx.stroke();
+}
+
 export default {
     decideTheme,
-    getIsValidEnumValue
+    getIsValidEnumValue,
+    drawBoard
 }
