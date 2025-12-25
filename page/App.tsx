@@ -7,47 +7,63 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 
 import Page from './components/Page';
-import { useReducer } from 'react';
-import p_consts from './p_consts';
+import { useEffect, useReducer } from 'react';
+import std from './std';
 
 
-function navMenuReducer(state: any, { type, input }: { type?: string, input?: string }) {
+function navMenuReducer(state: any, { type, input }: { type?: 'execute' | null, input?: string }) {
 	if (type == 'execute') {
 		switch(state) {
-			case p_consts.state.nav.short:
-				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.long);
-				return p_consts.state.nav.long;
+			case std.state.nav.short:
+				localStorage.setItem(std.key.nav, std.state.nav.long);
+				return std.state.nav.long;
 
-			case p_consts.state.nav.none:
-				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.none);
-				return p_consts.state.nav.none_open;
+			case std.state.nav.icon:
+				localStorage.setItem(std.key.nav, std.state.nav.icon);
+				return std.state.nav.icon_open;
 
-			case p_consts.state.nav.none_open:
-				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.none);
-				return p_consts.state.nav.none;
+			case std.state.nav.icon_open:
+				localStorage.setItem(std.key.nav, std.state.nav.icon);
+				return std.state.nav.icon;
+
+			case std.state.nav.none:
+				localStorage.setItem(std.key.nav, std.state.nav.none);
+				return std.state.nav.none_open;
+
+			case std.state.nav.none_open:
+				localStorage.setItem(std.key.nav, std.state.nav.none);
+				return std.state.nav.none;
 
 			default:
-				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.short);
-				return p_consts.state.nav.short;
+				localStorage.setItem(std.key.nav, std.state.nav.short);
+				return std.state.nav.short;
 		}
 	}
 	else {
 		switch (input) {
-			case p_consts.state.nav.short:
-				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.short);
-				return p_consts.state.nav.short;
+			case std.state.nav.short:
+				localStorage.setItem(std.key.nav, std.state.nav.short);
+				return std.state.nav.short;
 
-			case p_consts.state.nav.none:
-				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.none);
-				return p_consts.state.nav.none;
+			case std.state.nav.icon:
+				localStorage.setItem(std.key.nav, std.state.nav.icon);
+				return std.state.nav.icon;
 
-			case p_consts.state.nav.none_open:
-				localStorage.setItem(p_consts.key.nav, p_consts.state.nav.none);
-				return p_consts.state.nav.none_open;
+			case std.state.nav.icon_open:
+				localStorage.setItem(std.key.nav, std.state.nav.icon);
+				return std.state.nav.icon_open;
+
+			case std.state.nav.none:
+				localStorage.setItem(std.key.nav, std.state.nav.none);
+				return std.state.nav.none;
+
+			case std.state.nav.none_open:
+				localStorage.setItem(std.key.nav, std.state.nav.none);
+				return std.state.nav.none_open;
 
 			default:
-				localStorage.removeItem(p_consts.key.nav);
-				return p_consts.state.nav.long;
+				localStorage.removeItem(std.key.nav);
+				return std.state.nav.long;
 
 		}
 	}
@@ -58,12 +74,33 @@ function AppControl({ children }: Props) {
 	let init_nav_state;
 
 	try {
-		init_nav_state = localStorage.getItem(p_consts.key.nav) ?? p_consts.state.nav.long;
+		init_nav_state = localStorage.getItem(std.key.nav) ?? std.state.nav.long;
 	} catch (error) {
-		init_nav_state = p_consts.state.nav.long;
+		init_nav_state = std.state.nav.long;
 	}
 
 	const [navMenuState, setNavMenuState] = useReducer<string, any>(navMenuReducer, init_nav_state);
+
+	useEffect(() => {
+		window.addEventListener('resize', () => {
+			const width = window.innerWidth;
+
+			if (width >= std.size.nav.long) {
+				setNavMenuState({ input: std.state.nav.long });
+			}
+			else if (width >= std.size.nav.short) {
+				setNavMenuState({ input: std.state.nav.short });
+			}
+			else if (width >= std.size.nav.icon) {
+				setNavMenuState({ input: std.state.nav.icon });
+			}
+			else {
+				setNavMenuState({ input: std.state.nav.none });
+			}
+		});
+	}, []);
+
+	// nav_short 스토리지 만들어서 롱 상태에서 접었을 당시 쇼츠로 변환한 것을 기억하게 하기
 
 	return (
 		<>
