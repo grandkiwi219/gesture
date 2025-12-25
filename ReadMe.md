@@ -1,6 +1,6 @@
 # <div align=center><자급자족 프로젝트 2> <br> gesture; 제스처</div> 
 
-<div align=center>타 브라우저 내장 제스쳐 기능을 크롬에서 사용하고자 하는 목적으로 제작</div>
+<div align=center>타 브라우저 내장 제스처 기능을 크롬에서 사용하고자 하는 목적으로 제작</div>
 
 <br>
 
@@ -12,7 +12,7 @@
 
 본 확장프로그램은 미완성 상태이고, 코드가 난잡할 수 있습니다.<br><br>
 본 확장프로그램 혹은 이와 관련된 기능으로 인해 생긴 문제는 책임질 수 없습니다.<br><br>
-또한 미완성인만큼 변경 및 개선될 부분은 얼마든지 있음을 알립니다.
+또한 미완성인만큼 변경 및 개선될 부분은 얼마든지 있음을 알려드립니다.
 
 <br>
 
@@ -24,14 +24,14 @@
 
 - git clone
 ```bash
-$ git clone https://github.com/grandkiwi219/gestrue.git
+git clone https://github.com/grandkiwi219/gestrue.git
 ```
 
 <br>
 
 - 빌드
 ```bash
-$ npm run build
+npm run build
 ```
 > 폴더 위치 → output/chrome
 
@@ -42,7 +42,7 @@ $ npm run build
 
 - 압축
 ```bash
-$ npm run zip
+npm run zip
 ```
 > 폴더 위치 → dist/\<version>
 
@@ -54,7 +54,7 @@ $ npm run zip
 
 - 한 번에 실행
 ```bash
-$ npm run process
+npm run process
 ```
 
 <br>
