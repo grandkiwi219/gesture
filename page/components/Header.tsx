@@ -1,3 +1,5 @@
+import React from 'react';
+
 import constants from 'page/p_consts';
 import assets from 'page/assets';
 import { useState } from 'react';
@@ -6,7 +8,7 @@ import { LuMenu, LuMoon, LuSun } from "react-icons/lu";
 import './Header.css' with { type: 'css' };
 
 import { initial } from 'src/main/consts';
-import p_consts from 'page/p_consts';
+
 
 function SetTheme() {
     
@@ -28,29 +30,14 @@ function SetTheme() {
     );
 }
 
-export default function({ navMenuState, setNavMenuState }: HeaderProps) {
+function Header({ setNavMenuState }: HeaderProps) {
+
     return (
         <>
             <header>
                 <button className='opacity'
                     onClick={() => {
-                        switch(navMenuState) {
-                            case p_consts.state.nav.short:
-                                setNavMenuState(p_consts.state.nav.long);
-                                break;
-
-                            case p_consts.state.nav.none:
-                                setNavMenuState(p_consts.state.nav.none_open);
-                                break;
-
-                            case p_consts.state.nav.none_open:
-                                setNavMenuState(p_consts.state.nav.none);
-                                break;
-
-                            default:
-                                setNavMenuState(p_consts.state.nav.short);
-                                break;
-                        }
+                        setNavMenuState({ type: 'execute' });
                     }}
                 >
                     <LuMenu size={constants.icon_size} />
@@ -61,3 +48,5 @@ export default function({ navMenuState, setNavMenuState }: HeaderProps) {
         </>
     );
 }
+
+export default React.memo(Header);

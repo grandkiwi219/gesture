@@ -1,17 +1,22 @@
 type Props = { children: ReactNode }
 
 type NavProps = {
-    to: string
     Icon: ReactNode
-    children: ReactNode,
+    setting: Setting,
 }
 
 interface NavMenuProps {
     state: string;
+    setState: Function;
+}
+
+interface NavWrapProps {
+    children: ReactNode;
+    state: string;
+    setState: Function;
 }
 
 interface HeaderProps {
-    navMenuState: string;
     setNavMenuState: Function;
 }
 

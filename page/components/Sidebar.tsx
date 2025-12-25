@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink } from 'react-router';
 
 import './Sidebar.css' with { type: 'css' };
@@ -15,36 +16,69 @@ import packages from '../../package.json' with { type: 'json' };
 import p_consts from 'page/p_consts';
 
 
-function NavA({ Icon, to, children }: NavProps) {
+const menu = {
+    main: 'menu',
+    wrap: 'menu-wrap',
+    top: 'menu-top',
+    bottom: 'menu-bottom',
+    active: 'active',
+}
+
+function NavA({ Icon, setting }: NavProps) {
+
     return (
-        <NavLink to={to} className={({isActive}) => isActive ? 'active' : undefined}><Icon size={p_consts.icon_size}/>&nbsp;&nbsp;{children}</NavLink>
+        <NavLink to={setting.path} className={({isActive}) => isActive ? menu.active : undefined}>
+            <Icon size={p_consts.icon_size}/>&nbsp;&nbsp;{setting.name}
+        </NavLink>
     );
 }
 
-export default function({ state }: NavMenuProps) {
+function NavWrap({ state, setState, children }: NavWrapProps) {
+
     return (
-        <>
-            <nav id="menu" className={state}>
-                <div id='menu-wrap'>
-                    <div id='menu-top'>
-                        <NavA Icon={BsCursor} to={gestureSetting.path}>
-                            {gestureSetting.name}
-                        </NavA>
+        <nav id={menu.main} className={state}
+            onClick={(e) => {
+                if (state != p_consts.state.nav.none_open) return;
 
-                        <NavA Icon={LuMonitor} to={usageSetting.path}>
-                            {usageSetting.name}
-                        </NavA>
+                const target = e.target as HTMLElement;
 
-                        <NavA Icon={IoNewspaperOutline} to={pageSetting.path}>
-                            {pageSetting.name}
-                        </NavA>
-                    </div>
-                    <div id='menu-bottom'>
-                        <a href={packages.homepage} target='_blank'><FaGithub /> GitHub</a>
-                        <p>Copyright ⓒ 2025. {packages.author} All rights reserved.</p>
-                    </div>
+                if (
+                    document.getElementById(menu.wrap)! === target
+                    || document.getElementById(menu.top)! === target
+                    || document.getElementById(menu.top)!.getElementsByClassName(menu.active)[0].contains(target)
+                    || document.getElementById(menu.bottom)!.contains(target)
+                ) return;
+
+                setState({ input: p_consts.state.nav.none });
+            }}
+        >
+            {children}
+        </nav>
+    );
+}
+
+function NavMenu({ state, setState }: NavMenuProps) {
+
+    return (
+        <NavWrap state={state} setState={setState}>
+            <div id={menu.wrap}>
+    
+                <div id={menu.top}>
+                    <NavA Icon={BsCursor} setting={gestureSetting} />
+    
+                    <NavA Icon={LuMonitor} setting={usageSetting} />
+    
+                    <NavA Icon={IoNewspaperOutline} setting={pageSetting} />
                 </div>
-            </nav>
-        </>
+    
+                <div id={menu.bottom}>
+                    <a href={packages.homepage} target='_blank'><FaGithub /> GitHub</a>
+                    <p>Copyright ⓒ 2025. {packages.author} All rights reserved.</p>
+                </div>
+    
+            </div>
+        </NavWrap>
     );
 }
+
+export default NavMenu;

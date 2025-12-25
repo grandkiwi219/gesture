@@ -4,7 +4,9 @@ export const pageSetting: Setting = {
     path: '/page'
 }
 
-export default function () {
+export default function() {
+    console.log('페이지')
+
     return (
         <>
             <div>페이지 세팅</div>

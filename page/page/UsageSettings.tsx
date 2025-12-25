@@ -4,7 +4,9 @@ export const usageSetting: Setting = {
     path: '/usage'
 }
 
-export default function () {
+export default function() {
+    console.log('사용')
+
     return (
         <>
             <div>사용 세팅</div>
