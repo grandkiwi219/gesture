@@ -16,3 +16,8 @@ body {
     font-size: 75%;
     font-weight: 600;
 }
+
+
+::selection {
+    background-color: var(--selection);
+}

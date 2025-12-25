@@ -1,7 +1,7 @@
 import React from 'react';
 
-import constants from 'page/p_consts';
-import assets from 'page/assets';
+import std from 'page/std';
+import utils from 'page/utils';
 import { useState } from 'react';
 import { LuMenu, LuMoon, LuSun } from "react-icons/lu";
 
@@ -12,20 +12,20 @@ import { initial } from 'src/main/consts';
 
 function SetTheme() {
     
-    let [theme, setTheme] = useState(localStorage.getItem(constants.key.theme));
+    let [theme, setTheme] = useState(localStorage.getItem(std.key.theme));
 
     function clickThemeBtn() {
         localStorage.setItem(
-            constants.key.theme,
-            theme != constants.Theme.Dark ? constants.Theme.Dark : constants.Theme.Light
+            std.key.theme,
+            theme != std.Theme.Dark ? std.Theme.Dark : std.Theme.Light
         );
-        setTheme(() => localStorage.getItem(constants.key.theme))
-        assets.decideTheme();
+        setTheme(() => localStorage.getItem(std.key.theme))
+        utils.decideTheme();
     }
 
     return (
         <button onClick={clickThemeBtn}>
-            {theme == constants.Theme.Dark ? <LuSun size={constants.icon_size} /> : <LuMoon size={constants.icon_size} />}
+            {theme == std.Theme.Dark ? <LuSun size={std.size.icon} /> : <LuMoon size={std.size.icon} />}
         </button>
     );
 }
@@ -40,7 +40,7 @@ function Header({ setNavMenuState }: HeaderProps) {
                         setNavMenuState({ type: 'execute' });
                     }}
                 >
-                    <LuMenu size={constants.icon_size} />
+                    <LuMenu size={std.size.icon} />
                 </button>
                 <div id='title'>{initial}</div>
                 <SetTheme></SetTheme>

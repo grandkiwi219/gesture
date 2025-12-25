@@ -6,7 +6,7 @@ import "./index.css" with { type: "css" };
 
 import App from "./App";
 
-import assets from "./assets";
+import utils from "./utils";
 
 const root_element = document.body;
 
@@ -14,7 +14,7 @@ if (!root_element) throw new Error("root is undefined");
 
 const root = ReactDOM.createRoot(root_element);
 
-assets.decideTheme();
+utils.decideTheme();
 
 root.render(
     <React.StrictMode>

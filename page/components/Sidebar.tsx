@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router';
 
 import './Sidebar.css' with { type: 'css' };
@@ -13,7 +12,7 @@ import { LuMonitor } from "react-icons/lu";
 import { IoNewspaperOutline } from "react-icons/io5";
 
 import packages from '../../package.json' with { type: 'json' };
-import p_consts from 'page/p_consts';
+import std from 'page/std';
 
 
 const menu = {
@@ -28,7 +27,7 @@ function NavA({ Icon, setting }: NavProps) {
 
     return (
         <NavLink to={setting.path} className={({isActive}) => isActive ? menu.active : undefined}>
-            <Icon size={p_consts.icon_size}/>&nbsp;&nbsp;{setting.name}
+            <Icon size={std.size.icon}/>&nbsp;&nbsp;{setting.name}
         </NavLink>
     );
 }
@@ -38,7 +37,10 @@ function NavWrap({ state, setState, children }: NavWrapProps) {
     return (
         <nav id={menu.main} className={state}
             onClick={(e) => {
-                if (state != p_consts.state.nav.none_open) return;
+                if (
+                    state != std.state.nav.none_open
+                    && state != std.state.nav.icon_open
+                ) return;
 
                 const target = e.target as HTMLElement;
 
@@ -49,7 +51,7 @@ function NavWrap({ state, setState, children }: NavWrapProps) {
                     || document.getElementById(menu.bottom)!.contains(target)
                 ) return;
 
-                setState({ input: p_consts.state.nav.none });
+                setState({ type: 'execute' });
             }}
         >
             {children}

@@ -1,4 +1,4 @@
-import constants from './p_consts';
+import std from './std';
 
 function decideTheme() {
     const is_dark_mode: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -6,9 +6,9 @@ function decideTheme() {
     let storage_theme: string | null = null;
     
     try {
-        const theme: string = localStorage.getItem(constants.key.theme) ?? '';
+        const theme: string = localStorage.getItem(std.key.theme) ?? '';
     
-        if (getIsValidEnumValue(constants.Theme, theme))
+        if (getIsValidEnumValue(std.Theme, theme))
             storage_theme = theme;
     } catch (e) {}
 
@@ -18,14 +18,14 @@ function decideTheme() {
         selected_theme = storage_theme;
     }
     else if (is_dark_mode) {
-        selected_theme = constants.Theme.Dark;
-        localStorage.setItem(constants.key.theme, constants.Theme.Dark);
+        selected_theme = std.Theme.Dark;
+        localStorage.setItem(std.key.theme, std.Theme.Dark);
     }
     else {
-        selected_theme = constants.Theme.Light;
+        selected_theme = std.Theme.Light;
     }
 
-    document.documentElement.setAttribute(constants.key.theme, selected_theme);
+    document.documentElement.setAttribute(std.key.theme, selected_theme);
 }
 
 function getIsValidEnumValue(enumObject: any, value: number | string) {
