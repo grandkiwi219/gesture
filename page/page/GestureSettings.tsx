@@ -3,9 +3,11 @@ import { useEffect } from 'react';
 import './_pages.css' with { type: 'css' };
 
 import std from 'page/std';
+
 import utils from 'page/utils';
 
 import { MdAddCircleOutline } from "react-icons/md";
+
 
 export const gestureSetting: Setting = {
 	name: '제스처 설정',

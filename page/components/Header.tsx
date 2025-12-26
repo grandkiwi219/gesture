@@ -1,13 +1,13 @@
-import React from 'react';
-
-import std from 'page/std';
-import utils from 'page/utils';
-import { useState } from 'react';
-import { LuMenu, LuMoon, LuSun } from "react-icons/lu";
+import { memo, useState } from 'react';
 
 import './Header.css' with { type: 'css' };
 
 import { initial } from 'src/main/consts';
+import std from 'page/std';
+
+import utils from 'page/utils';
+
+import { LuMenu, LuMoon, LuSun } from "react-icons/lu";
 
 
 function SetTheme() {
@@ -49,4 +49,4 @@ function Header({ setNavMenuState }: HeaderProps) {
     );
 }
 
-export default React.memo(Header);
+export default memo(Header);

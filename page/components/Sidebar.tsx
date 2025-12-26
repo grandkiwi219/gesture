@@ -6,13 +6,13 @@ import { gestureSetting } from 'page/page/GestureSettings';
 import { usageSetting } from 'page/page/UsageSettings';
 import { pageSetting } from 'page/page/PageSettings';
 
+import packages from '../../package.json' with { type: 'json' };
+import std from 'page/std';
+
 import { FaGithub } from "react-icons/fa";
 import { BsCursor } from "react-icons/bs";
 import { LuMonitor } from "react-icons/lu";
 import { IoNewspaperOutline } from "react-icons/io5";
-
-import packages from '../../package.json' with { type: 'json' };
-import std from 'page/std';
 
 
 const menu = {

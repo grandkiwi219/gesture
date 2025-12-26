@@ -1,13 +1,12 @@
+import { useEffect, useReducer } from 'react';
 import { HashRouter } from 'react-router-dom';
 
 import './App.css' with { type: 'css' };
-import './CSS/Buttons.css' with { type: 'css' };
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-
 import Page from './components/Page';
-import { useEffect, useReducer } from 'react';
+
 import std from './std';
 
 
