@@ -6,20 +6,18 @@ import { stopDrawing } from "./drawing";
 import { mouseMove } from "./event";
 import consts, { sites, storage_area } from "./consts";
 import { setInitialGesture } from "service/reset";
-import { credits, messages, repeater_msg_event } from "src/repeater/msg/message-type";
+import { credits, repeater_msg_event } from "src/repeater/msg/message-type";
 
-export function mainAddEvent(removeEvent: Function, addEvent: Function): Function {
+export function mainAddEvent(addEvent: Function): (() => void) {
     return function() {
         variable.main_running = true;
         addEvent();
-        setCommand(removeEvent);
     }
 }
 
-export function mainRemoveEvent(removeEvent: Function): Function {
+export function mainRemoveEvent(removeEvent: Function): (() => void) {
     return function() {
         variable.main_running = false;
-        window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(messages.acknowledge_context_menu) }));
         removeEvent();
     }
 }
@@ -43,9 +41,15 @@ export function exitRun() {
     }
 }
 
-export function exitReset() {
-    window.removeEventListener('mousemove', mouseMove);
-    
+export function exitReset(
+    {
+    stop_drawing = true, remove_mouse_move = true
+    }
+    : ExitReset = {}
+) {
+    if (remove_mouse_move && variable.mouseMove)
+        window.removeEventListener('mousemove', variable.mouseMove);
+
     variable.directions.reset();
     variable.starting = false;
     variable.executing = false;
@@ -62,7 +66,7 @@ export function exitReset() {
         y: -1
     }
 
-    stopDrawing();
+    if (stop_drawing) stopDrawing();
 }
 
 export function getCommandData() {

@@ -1,26 +1,29 @@
 import consts from "src/main/consts";
-import { messages, repeater_msg_event } from "../../repeater/msg/message-type";
 import { variable } from "src/main/variable";
 import { decidePos, decideDir, measureDistanceSq } from "../utils/decider";
 import { continueDrawing, showCommandDrawing, startDrawing } from "src/main/drawing";
-import { exitReset, exitRun, getCommandData } from "src/main/process";
+import { exitReset, getCommandData } from "src/main/process";
+import { sendIgnoreContextMenu } from "../dispatch";
 import logger from "../utils/logger";
 
 export function mouseMove(event: MouseEvent,
     {
+        ignoreContextMenu = sendIgnoreContextMenu,
         drawing_target = window,
-        show_command = true
+        show_command = true,
+        reset_options
     }
     : {
-        drawing_target?: Element | Window,
-        show_command?: boolean
-    }
-    = {}
+        ignoreContextMenu?: Function
+        drawing_target?: Element | Window | null,
+        show_command?: boolean,
+        reset_options?: ExitReset
+    } = {}
 ) {
     if (!variable.executing) return;
 
     if (event.buttons != 2) {
-        exitReset();
+        exitReset(reset_options);
         return;
     }
 
@@ -29,16 +32,13 @@ export function mouseMove(event: MouseEvent,
     if (!variable.starting) {
         if (distance > consts.start_range**2) {
             variable.starting = true;
-            window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(messages.ignore_context_menu) }));
+            ignoreContextMenu();
         }
         return;
     }
 
-    if (!(drawing_target instanceof Element) && !(drawing_target instanceof Window))
-        drawing_target = window;
-
     if (!variable.drawing_store.target) {
-        variable.drawing_store.target = drawing_target;
+        variable.drawing_store.target = drawing_target || window;
         startDrawing();
     }
 
@@ -54,13 +54,11 @@ export function mouseMove(event: MouseEvent,
     const direction = decideDir(event);
     decidePos(event);
 
-    if (!show_command) return;
-
     const is_new_dir = variable.directions.push(direction);
-    
-    if (!is_new_dir) return;
 
-    const data = getCommandData();
+    if (show_command && is_new_dir) {
+        showCommandDrawing(getCommandData()?.description);
+    }
 
-    showCommandDrawing(data?.description);
+    return is_new_dir;
 }

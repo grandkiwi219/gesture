@@ -47,3 +47,28 @@ export function setSizeCanvas(size_coord: Coordinate) {
         paper.style.height = `${size_coord.y}px`;
     }
 }
+
+export async function setDynamicSizeCanvas(canvas: HTMLCanvasElement) {
+    const size_coord: Coordinate = decideSize(variable.drawing_store.target);
+
+    if (variable.drawing_store.target_is_window) {
+        if (canvas.width < size_coord.x && canvas.height < size_coord.y) {
+            variable.drawing_store.preserve
+                ? preserveCanvas(canvas, canvas.getContext('2d')!, size_coord)
+                : setSizeCanvas(size_coord);;
+        }
+        return;
+    }
+
+    if (canvas.width != size_coord.x && canvas.height != size_coord.y) {
+        variable.drawing_store.preserve
+            ? preserveCanvas(canvas, canvas.getContext('2d')!, size_coord)
+            : setSizeCanvas(size_coord);;
+    }
+}
+
+function preserveCanvas(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, size_coord: Coordinate) {
+    const tempImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    setSizeCanvas(size_coord);
+    ctx.putImageData(tempImage, 0, 0);
+}

@@ -18,8 +18,16 @@ interface Drawing {
     command: Element | null;
     command_canvas: Element | null;
     command_text: Element | null;
+    target_is_window: boolean;
+    preserve: boolean;
 }
 
 interface MouseExit {
-    run?: boolean
+    run?: boolean;
+    reset_options?: ExitReset;
+}
+
+interface ExitReset {
+    stop_drawing?: boolean;
+    remove_mouse_move?: boolean;
 }

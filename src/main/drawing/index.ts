@@ -1,12 +1,14 @@
 import { drawing_elements, drawing_options } from "src/main/consts";
 import { variable } from "src/main/variable";
-import { decideSize, drawCommand, setSizeCanvas } from "./supports";
+import { decideSize, drawCommand, setDynamicSizeCanvas, setSizeCanvas } from "./supports";
 import logger from "../utils/logger";
 
 export function startDrawing() {
-    if (!variable.drawing_store.target) return;
+    const std_target = variable.drawing_store.target;
 
-    let target = variable.drawing_store.target;
+    if (!std_target) return;
+
+    let target = std_target;
     const coord: Coordinate = decideSize(target);
 
     if (!(target instanceof Element)) {
@@ -14,36 +16,48 @@ export function startDrawing() {
     }
 
     const main = document.createElement(drawing_elements.main.tag);
-    variable.drawing_store.main = main;
+    const paper = document.createElement(drawing_elements.paper.tag);
+    const command = document.createElement(drawing_elements.command.tag);
+    const command_canvas = document.createElement(drawing_elements.command_canvas.tag);
+    const command_text = document.createElement(drawing_elements.command_text.tag);
 
     const shadow = main.attachShadow({ mode: "open" });
+    
+    if (std_target instanceof Window || std_target == document.documentElement) {
+        variable.drawing_store.target_is_window = true;
 
-    const paper = document.createElement(drawing_elements.paper.tag);
-    if (drawing_elements.paper?.style && typeof drawing_elements.paper?.style == 'object') {
-        Object.assign(paper.style, drawing_elements.paper.style);
+        main.style.position = 'fixed';
+        command.style.position = 'fixed';
     }
+    else {
+        variable.drawing_store.target_is_window = false;
+
+        main.style.position = 'absolute';
+        command.style.position = 'absolute';
+    }
+
+    /* main */
+    Object.assign(main.style, drawing_elements.main.style);
+    variable.drawing_store.main = main;
+
+    /* paper */
+    Object.assign(paper.style, drawing_elements.paper.style);
     variable.drawing_store.paper = paper;
     shadow.appendChild(paper);
 
     setSizeCanvas(coord);
-
-    const command = document.createElement(drawing_elements.command.tag);
-    if (drawing_elements.command?.style && typeof drawing_elements.command?.style == 'object') {
-        Object.assign(command.style, drawing_elements.command.style);
-    }
+    
+    /* command */
+    Object.assign(command.style, drawing_elements.command.style);
     variable.drawing_store.command = command;
-
-    const command_canvas = document.createElement(drawing_elements.command_canvas.tag);
-    if (drawing_elements.command_canvas?.style && typeof drawing_elements.command_canvas?.style == 'object') {
-        Object.assign(command_canvas.style, drawing_elements.command_canvas.style);
-    }
+    
+    /* command_canvas */
+    Object.assign(command_canvas.style, drawing_elements.command_canvas.style);
     variable.drawing_store.command_canvas = command_canvas;
     command.appendChild(command_canvas);
-
-    const command_text = document.createElement(drawing_elements.command_text.tag);
-    if (drawing_elements.command_text?.style && typeof drawing_elements.command_text?.style == 'object') {
-        Object.assign(command_text.style, drawing_elements.command_text.style);
-    }
+    
+    /* command_text */
+    Object.assign(command_text.style, drawing_elements.command_text.style);
     variable.drawing_store.command_text = command_text;
     command.appendChild(command_text);
 
@@ -89,13 +103,7 @@ export function continueDrawing({ x, y }: Coordinate) {
         ctx.fill();
     }
 
-    const size_coord: Coordinate = decideSize(variable.drawing_store.target);
-
-    if (canvas.width < size_coord.x && canvas.height < size_coord.y) {
-        const tempImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        setSizeCanvas(size_coord);
-        ctx.putImageData(tempImage, 0, 0);
-    }
+    setDynamicSizeCanvas(canvas);
 }
 
 export function showCommandDrawing(description: string | undefined) {

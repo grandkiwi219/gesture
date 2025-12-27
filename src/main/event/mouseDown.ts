@@ -1,20 +1,36 @@
 import { variable } from "src/main/variable";
 import { decidePos } from "src/main/utils/decider";
 import { exitReset } from "src/main/process";
-import { messages, repeater_msg_event } from "src/repeater/msg/message-type";
+import { sendAcknowledgeContextMenu } from '../dispatch/index';
 import { mouseMove } from "./mouseMove";
 
-export function mouseDown(event: MouseEvent) {
+export function mouseDown(event: MouseEvent,
+    {
+        acknowledgeContextMenu = sendAcknowledgeContextMenu,
+        use_mouse_move = true,
+        reset_options
+    }
+    : {
+        acknowledgeContextMenu?: Function,
+        use_mouse_move?: boolean,
+        reset_options?: ExitReset
+    } = {}
+) {
     if (event.button != 2) {
         exitReset();
         return;
     }
 
-    exitReset();
+    exitReset(reset_options);
 
-    window.addEventListener('mousemove', mouseMove, true);
+    if (use_mouse_move) {
+        if (variable.mouseMove)
+            window.addEventListener('mousemove', variable.mouseMove, true);
+        else
+            throw new Error('mouseMove 이벤트 함수가 할당되지 않았습니다.');
+    }
 
-    window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(messages.acknowledge_context_menu) }));
+    acknowledgeContextMenu();
 
     variable.executing = true;
     decidePos(event);

@@ -28,7 +28,9 @@ let drawing_store: Drawing = {
     paper: null,
     command: null,
     command_canvas: null,
-    command_text: null
+    command_text: null,
+    target_is_window: false,
+    preserve: true,
 };
 
 export const variable = {
@@ -40,5 +42,7 @@ export const variable = {
     last_pos,
     directions,
     command_store,
-    drawing_store
+    drawing_store,
+    
+    mouseMove: null as null | ((ev: MouseEvent) => any)
 }

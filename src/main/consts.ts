@@ -41,14 +41,22 @@ export const drawing_elements: {
     }
 } = {
     main: {
-        tag: `${initial}-paper`
+        tag: `${initial}-paper`,
+        style: {
+            top: 0,
+            left: 0,
+            display: 'block',
+            userSelect: 'none',
+            zIndex: 99990,
+            overflow: 'hidden'
+        }
     },
     paper: {
         tag: 'canvas',
         style: {
             padding: '0',
             margin: '0',
-            position: 'fixed',
+            position: 'absolute',
             top: '0',
             left: '0',
             overflow: 'hidden'
@@ -61,7 +69,6 @@ export const drawing_elements: {
             height: `${command_size}px`,
             padding: '0',
             borderRadius: '30px',
-            position: 'fixed',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
