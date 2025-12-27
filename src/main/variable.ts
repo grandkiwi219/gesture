@@ -27,10 +27,10 @@ let drawing_store: Drawing = {
     main: null,
     paper: null,
     command: null,
-    command_canvas: null,
+    command_img: null,
     command_text: null,
     target_is_window: false,
-    preserve: true,
+    preserve: true, // 타겟의 크기가 변경시 종이에 그린 그림을 지울지 말지
 };
 
 export const variable = {
