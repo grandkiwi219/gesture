@@ -79,14 +79,14 @@ export const drawing_elements: {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
+            gap: '15px',
         }
     },
-    command_canvas: {
-        tag: 'canvas',
+    command_img: {
+        tag: 'img',
         style: {
-            width: '100%',
             height: '50%',
-            display: 'block'
+            filter: 'drop-shadow(0 0 10px white)'
         }
     },
     command_text: {

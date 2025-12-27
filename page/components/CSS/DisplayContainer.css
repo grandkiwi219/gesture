@@ -32,10 +32,12 @@
     left: 0;
 }
 
-.display {
+.display-base {
     width: 100%;
     height: fit-content;
+}
 
+.display {
     padding: var(--container-padding);
 
     background-color: var(--background-color);

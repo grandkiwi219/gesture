@@ -16,7 +16,7 @@ interface Drawing {
     main: Element | null;
     paper: Element | null;
     command: Element | null;
-    command_canvas: Element | null;
+    command_img: Element | null;
     command_text: Element | null;
     target_is_window: boolean;
     preserve: boolean;

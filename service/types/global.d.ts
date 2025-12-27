@@ -1,7 +1,10 @@
+type GesturePainting = string;
+
 interface Gesture {
-    description: string,
-    type: string,
-    script: string
+    gesturePainting?: GesturePainting;
+    description: string;
+    type: string;
+    script: string;
 }
 
 interface BgMsg {

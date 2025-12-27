@@ -22,6 +22,7 @@ function UsageDisplay({ children }: Props) {
         console.log('사용')
         exitReset();
 
+        variable.command_store.clear();
         setCommand(() => {});
         variable.drawing_store.preserve = false;
 

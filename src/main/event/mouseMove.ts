@@ -57,7 +57,8 @@ export function mouseMove(event: MouseEvent,
     const is_new_dir = variable.directions.push(direction);
 
     if (show_command && is_new_dir) {
-        showCommandDrawing(getCommandData()?.description);
+        const command_data = getCommandData();
+        showCommandDrawing(command_data?.description, command_data?.gesturePainting);
     }
 
     return is_new_dir;

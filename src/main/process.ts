@@ -74,7 +74,7 @@ export function getCommandData() {
 }
 
 export async function setCommand(removeEvent: Function) {
-    chrome.storage[storage_area].get([consts.store, sites]).then(results => {
+    chrome.storage[storage_area].get([consts.store, sites]).then(async results => {
         const ignore_keys = results[sites] as unknown as string[];
         if (decideThisSIte(ignore_keys, removeEvent))
             return;
@@ -83,7 +83,7 @@ export async function setCommand(removeEvent: Function) {
         if (!store_keys || !Array.isArray(store_keys)) {
             logger.warn('키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
 
-            setInitialGesture();
+            await setInitialGesture();
             setCommand(removeEvent);
             return;
         }

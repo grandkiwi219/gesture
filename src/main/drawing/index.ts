@@ -18,7 +18,7 @@ export function startDrawing() {
     const main = document.createElement(drawing_elements.main.tag);
     const paper = document.createElement(drawing_elements.paper.tag);
     const command = document.createElement(drawing_elements.command.tag);
-    const command_canvas = document.createElement(drawing_elements.command_canvas.tag);
+    const command_img = document.createElement(drawing_elements.command_img.tag);
     const command_text = document.createElement(drawing_elements.command_text.tag);
 
     const shadow = main.attachShadow({ mode: "open" });
@@ -51,10 +51,10 @@ export function startDrawing() {
     Object.assign(command.style, drawing_elements.command.style);
     variable.drawing_store.command = command;
     
-    /* command_canvas */
-    Object.assign(command_canvas.style, drawing_elements.command_canvas.style);
-    variable.drawing_store.command_canvas = command_canvas;
-    command.appendChild(command_canvas);
+    /* command_img */
+    Object.assign(command_img.style, drawing_elements.command_img.style);
+    variable.drawing_store.command_img = command_img;
+    command.appendChild(command_img);
     
     /* command_text */
     Object.assign(command_text.style, drawing_elements.command_text.style);
@@ -106,32 +106,38 @@ export function continueDrawing({ x, y }: Coordinate) {
     setDynamicSizeCanvas(canvas);
 }
 
-export function showCommandDrawing(description: string | undefined) {
+export function showCommandDrawing(description: string | undefined, gesturePainting: GesturePainting | undefined) {
     const cmd = variable.drawing_store.command;
     const cxt = variable.drawing_store.command_text;
-    const cvs = variable.drawing_store.command_canvas;
+    const cmg = variable.drawing_store.command_img;
     if (
         ((!cmd || !(cmd instanceof HTMLElement))) ||
         ((!cxt || !(cxt instanceof HTMLElement))) ||
-        ((!cvs || !(cvs instanceof HTMLElement)))
+        ((!cmg || !(cmg instanceof HTMLImageElement)))
     ) {
         stopDrawing();
         return;
     }
     
     if (typeof description != 'string') {
+        cmg.src = '';
         cxt.textContent = '';
         cmd.style.display = 'none';
         return;
     }
 
-    /* if (cvs instanceof HTMLCanvasElement) {
-        drawCommand(cvs);
-    } */
-
-    //temp
-    cvs.style.display = 'none';
-
+    if (gesturePainting) {
+        cmg.src = gesturePainting;
+        cmg.style.display = 'block';
+        cmg.addEventListener('error', (e) => {
+            cmg.style.display = 'none';
+            logger.error('cmg: ', e);
+        }, { once: true });
+    }
+    else {
+        cmg.src = '';
+        cmg.style.display = 'none';
+    }
     cxt.textContent = description;
     cmd.style.display = 'flex';
 }
@@ -150,9 +156,9 @@ export function stopDrawing() {
         variable.drawing_store.command.remove();
         variable.drawing_store.command = null;
     }
-    if (variable.drawing_store.command_canvas) {
-        variable.drawing_store.command_canvas.remove();
-        variable.drawing_store.command_canvas = null;
+    if (variable.drawing_store.command_img) {
+        variable.drawing_store.command_img.remove();
+        variable.drawing_store.command_img = null;
     }
     if (variable.drawing_store.command_text) {
         variable.drawing_store.command_text.remove();

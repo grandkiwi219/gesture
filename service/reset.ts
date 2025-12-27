@@ -19,5 +19,4 @@ export async function setInitialGesture() {
             [sites]: sites_result
         });
     }
-
 }
