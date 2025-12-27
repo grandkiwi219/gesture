@@ -1,8 +1,15 @@
-type Props = { children: ReactNode }
+interface Props {
+    children: ReactNode
+}
 
-type NavProps = {
-    Icon: ReactNode
-    setting: Setting,
+interface AppProps extends Props {
+    init_nav_state: string;
+    init_nav_short_state: boolean;
+}
+
+interface NavProps {
+    Icon: ReactNode;
+    setting: Setting;
 }
 
 interface NavMenuProps {
@@ -10,8 +17,7 @@ interface NavMenuProps {
     setState: Function;
 }
 
-interface NavWrapProps {
-    children: ReactNode;
+interface NavWrapProps extends Props {
     state: string;
     setState: Function;
 }

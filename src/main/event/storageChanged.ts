@@ -22,6 +22,7 @@ export async function storageChanged(
         if (!variable.main_running) {
             addEvent();
         }
+        
         const ignore_index = changed_items.indexOf(sites);
         if (ignore_index > -1) {
             changed_items.splice(ignore_index, 1);

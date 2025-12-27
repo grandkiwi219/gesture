@@ -1,6 +1,7 @@
 const key = {
 	theme: 'theme',
-	nav: 'nav'
+	nav: 'nav',
+	nav_short: 'nav_short'
 }
 
 const state = {

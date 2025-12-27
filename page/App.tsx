@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { HashRouter } from 'react-router-dom';
 
 import './App.css' with { type: 'css' };
@@ -10,40 +10,21 @@ import Page from './components/Page';
 import std from './std';
 
 import { navMenuReducer } from './utils/reducer';
+import { resizeNav } from './utils/decider';
 
 
-function AppControl({ children }: Props) {
+function AppControl({ init_nav_state, init_nav_short_state, children }: AppProps) {
 
-	let init_nav_state;
-
-	try {
-		init_nav_state = localStorage.getItem(std.key.nav) ?? std.state.nav.long;
-	} catch (error) {
-		init_nav_state = std.state.nav.long;
-	}
-
-	const [navMenuState, setNavMenuState] = useReducer<string, any>(navMenuReducer, init_nav_state);
+	const navShortState = useRef(init_nav_short_state);
+	const [navMenuState, setNavMenuState] = useReducer<string, any>(navMenuReducer(navShortState), init_nav_state);
 
 	useEffect(() => {
-		window.addEventListener('resize', () => {
-			const width = window.innerWidth;
+		resizeNav(navShortState, setNavMenuState);
 
-			if (width >= std.size.nav.long) {
-				setNavMenuState({ input: std.state.nav.long });
-			}
-			else if (width >= std.size.nav.short) {
-				setNavMenuState({ input: std.state.nav.short });
-			}
-			else if (width >= std.size.nav.icon) {
-				setNavMenuState({ input: std.state.nav.icon });
-			}
-			else {
-				setNavMenuState({ input: std.state.nav.none });
-			}
+		window.addEventListener('resize', () => {
+			resizeNav(navShortState, setNavMenuState);
 		});
 	}, []);
-
-	// nav_short 스토리지 만들어서 롱 상태에서 접었을 당시 쇼츠로 변환한 것을 기억하게 하기
 
 	return (
 		<>
@@ -59,8 +40,23 @@ function AppControl({ children }: Props) {
 }
 
 export default function() {
+
+	let init_nav_state: string;
+	try {
+		init_nav_state = localStorage.getItem(std.key.nav) ?? std.state.nav.long;
+	} catch (error) {
+		init_nav_state = std.state.nav.long;
+	}
+
+	let init_nav_short_state: boolean;
+	try {
+		init_nav_short_state = JSON.parse(localStorage.getItem(std.key.nav_short) ?? 'false');
+	} catch (error) {
+		init_nav_short_state = false;
+	}
+
 	return (
-		<AppControl>
+		<AppControl init_nav_state={init_nav_state} init_nav_short_state={init_nav_short_state}>
 			<Page></Page>
 		</AppControl>
 	);

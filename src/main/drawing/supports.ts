@@ -55,7 +55,7 @@ export async function setDynamicSizeCanvas(canvas: HTMLCanvasElement) {
         if (canvas.width < size_coord.x && canvas.height < size_coord.y) {
             variable.drawing_store.preserve
                 ? preserveCanvas(canvas, canvas.getContext('2d')!, size_coord)
-                : setSizeCanvas(size_coord);;
+                : setSizeCanvas(size_coord);
         }
         return;
     }
@@ -63,7 +63,7 @@ export async function setDynamicSizeCanvas(canvas: HTMLCanvasElement) {
     if (canvas.width != size_coord.x && canvas.height != size_coord.y) {
         variable.drawing_store.preserve
             ? preserveCanvas(canvas, canvas.getContext('2d')!, size_coord)
-            : setSizeCanvas(size_coord);;
+            : setSizeCanvas(size_coord);
     }
 }
 
