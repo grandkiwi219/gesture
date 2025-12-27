@@ -1,3 +1,13 @@
+import { useEffect, useRef } from 'react';
+
+import './_pages.css' with { type: 'css' };
+
+import { exitReset, setCommand } from 'src/main/process';
+import { mouseDown, mouseMove, mouseUp, storageChanged } from 'src/main/event';
+import { variable } from 'src/main/variable';
+
+import GridCanvas from 'page/components/GridCanvas';
+
 
 export const usageSetting: Setting = {
     name: '사용 설정',
@@ -5,11 +15,77 @@ export const usageSetting: Setting = {
 }
 
 export default function() {
-    console.log('사용')
+
+    const drawing_target = useRef(null);
+    const context_menu = useRef(true);
+
+    useEffect(() => {
+        console.log('사용')
+        exitReset();
+
+        setCommand(() => {});
+        variable.drawing_store.preserve = false;
+
+        chrome.storage.onChanged.addListener(mainStorageChanged);
+        function mainStorageChanged(
+            changes: { [key: string]: chrome.storage.StorageChange; },
+            area: chrome.storage.AreaName
+        ) {
+            storageChanged(changes, area, () => {}, () => {});
+        }
+
+        return () => {
+            chrome.storage.onChanged.removeListener(mainStorageChanged);
+        }
+    });
 
     return (
-        <>
-            <div>사용 세팅</div>
-        </>
+        <div className="container">
+            <div className="display-container">
+                <div className='display'
+                    ref={drawing_target}
+                    onMouseUp={usageMouseUp}
+                    onMouseLeave={usageMouseLeave}
+                    onMouseDown={(event) => {
+                        mouseDown((event as unknown as MouseEvent), 
+                            {
+                                acknowledgeContextMenu: () => context_menu.current = true,
+                                use_mouse_move: false,
+                                reset_options: {
+                                    remove_mouse_move: false
+                                }
+                            }
+                        );
+                    }}
+                    onMouseMove={(event) => {
+                        mouseMove((event as unknown as MouseEvent), {
+                            ignoreContextMenu: () => context_menu.current = false,
+                            drawing_target: drawing_target.current,
+                            show_command: true
+                        });
+                    }}
+                    onContextMenu={(e) => {
+						if (context_menu.current) return;
+
+                        e.preventDefault();
+                        e.stopPropagation();
+					}}
+                >
+                    <GridCanvas />
+                </div>
+            </div>
+
+            <div className="options-container">
+                <div className="option"></div>
+            </div>
+        </div>
     );
+}
+
+function usageMouseUp(event: any) {
+    mouseUp(event, { run: false, reset_options: { remove_mouse_move: false } });
+}
+
+function usageMouseLeave() {
+	exitReset({ remove_mouse_move: false });
 }

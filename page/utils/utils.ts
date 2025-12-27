@@ -1,4 +1,4 @@
-import std from './std';
+import std from '../std';
 
 function decideTheme() {
     const is_dark_mode: boolean = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;

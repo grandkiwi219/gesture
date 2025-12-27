@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import './Page.css' with { type: 'css' };
+import './CSS/Page.css' with { type: 'css' };
 
 import GestureSettings, { gestureSetting } from 'page/page/GestureSettings';
 import UsageSettings, { usageSetting } from 'page/page/UsageSettings';

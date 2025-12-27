@@ -1,10 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import './_pages.css' with { type: 'css' };
 
-import std from 'page/std';
+import { exitReset } from 'src/main/process';
+import { variable } from 'src/main/variable';
+import { mouseDown, mouseMove, mouseUp } from 'src/main/event';
+import { stopDrawing } from 'src/main/drawing';
 
-import utils from 'page/utils';
+import GridCanvas from 'page/components/GridCanvas';
 
 import { MdAddCircleOutline } from "react-icons/md";
 
@@ -15,29 +18,70 @@ export const gestureSetting: Setting = {
 }
 
 export default function() {
-	console.log('제스처')
+
+	const drawing_target = useRef(null);
+	const context_menu = useRef(true);
 
 	useEffect(() => {
-		const canvas = document.getElementsByClassName('display')[0] as HTMLCanvasElement;
+		console.log('제스처')
+		exitReset();
 
-		canvas.width = std.size.display;
-		canvas.height = std.size.display;
-		
-		utils.drawBoard(canvas.getContext("2d")!);
-	}, []);
+		variable.directions.reset();
+		variable.drawing_store.preserve = false;
+	});
 
 	return (
 		<div className="container">
 			<div className="display-container">
-				<canvas className="display" />
-			</div>
+				<div className='display'
+					ref={drawing_target}
+					onMouseUp={gestureMouseUp}
+					onMouseLeave={gestureMouseLeave}
+					onMouseDown={(event) => {
+						stopDrawing();
+						mouseDown((event as unknown as MouseEvent), 
+							{
+								acknowledgeContextMenu: () => context_menu.current = true,
+								use_mouse_move: false,
+								reset_options: {
+									stop_drawing: false,
+									remove_mouse_move: false
+								}
+							}
+						);
+					}}
+					onMouseMove={(event) => {
+						mouseMove((event as unknown as MouseEvent), { 
+							ignoreContextMenu: () => context_menu.current = false,
+							drawing_target: drawing_target.current,
+							show_command: false
+						});
+					}}
+					onContextMenu={(e) => {
+						if (context_menu.current) return;
 
+						e.preventDefault();
+						e.stopPropagation();
+					}}
+				>
+					<GridCanvas />
+				</div>
+			</div>
+			
 			<div className="options-container">
-				<div className="option"></div>
 				<button className="opacity option generate">
 					<MdAddCircleOutline size="30px" />
 				</button>
+				<div className="option"></div>
 			</div>
 		</div>
 	);
+}
+
+function gestureMouseUp(event: any) {
+	mouseUp(event, { run: false, reset_options: { stop_drawing: false, remove_mouse_move: false } });
+}
+
+function gestureMouseLeave() {
+	exitReset({ stop_drawing: false, remove_mouse_move: false });
 }

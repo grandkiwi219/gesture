@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router';
 
-import './Sidebar.css' with { type: 'css' };
+import './CSS/Sidebar.css' with { type: 'css' };
 
 import { gestureSetting } from 'page/page/GestureSettings';
 import { usageSetting } from 'page/page/UsageSettings';

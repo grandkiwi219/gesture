@@ -7,7 +7,7 @@ import './CSS/Buttons.css' with { type: 'css' };
 
 import App from "./App";
 
-import utils from "./utils";
+import utils from "./utils/utils";
 
 
 const root_element = document.body;

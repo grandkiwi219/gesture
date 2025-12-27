@@ -1,11 +1,11 @@
 import { memo, useState } from 'react';
 
-import './Header.css' with { type: 'css' };
+import './CSS/Header.css' with { type: 'css' };
 
 import { initial } from 'src/main/consts';
 import std from 'page/std';
 
-import utils from 'page/utils';
+import utils from 'page/utils/utils';
 
 import { LuMenu, LuMoon, LuSun } from "react-icons/lu";
 
