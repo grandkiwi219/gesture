@@ -1,0 +1,43 @@
+.direction-settings {
+    display: flex;
+    flex-flow: column wrap;
+    gap: calc(var(--container-gap) / 2);
+}
+
+.btns {
+    color: gray;
+
+    display: none;
+    justify-content: space-between;
+}
+
+.btns > button {
+    background-color: var(--background-color);
+}
+
+.dirs {
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.direction-settings:has(> .dirs > *) > * {
+    display: flex;
+}
+
+.dir {
+    width: fit-content;
+    height: fit-content;
+
+    padding: 8px;
+
+    border-radius: var(--paper-border-radius);
+
+    color: gray;
+    background-color: var(--background-color-hover);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
