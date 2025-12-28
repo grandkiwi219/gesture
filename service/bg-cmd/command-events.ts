@@ -8,7 +8,7 @@ export function backgroundCommand(command: string, tab?: chrome.tabs.Tab | undef
             break;
         case command_keys.reset:
             console.log('옵션을 재설정합니다.');
-            setInitialGesture();
+            setInitialGesture(true);
             break;
         default:
             console.warn('알 수 없는 명령어');

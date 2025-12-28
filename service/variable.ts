@@ -4,5 +4,5 @@ export const bg_variable = {
 }
 
 export const bg_state = {
-    loaded_command: false
+    loaded_command: true
 }
