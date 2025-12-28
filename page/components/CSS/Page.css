@@ -1,5 +1,5 @@
 :root {
-    --paper-max-width: 960px;
+    --paper-max-width: 960;
     --paper-min-width: 300px;
     --paper-padding: 20px;
     --paper-border-radius: 20px;
@@ -20,7 +20,7 @@
 .paper {
     --paper-margin-vertical: 20px;
 
-    max-width: calc(var(--paper-max-width) + var(--paper-padding) * 2);
+    max-width: calc((var(--paper-max-width) * 1px) + var(--paper-padding) * 2);
     min-width: calc(var(--paper-min-width) + var(--paper-padding) * 2);
     width: 90%;
     min-height: calc(100vh - var(--header-height) - (var(--paper-margin-vertical) * 2));

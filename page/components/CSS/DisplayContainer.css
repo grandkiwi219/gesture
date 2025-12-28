@@ -17,7 +17,7 @@
 /* display */
 
 .display-container {
-    flex-grow: calc(var(--paper-max-width) / 1px);
+    flex-grow: var(--paper-max-width);
     flex-basis: var(--paper-min-width);
 
     height: fit-content;
