@@ -95,16 +95,40 @@ function GestureDisplays({ children }: Props) {
 			</GestureCanvas>
 
 			<div className='display-base direction-settings'>
-				<div className='display-base btns'>
-					<button className='opacity display'>??????</button>
-					<button className='opacity display'>Add</button>
+
+				<div className='display-base setups'>
+					<div className='naming'>
+						<input id='naming-input' type="text" 
+							placeholder='설명 추가'
+							onKeyDown={e => {
+								if (
+									e.altKey
+									|| e.shiftKey
+									|| e.ctrlKey
+									|| e.metaKey
+								) return;
+
+								switch (e.key) {
+									case 'Escape':
+										document.body.focus();
+										break;
+
+									default:
+										break;
+								}
+							}}
+						/>
+					</div>
+					<button className='opacity display'>추가하기</button>
 				</div>
+
 				<div ref={display_dirs} className='display-base display dirs'>
 					{dirs.map(dir => {
 						const Icon = dirEl[dir];
 						return (<div className='dir'><Icon size='30px' /></div>);
 					})}
 				</div>
+				
 			</div>
 		</>
 	);

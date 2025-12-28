@@ -1,5 +1,8 @@
 * {
     box-sizing: border-box;
+
+    font-family: 'Pretendard', "Segoe UI", Arial, "Malgun Gothic", Gulim, sans-serif;
+    font-weight: 600;
 }
 
 html {
@@ -12,9 +15,7 @@ body {
     padding: 0;
     margin: 0;
 
-    font-family: 'Pretendard', "Segoe UI", Arial, "Malgun Gothic", Gulim, sans-serif;
     font-size: 75%;
-    font-weight: 600;
 }
 
 

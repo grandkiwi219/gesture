@@ -4,15 +4,51 @@
     gap: calc(var(--container-gap) / 2);
 }
 
-.btns {
+.setups {
     color: gray;
 
     display: none;
     justify-content: space-between;
 }
 
-.btns > button {
+.naming {
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#naming-input {
+    width: 100%;
+    height: 40px;
+
+    padding: 2px 17px;
+
+    border: 1px solid var(--background-color);
+    border-bottom-color: var(--background-color-active);
+    border-radius: var(--paper-border-radius);
+
     background-color: var(--background-color);
+}
+
+#naming-input:focus {
+    outline: none;
+    box-shadow: none;
+
+    border: 1px solid gray;
+
+    transition: border-color var(--transition-speed);
+}
+
+.setups > button {
+    background-color: var(--background-color);
+}
+
+.setups > button:active {
+    border: none;
+    border-top: 1px solid var(--background-color-active);
 }
 
 .dirs {
