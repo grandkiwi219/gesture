@@ -42,6 +42,10 @@
     transition: border-color var(--transition-speed);
 }
 
+#naming-input::placeholder {
+    color: rgb(117, 117, 117);
+}
+
 .setups > button {
     background-color: var(--background-color);
 }
@@ -68,6 +72,7 @@
 
     padding: 8px;
 
+    border-bottom: 1px solid var(--background-color-active);
     border-radius: var(--paper-border-radius);
 
     color: gray;

@@ -28,6 +28,7 @@
     margin: var(--paper-margin-vertical) 0;
     padding: var(--paper-padding);
 
+    /* border-bottom: 1px solid var(--background-color-active); */
     border-radius: var(--paper-border-radius);
 
     background-color: var(--background-color-hover);
