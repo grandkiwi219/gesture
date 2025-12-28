@@ -1,86 +1,32 @@
-import { setInitialGesture } from "service/reset";
-import { regex, sites, storage_area, store } from "../consts";
-import logger from "../utils/logger";
-import { decideThisSIte, setCommand } from "../process";
+import { decideThisSIte } from "../process";
 import { variable } from "../variable";
+import { encodeMap } from "../utils/utils";
+import logger from "../utils/logger";
 
-export async function storageChanged(
-    changes: { [key: string]: chrome.storage.StorageChange; },
-    area: chrome.storage.AreaName,
-    addEvent: Function,
-    removeEvent: Function
-) {
-    if (area != storage_area) return;
+export function storageChanged(message: ContentMessage, addEvent?: Function, removeEvent?: Function) {
+    switch (message.credit) {
+        case 'sites':
+            changeSites(message.data as Sites, addEvent, removeEvent);
+            break;
 
-    let changed_items = Object.keys(changes);
+        case 'commands':
+            changeCommands(message.data as KeyObject<Gesture>);
+            break;
 
-    if (changed_items.includes(sites)) {
-        const ignore_keys = changes[sites].newValue as string[];
-        if (decideThisSIte(ignore_keys, removeEvent))
-            return;
-
-        if (!variable.main_running) {
-            addEvent();
-        }
-        
-        const ignore_index = changed_items.indexOf(sites);
-        if (ignore_index > -1) {
-            changed_items.splice(ignore_index, 1);
-        }
+        default:
+            break;
     }
+} 
 
-    if (changed_items.includes(store)) {
-        const old_value = changes[store].oldValue as string[] || [];
-        const new_value = changes[store].newValue as string[];
+export function changeSites(changed_sites: Sites, addEvent: Function | undefined, removeEvent: Function | undefined) {
+    if (decideThisSIte(changed_sites, removeEvent))
+        return;
 
-        if (!Array.isArray(new_value)) {
-            logger.warn('키 값이 변경되었으나, 키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
-
-            await setInitialGesture();
-            setCommand(removeEvent);
-            return;
-        }
-
-        const old_set = new Set(old_value);
-        const new_set = new Set(new_value);
-
-        const added = new_value.filter(r => !old_set.has(r));
-        added.forEach(item => itemChecker(item));
-
-        const removed = old_value.filter(r => !new_set.has(r));
-        removed.forEach(item => {
-            variable.command_store.delete(item);
-        });
-
-        const added_set = new Set(added);
-        changed_items = changed_items.filter(r => 
-            r != store
-            && !added_set.has(r)
-            && new_set.has(r)
-        );
+    if (addEvent && !variable.main_running) {
+        addEvent();
     }
+}
 
-    for (const item of changed_items) {
-        itemChecker(item);
-    }
-
-    function itemChecker(item_key: string) {
-        if (!regex.direction.test(item_key)) return;
-
-        const change = changes[item_key];
-        if (!change || !change.newValue) return;
-
-        const gesture = changes[item_key].newValue as Gesture;
-
-        if (
-            typeof gesture.description != 'string'
-            || typeof gesture.script != 'string'
-            || typeof gesture.type != 'string'
-        ) {
-            variable.command_store.delete(item_key);
-            return;
-        }
-
-        variable.command_store.set(item_key, gesture);
-    }
+export function changeCommands(changed_command_store: KeyObject<Gesture>) {
+    variable.command_store = encodeMap<Gesture>(Object.keys(changed_command_store), changed_command_store as KeyObject<Gesture>);
 }

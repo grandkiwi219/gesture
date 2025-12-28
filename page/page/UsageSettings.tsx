@@ -23,19 +23,16 @@ function UsageDisplay({ children }: Props) {
         exitReset();
 
         variable.command_store.clear();
-        setCommand(() => {});
+        setCommand();
         variable.drawing_store.preserve = false;
 
-        chrome.storage.onChanged.addListener(mainStorageChanged);
-        function mainStorageChanged(
-            changes: { [key: string]: chrome.storage.StorageChange; },
-            area: chrome.storage.AreaName
-        ) {
-            storageChanged(changes, area, () => {}, () => {});
+        chrome.runtime.onMessage.addListener(mainStorageChanged);
+        function mainStorageChanged(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
+            storageChanged(message);
         }
 
         return () => {
-            chrome.storage.onChanged.removeListener(mainStorageChanged);
+            chrome.runtime.onMessage.removeListener(mainStorageChanged);
         }
     });
 

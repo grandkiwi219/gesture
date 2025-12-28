@@ -5,6 +5,14 @@ interface Coordinate {
 
 type Angle = number;
 
+type Sites = string[];
+
+type CommandStore = Map<string, Gesture>;
+
+interface KeyObject<V> {
+    [key: string]: V
+}
+
 interface Script {
     key: string;
     description: string;
@@ -30,4 +38,9 @@ interface MouseExit {
 interface ExitReset {
     stop_drawing?: boolean;
     remove_mouse_move?: boolean;
+}
+
+interface ContentMessage {
+    credit: 'sites' | 'commands';
+    data: Sites |  KeyObject<Gesture>;
 }

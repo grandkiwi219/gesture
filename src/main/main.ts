@@ -23,23 +23,19 @@ void function main() {
         
         window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(messages.acknowledge_context_menu) }));
 
-        setCommand(removeEvent);
-
         window.addEventListener('mousedown', mouseDown, true);
-
+        
         window.addEventListener('mouseup', mouseUp);
-
+        
         window.addEventListener(script_msg_event, scriptMessage);
 
+        setCommand(removeEvent);
     });
     addEvent();
-    
-    chrome.storage.onChanged.addListener(mainStorageChanged);
-    function mainStorageChanged(
-        changes: { [key: string]: chrome.storage.StorageChange; },
-        area: chrome.storage.AreaName
-    ) {
-        storageChanged(changes, area, addEvent, removeEvent);
+
+    chrome.runtime.onMessage.addListener(mainStorageChanged);
+    function mainStorageChanged(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
+        storageChanged(message, addEvent, removeEvent);
     }
 }();
 

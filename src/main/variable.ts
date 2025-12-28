@@ -20,7 +20,7 @@ let last_pos: Coordinate = {
 
 let directions = new DirectionBundle();
 
-let command_store: Map<string, Gesture> = new Map();
+let command_store: CommandStore = new Map();
 
 let drawing_store: Drawing = {
     target: null,

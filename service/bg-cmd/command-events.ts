@@ -1,4 +1,4 @@
-import { command_keys } from "service/cmd/commands-types";
+import { command_keys } from "service/bg-cmd/commands-types";
 import { setInitialGesture } from "service/reset";
 
 export function backgroundCommand(command: string, tab?: chrome.tabs.Tab | undefined): void {

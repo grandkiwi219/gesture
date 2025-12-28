@@ -26,3 +26,19 @@ export function isScrollableY(el: Element): boolean {
 export function isScrollable(el: Element): boolean {
     return isScrollableX(el) || isScrollableY(el);
 }
+
+export function encodeMap<V>(keys: string[], result: KeyObject<V>) {
+    const map = new Map<string, V>();
+    keys.forEach(key => {
+        map.set(key, result[key]);
+    });
+    return map;
+}
+
+export function decodeMap<V>(map: Map<string, V>) {
+    const result: KeyObject<V> = {}
+    map.forEach((v, k) => {
+        result[k] = v;
+    });
+    return result;
+}

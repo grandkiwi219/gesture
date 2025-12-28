@@ -12,3 +12,7 @@ interface BgMsg {
     state: string;
     data?: any;
 }
+
+interface StorageChanges {
+    [key: string]: chrome.storage.StorageChange;
+}

@@ -1,21 +1,27 @@
 import { setInitialGesture } from "./reset.js";
 
-import { backgroundCommand } from "./cmd/command-events";
+import { backgroundCommand } from "./bg-cmd/command-events";
 import { backgroundMessageScript } from "./msg/message-script-events.js";
 import { contextMenuEvent, contextMenuStartEvent } from "./contextMenu/context-menu-event.js";
 import { createContextMenu } from "./contextMenu/context-menu-create.js";
 import { decideIgnore_this_site_title, setIgnore_this_site_set } from "./contextMenu/context-menu-supports.js";
 import { sites, storage_area } from "src/main/consts.js";
+import { loadCommand, loadSites, loadStorageChanged } from "./cmd/index.js";
 
 chrome.runtime.onInstalled.addListener(async d => {
     if (d.reason === 'install') {
         chrome.runtime.openOptionsPage();
-        setInitialGesture();
+        await setInitialGesture();
     }
     
+    // gesture-command
+    await loadSites();
+    await loadCommand();
+    
+    
+    // context-menu
     createContextMenu();
 
-    // context-menu
     contextMenuStartEvent();
     chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
         if (tabs[0]) {
@@ -24,7 +30,12 @@ chrome.runtime.onInstalled.addListener(async d => {
     });
 });
 
-chrome.runtime.onStartup.addListener(() => {
+chrome.runtime.onStartup.addListener(async () => {
+    // gesture-command
+    await loadSites();
+    await loadCommand();
+
+
     // context-menu
     contextMenuStartEvent();
     chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
@@ -62,8 +73,13 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     }
 });
 
-chrome.storage.onChanged.addListener(async (changes, area) => {
+chrome.storage.onChanged.addListener((changes, area) => {
     if (area == storage_area) {
+
+        // gesture-command
+        loadStorageChanged(changes);
+
+
         // context-menu
         if (changes[sites]) {
             setIgnore_this_site_set(changes[sites].newValue);
@@ -73,5 +89,6 @@ chrome.storage.onChanged.addListener(async (changes, area) => {
                 }
             });
         }
+        
     }
 });

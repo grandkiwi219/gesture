@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 
 import config from './package.json' with { type: 'json' };
-import { commands } from './service/cmd/commands-types.js';
+import { commands } from './service/bg-cmd/commands-types.js';
 
 dotenv.config();
 

@@ -1,4 +1,4 @@
-import consts, { regex, sites } from "src/main/consts";
+import { regex } from "src/main/consts";
 import { context_menu_data } from "./context-menu-types";
 import { bg_variable } from "service/variable";
 
@@ -19,7 +19,7 @@ export function decideIgnore_this_site_title(url: string | null | undefined) {
 
     const host = url.match(regex.host);
 
-    if (host && bg_variable.sites.has(host[0])) {
+    if (host && bg_variable.sites.includes(host[0])) {
         updateIgnore_this_site_title(true);
         return;
         // return { state: true, host: host };
@@ -33,6 +33,6 @@ export function setIgnore_this_site_set(result: string[] | undefined | unknown) 
         return;
         // return false;
     }
-    bg_variable.sites = new Set(result);
+    bg_variable.sites = result;
     // return true;
 }

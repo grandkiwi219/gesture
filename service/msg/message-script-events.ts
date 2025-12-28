@@ -5,11 +5,13 @@ export function backgroundMessageScript(msg: BgMsg, sender: chrome.runtime.Messa
         case messages.tabs:
             tabsState(msg, sender, response);
             break;
+
         case messages.windows:
             if (sender.tab && sender.tab.windowId) {
                 chrome.windows.update(sender.tab.windowId, { state: msg.state as chrome.windows.UpdateInfo["state"] });
             }
             break;
+
         default:
             break;
     }

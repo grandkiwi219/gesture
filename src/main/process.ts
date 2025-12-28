@@ -7,6 +7,7 @@ import { mouseMove } from "./event";
 import consts, { sites, storage_area } from "./consts";
 import { setInitialGesture } from "service/reset";
 import { credits, repeater_msg_event } from "src/repeater/msg/message-type";
+import { encodeMap } from "./utils/utils";
 
 export function mainAddEvent(addEvent: Function): (() => void) {
     return function() {
@@ -73,34 +74,29 @@ export function getCommandData() {
     return variable.command_store.get(variable.directions.data.join(''));
 }
 
-export async function setCommand(removeEvent: Function) {
+export async function setCommand(removeEvent?: Function) {
     chrome.storage[storage_area].get([consts.store, sites]).then(async results => {
-        const ignore_keys = results[sites] as unknown as string[];
-        if (decideThisSIte(ignore_keys, removeEvent))
+        if (decideThisSIte(results[sites], removeEvent))
             return;
 
         const store_keys = results[consts.store];
-        if (!store_keys || !Array.isArray(store_keys)) {
-            logger.warn('키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
 
-            await setInitialGesture();
-            setCommand(removeEvent);
+        if (!Array.isArray(store_keys)) {
+            logger.error('스토어가 존재하지 않거나 배열의 형태가 아닙니다.');
             return;
         }
 
         const filtered_keys = store_keys.filter((r) => typeof r == 'string');
 
         chrome.storage[storage_area].get(filtered_keys).then(result => {
-            filtered_keys.forEach(key => {
-                variable.command_store.set(key, result[key] as Gesture);
-            });
+            variable.command_store = encodeMap<Gesture>(filtered_keys, result as KeyObject<Gesture>);
         });
     });
 }
 
-export function decideThisSIte(ignore_keys: string[], removeEvent: Function) {
-    if (ignore_keys && Array.isArray(ignore_keys)) {
-        if (ignore_keys.includes(location.hostname)) {
+export function decideThisSIte(sites: any, removeEvent?: Function) {
+    if (removeEvent && Array.isArray(sites)) {
+        if (sites.includes(location.hostname)) {
             removeEvent();
             exitReset();
             return true;
