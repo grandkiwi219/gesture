@@ -1,7 +1,9 @@
+import { useContext } from 'react';
 import { NavLink } from 'react-router';
 
 import './CSS/Sidebar.css' with { type: 'css' };
 
+import { NavContext } from 'page/App';
 import { gestureSetting } from 'page/page/GestureSettings';
 import { usageSetting } from 'page/page/UsageSettings';
 import { pageSetting } from 'page/page/PageSettings';
@@ -35,14 +37,16 @@ function NavA({ Icon, setting }: NavProps) {
     );
 }
 
-function NavWrap({ state, setState, children }: NavWrapProps) {
+function NavControl({ children }: Props) {
+
+    const nav_context = useContext(NavContext);
 
     return (
-        <nav id={menu.main} className={state}
+        <nav id={menu.main} className={nav_context?.navMenuState}
             onClick={(e) => {
                 if (
-                    state != std.state.nav.none_open
-                    && state != std.state.nav.icon_open
+                    nav_context?.navMenuState != std.state.nav.none_open
+                    && nav_context?.navMenuState != std.state.nav.icon_open
                 ) return;
 
                 const target = e.target as HTMLElement;
@@ -54,7 +58,7 @@ function NavWrap({ state, setState, children }: NavWrapProps) {
                     || document.getElementById(menu.bottom)!.contains(target)
                 ) return;
 
-                setState({ type: 'execute' });
+                nav_context.setNavMenuState({ type: 'execute' });
             }}
         >
             {children}
@@ -62,10 +66,9 @@ function NavWrap({ state, setState, children }: NavWrapProps) {
     );
 }
 
-function NavMenu({ state, setState }: NavMenuProps) {
-
+function NavMenu() {
     return (
-        <NavWrap state={state} setState={setState}>
+        <NavControl>
             <div id={menu.wrap}>
     
                 <div id={menu.top}>
@@ -82,7 +85,7 @@ function NavMenu({ state, setState }: NavMenuProps) {
                 </div>
     
             </div>
-        </NavWrap>
+        </NavControl>
     );
 }
 

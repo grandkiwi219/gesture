@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from 'react';
+import { ActionDispatch, createContext, useEffect, useReducer, useRef } from 'react';
 import { HashRouter } from 'react-router-dom';
 
 import './App.css' with { type: 'css' };
@@ -12,6 +12,11 @@ import std from './std';
 import { navMenuReducer } from './utils/reducer';
 import { resizeNav } from './utils/decider';
 
+
+export const NavContext = createContext<{
+	navMenuState: string,
+	setNavMenuState: ActionDispatch<any>
+} | null>(null);
 
 function AppControl({ init_nav_state, init_nav_short_state, children }: AppProps) {
 
@@ -27,15 +32,12 @@ function AppControl({ init_nav_state, init_nav_short_state, children }: AppProps
 	}, []);
 
 	return (
-		<>
-			<Header setNavMenuState={setNavMenuState}></Header>
-
-			<HashRouter>
-				<Sidebar state={navMenuState} setState={setNavMenuState}></Sidebar>
-
-				{children}
-			</HashRouter>
-		</>
+		<NavContext value={{
+			navMenuState,
+			setNavMenuState
+		}}>
+			{children}
+		</NavContext>
 	);
 }
 
@@ -57,7 +59,15 @@ export default function() {
 
 	return (
 		<AppControl init_nav_state={init_nav_state} init_nav_short_state={init_nav_short_state}>
-			<Page></Page>
+			<Header></Header>
+
+			<HashRouter>
+
+				<Sidebar></Sidebar>
+
+				<Page></Page>
+
+			</HashRouter>
 		</AppControl>
 	);
 }
