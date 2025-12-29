@@ -55,7 +55,9 @@ export function GCanvas({ children }: Props) {
 	});
 
 	return (
-		<div className='display-base display'
+		<div className='display-base display' style={{
+				position: 'relative'
+			}}
 			ref={drawing_target}
 			onMouseUp={gestureMouseUp}
 			onMouseLeave={gestureMouseLeave}
