@@ -1,8 +1,34 @@
+/* GCanvas */
+
+.display-cancel {
+    padding: 5px;
+
+    border-radius: 50%;
+
+    background-color: var(--background-color-translucent);
+
+    color: gray;
+    font-size: 0;
+    
+    display: none;
+
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 99991;
+
+    transition: none;
+}
+
+/* GDisplay */
+
 .direction-settings {
     display: flex;
     flex-flow: column wrap;
     gap: calc(var(--container-gap) / 2);
 }
+
+/* GSetups */
 
 .setups {
     color: gray;
@@ -42,6 +68,10 @@
     transition: border-color var(--transition-speed);
 }
 
+#naming-input.warning:focus {
+    border-color: red;
+}
+
 #naming-input::placeholder {
     color: rgb(117, 117, 117);
 }
@@ -54,6 +84,8 @@
     border: none;
     border-top: 1px solid var(--background-color-active);
 }
+
+/* GDirs */
 
 .dirs {
     display: none;
