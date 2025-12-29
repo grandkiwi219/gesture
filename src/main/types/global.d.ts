@@ -39,8 +39,3 @@ interface ExitReset {
     stop_drawing?: boolean;
     remove_mouse_move?: boolean;
 }
-
-interface ContentMessage {
-    credit: 'sites' | 'commands';
-    data: Sites |  KeyObject<Gesture>;
-}
