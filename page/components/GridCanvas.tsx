@@ -6,7 +6,7 @@ import utils from "page/utils/utils";
 import './CSS/GridCanvas.css' with { type: 'css' };
 
 export default function() {
-    const ref = useRef(null);
+    const ref = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
         const canvas = ref.current as unknown as HTMLCanvasElement;

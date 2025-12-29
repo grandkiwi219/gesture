@@ -1,4 +1,4 @@
-import { memo, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import './CSS/Header.css' with { type: 'css' };
 
@@ -32,7 +32,7 @@ function SetTheme() {
     );
 }
 
-function Header() {
+export default function() {
 
     const nav_context = useContext(NavContext);
 
@@ -51,6 +51,4 @@ function Header() {
             </header>
         </>
     );
-}
-
-export default memo(Header);
+};

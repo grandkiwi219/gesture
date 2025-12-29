@@ -72,7 +72,6 @@ function UsageDisplay({ children }: Props) {
 }
 
 export default function() {
-    console.log('사용 wrap');
     return (
         <DisplayContainer>
             <UsageDisplay>

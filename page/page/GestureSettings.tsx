@@ -1,4 +1,4 @@
-import { memo, Ref, useEffect, useRef, useState } from 'react';
+import { memo, createContext, useEffect, useRef, useState, useContext, useCallback } from 'react';
 import { IconType } from 'react-icons';
 
 import { variable } from 'src/main/variable';
@@ -16,25 +16,46 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { IoMdArrowRoundBack, IoMdArrowRoundDown, IoMdArrowRoundForward, IoMdArrowRoundUp } from "react-icons/io";
 
 
-const reset_options: ExitReset = {
-	stop_drawing: false,
-	remove_mouse_move: false
-}
-
 export const gestureSetting: Setting = {
 	name: '제스처 설정',
 	path: '/',
 }
 
+const SetDirs = createContext<((directions: direction[]) => void)>(() => {});
+const Dirs = createContext<direction[]>([]);
+
+function GControl({ children }: Props) {
+
+	const [dirsState, setDirsLegacy] = useState<direction[]>([]);
+
+	const setDirsState = useCallback((directions: direction[]) => {
+		return setDirsLegacy(directions);
+	}, []);
+
+	return (
+		<SetDirs value={setDirsState}>
+			<Dirs value={dirsState}>
+				{children}
+			</Dirs>
+		</SetDirs>
+	);
+}
+
+const reset_options: ExitReset = {
+	stop_drawing: false,
+	remove_mouse_move: false
+}
+
 let gesture_context_menu = true;
 
-const GCanvas = memo(function({ setDirs, children }: Props & { setDirs: (dirs: direction[]) => void }) {
+const GCanvas = memo(function({ children }: Props) {
 
 	const drawing_target = useRef(null);
+	const setDirs = useContext(SetDirs);
 
 	useEffect(() => {
 		gesture_context_menu = true;
-		
+
 		exitReset();
 		variable.drawing_store.preserve = false;
 	});
@@ -56,7 +77,11 @@ const GCanvas = memo(function({ setDirs, children }: Props & { setDirs: (dirs: d
 			onMouseMove={(event) => {
 				const is_new_dir = mouseMove((event as unknown as MouseEvent), {
 					ignoreContextMenu: () => {
-						setDirs([]);
+						try {
+							setDirs([]);
+						} catch (error) {
+							console.error('에러!', error)
+						}
 						stopDrawing();
 						gesture_context_menu = false;
 					},
@@ -67,7 +92,11 @@ const GCanvas = memo(function({ setDirs, children }: Props & { setDirs: (dirs: d
 
 				if (!is_new_dir) return;
 
-				setDirs([...variable.directions.data]);
+				try {
+					setDirs([...variable.directions.data]);
+				} catch (error) {
+					console.error('에러!?', error)
+				}
 			}}
 			onContextMenu={(e) => {
 				if (gesture_context_menu) return;
@@ -89,64 +118,60 @@ const dirEl: { [key in direction]: IconType } = {
 	[direction.Down]: IoMdArrowRoundDown
 }
 
-function GDisplay({ children }: Props) {
+function GDisplay() {
 
-	const display_dirs: Ref<HTMLDivElement> = useRef(null);
-
-	const [dirs, setDirs] = useState<direction[]>([]);
+	const dirs = useContext(Dirs);
 
 	return (
-		<>
-			<GCanvas setDirs={setDirs}>
-				{children}
-			</GCanvas>
+		<div className='display-base direction-settings'>
 
-			<div className='display-base direction-settings'>
+			<div className='display-base setups'>
+				<div className='naming'>
+					<input id='naming-input' type="text" 
+						placeholder='설명 추가'
+						onKeyDown={e => {
+							if (
+								e.altKey
+								|| e.shiftKey
+								|| e.ctrlKey
+								|| e.metaKey
+							) return;
 
-				<div className='display-base setups'>
-					<div className='naming'>
-						<input id='naming-input' type="text" 
-							placeholder='설명 추가'
-							onKeyDown={e => {
-								if (
-									e.altKey
-									|| e.shiftKey
-									|| e.ctrlKey
-									|| e.metaKey
-								) return;
+							switch (e.key) {
+								case 'Escape':
+									document.body.focus();
+									break;
 
-								switch (e.key) {
-									case 'Escape':
-										document.body.focus();
-										break;
-
-									default:
-										break;
-								}
-							}}
-						/>
-					</div>
-					<button className='opacity display'>추가하기</button>
+								default:
+									break;
+							}
+						}}
+					/>
 				</div>
-
-				<div ref={display_dirs} className='display-base display dirs'>
-					{dirs.map(dir => {
-						const Icon = dirEl[dir];
-						return (<div className='dir'><Icon size='30px' /></div>);
-					})}
-				</div>
-				
+				<button className='opacity display'>추가하기</button>
 			</div>
-		</>
+
+			<div className='display-base display dirs'>
+				{dirs.map(dir => {
+					const Icon = dirEl[dir];
+					return (<div className='dir'><Icon size='30px' /></div>);
+				})}
+			</div>
+			
+		</div>
 	);
 }
 
 export default function() {
 	return (
 		<DisplayContainer>
-			<GDisplay>
-				<GridCanvas />
-			</GDisplay>
+			<GControl>
+				<GCanvas>
+					<GridCanvas />
+				</GCanvas>
+
+				<GDisplay />
+			</GControl>
 
 			<>
 				<button className="opacity option generate">
