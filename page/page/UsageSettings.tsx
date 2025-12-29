@@ -13,15 +13,15 @@ export const usageSetting: Setting = {
     path: '/usage'
 }
 
+let usage_context_menu = true;
+
 function UsageDisplay({ children }: Props) {
 
     const drawing_target = useRef(null);
-    const context_menu = useRef(true);
-
     useEffect(() => {
-        console.log('사용')
+        usage_context_menu = true;
+        
         exitReset();
-
         variable.command_store.clear();
         setCommand();
         variable.drawing_store.preserve = false;
@@ -44,7 +44,7 @@ function UsageDisplay({ children }: Props) {
             onMouseDown={(event) => {
                 mouseDown((event as unknown as MouseEvent), 
                     {
-                        acknowledgeContextMenu: () => context_menu.current = true,
+                        acknowledgeContextMenu: () => usage_context_menu = true,
                         use_mouse_move: false,
                         reset_options: {
                             remove_mouse_move: false
@@ -54,13 +54,13 @@ function UsageDisplay({ children }: Props) {
             }}
             onMouseMove={(event) => {
                 mouseMove((event as unknown as MouseEvent), {
-                    ignoreContextMenu: () => context_menu.current = false,
+                    ignoreContextMenu: () => usage_context_menu = false,
                     drawing_target: drawing_target.current,
                     show_command: true
                 });
             }}
             onContextMenu={(e) => {
-                if (context_menu.current) return;
+                if (usage_context_menu) return;
 
                 e.preventDefault();
                 e.stopPropagation();

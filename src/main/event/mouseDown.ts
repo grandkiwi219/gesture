@@ -17,7 +17,7 @@ export function mouseDown(event: MouseEvent,
     } = {}
 ) {
     if (event.button != 2) {
-        exitReset();
+        exitReset(reset_options);
         return;
     }
 

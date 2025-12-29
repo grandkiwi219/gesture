@@ -16,20 +16,26 @@ import { MdAddCircleOutline } from "react-icons/md";
 import { IoMdArrowRoundBack, IoMdArrowRoundDown, IoMdArrowRoundForward, IoMdArrowRoundUp } from "react-icons/io";
 
 
+const reset_options: ExitReset = {
+	stop_drawing: false,
+	remove_mouse_move: false
+}
+
 export const gestureSetting: Setting = {
 	name: '제스처 설정',
 	path: '/',
 }
 
-const GestureCanvas = memo(function({ setDirs, children }: Props & { setDirs: (dirs: direction[]) => void }) {
+let gesture_context_menu = true;
+
+const GCanvas = memo(function({ setDirs, children }: Props & { setDirs: (dirs: direction[]) => void }) {
 
 	const drawing_target = useRef(null);
-	const context_menu = useRef(true);
 
 	useEffect(() => {
-		console.log('제스처')
+		gesture_context_menu = true;
+		
 		exitReset();
-
 		variable.drawing_store.preserve = false;
 	});
 
@@ -39,24 +45,24 @@ const GestureCanvas = memo(function({ setDirs, children }: Props & { setDirs: (d
 			onMouseUp={gestureMouseUp}
 			onMouseLeave={gestureMouseLeave}
 			onMouseDown={(event) => {
-				stopDrawing();
-				setDirs([]);
 				mouseDown((event as unknown as MouseEvent), 
 					{
-						acknowledgeContextMenu: () => context_menu.current = true,
+						acknowledgeContextMenu: () => {},
 						use_mouse_move: false,
-						reset_options: {
-							stop_drawing: false,
-							remove_mouse_move: false
-						}
+						reset_options
 					}
 				);
 			}}
 			onMouseMove={(event) => {
-				const is_new_dir = mouseMove((event as unknown as MouseEvent), { 
-					ignoreContextMenu: () => context_menu.current = false,
+				const is_new_dir = mouseMove((event as unknown as MouseEvent), {
+					ignoreContextMenu: () => {
+						setDirs([]);
+						stopDrawing();
+						gesture_context_menu = false;
+					},
 					drawing_target: drawing_target.current,
-					show_command: false
+					show_command: false,
+					reset_options
 				});
 
 				if (!is_new_dir) return;
@@ -64,16 +70,17 @@ const GestureCanvas = memo(function({ setDirs, children }: Props & { setDirs: (d
 				setDirs([...variable.directions.data]);
 			}}
 			onContextMenu={(e) => {
-				if (context_menu.current) return;
+				if (gesture_context_menu) return;
 
 				e.preventDefault();
 				e.stopPropagation();
+				gesture_context_menu = true;
 			}}
 		>
 			{children}
 		</div>
 	);
-})
+});
 
 const dirEl: { [key in direction]: IconType } = {
 	[direction.Right]: IoMdArrowRoundForward,
@@ -82,7 +89,7 @@ const dirEl: { [key in direction]: IconType } = {
 	[direction.Down]: IoMdArrowRoundDown
 }
 
-function GestureDisplays({ children }: Props) {
+function GDisplay({ children }: Props) {
 
 	const display_dirs: Ref<HTMLDivElement> = useRef(null);
 
@@ -90,9 +97,9 @@ function GestureDisplays({ children }: Props) {
 
 	return (
 		<>
-			<GestureCanvas setDirs={setDirs}>
+			<GCanvas setDirs={setDirs}>
 				{children}
-			</GestureCanvas>
+			</GCanvas>
 
 			<div className='display-base direction-settings'>
 
@@ -135,12 +142,11 @@ function GestureDisplays({ children }: Props) {
 }
 
 export default function() {
-	console.log('제스처 wrap');
 	return (
 		<DisplayContainer>
-			<GestureDisplays>
+			<GDisplay>
 				<GridCanvas />
-			</GestureDisplays>
+			</GDisplay>
 
 			<>
 				<button className="opacity option generate">
@@ -153,9 +159,9 @@ export default function() {
 }
 
 function gestureMouseUp(event: any) {
-	mouseUp(event, { run: false, reset_options: { stop_drawing: false, remove_mouse_move: false } });
+	mouseUp(event, { run: false, reset_options });
 }
 
 function gestureMouseLeave() {
-	exitReset({ stop_drawing: false, remove_mouse_move: false });
+	exitReset(reset_options);
 }
