@@ -18,6 +18,10 @@ body {
     font-size: 75%;
 }
 
+input {
+    color: var(--color);
+}
+
 
 ::selection {
     background-color: var(--selection);

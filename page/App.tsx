@@ -12,6 +12,9 @@ import std from './std';
 import { navMenuReducer } from './utils/reducer';
 import { resizeNav } from './utils/decider';
 
+import { setCommand } from 'src/main/process';
+import { storageChanged } from 'src/main/event';
+
 
 export const NavContext = createContext<{
 	navMenuState: string,
@@ -57,17 +60,29 @@ export default function() {
 		init_nav_short_state = false;
 	}
 
+	useEffect(() => {
+		chrome.runtime.onMessage.addListener(mainStorageChanged);
+        function mainStorageChanged(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
+			storageChanged(message);
+			if (message.credit == 'commands') {
+				window.dispatchEvent(new Event(std.event.command_loaded));
+			}
+        }
+
+		setCommand().then(() => {
+			window.dispatchEvent(new Event(std.event.command_loaded));
+		});
+	}, []);
+
 	return (
 		<AppControl init_nav_state={init_nav_state} init_nav_short_state={init_nav_short_state}>
-			<Header></Header>
+			<Header />
 
 			<HashRouter>
-
-				<Sidebar></Sidebar>
-
-				<Page></Page>
-
+				<Sidebar />
+				<Page />
 			</HashRouter>
+
 		</AppControl>
 	);
 }

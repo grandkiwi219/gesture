@@ -44,14 +44,14 @@ export function exitRun() {
 
 export function exitReset(
     {
-    stop_drawing = true, remove_mouse_move = true
+    stop_drawing = true, remove_mouse_move = true, reset_directions = true
     }
     : ExitReset = {}
 ) {
     if (remove_mouse_move && variable.mouseMove)
         window.removeEventListener('mousemove', variable.mouseMove);
 
-    variable.directions.reset();
+    if (reset_directions) variable.directions.reset();
     variable.starting = false;
     variable.executing = false;
     variable.position = {
@@ -75,7 +75,7 @@ export function getCommandData() {
 }
 
 export async function setCommand(removeEvent?: Function) {
-    chrome.storage[storage_area].get([consts.store, sites]).then(async results => {
+    return await chrome.storage[storage_area].get([consts.store, sites]).then(async results => {
         if (decideThisSIte(results[sites], removeEvent))
             return;
 
@@ -88,7 +88,7 @@ export async function setCommand(removeEvent?: Function) {
 
         const filtered_keys = store_keys.filter((r) => typeof r == 'string');
 
-        chrome.storage[storage_area].get(filtered_keys).then(result => {
+        await chrome.storage[storage_area].get(filtered_keys).then(result => {
             variable.command_store = encodeMap<Gesture>(filtered_keys, result as KeyObject<Gesture>);
         });
     });

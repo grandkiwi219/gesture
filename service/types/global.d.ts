@@ -1,9 +1,11 @@
 type GesturePainting = string;
 
+type GestureType = 'script' | 'custom_script';
+
 interface Gesture {
     gesturePainting?: GesturePainting;
     description: string;
-    type: string;
+    type: GestureType;
     script: string;
 }
 

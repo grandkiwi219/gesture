@@ -54,7 +54,7 @@ export async function loadSites() {
     });
 }
 
-export function loadStorageChanged(
+export async function loadStorageChanged(
     changes: StorageChanges
 ) {
     if (!bg_state.loaded_command) return;
@@ -107,7 +107,7 @@ export function loadStorageChanged(
         const new_set = new Set(new_value);
 
         const added = new_value.filter(r => !old_set.has(r));
-        added.forEach(item => itemChecker(changes, item));
+        added.forEach(item => itemChecker(changes, item, false));
 
         const removed = old_value.filter(r => !new_set.has(r));
         removed.forEach(item => {
@@ -115,15 +115,17 @@ export function loadStorageChanged(
         });
 
         const added_set = new Set(added);
-        changed_items = changed_items.filter(r => 
+        changed_items = changed_items.filter(r =>
             r != store  // 스토어 아님
             && !added_set.has(r)    // 추가된 거 제외
             && new_set.has(r)   // 스토어에 담긴 거 제외
         );
     }
 
+    const storage_store = await chrome.storage[storage_area].get([store]);
+
     for (const item of changed_items) {
-        itemChecker(changes, item, changed);
+        itemChecker(changes, item, storage_store[store], changed);
     }
 
     // command_store 전송
@@ -132,6 +134,7 @@ export function loadStorageChanged(
             credit: 'commands',
             data: decodeMap(bg_variable.command_store)
         }
+        console.log(message)
         chrome.tabs.query({}).then(tabs => {
             tabs.forEach(tab => {
                 if (tab.id)
@@ -142,7 +145,7 @@ export function loadStorageChanged(
     }
 }
 
-function itemChecker(changes: StorageChanges, item_key: string, changed?: { commands: boolean }) {
+function itemChecker(changes: StorageChanges, item_key: string, store?: any, changed?: { commands: boolean }) {
     if (!regex.direction.test(item_key)) return;
 
     const change = changes[item_key];
@@ -156,6 +159,10 @@ function itemChecker(changes: StorageChanges, item_key: string, changed?: { comm
         || typeof gesture.type != 'string'
     ) {
         bg_variable.command_store.delete(item_key);
+        return;
+    }
+
+    if (Array.isArray(store) && !store.includes(item_key)) {
         return;
     }
 

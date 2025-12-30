@@ -38,4 +38,5 @@ interface MouseExit {
 interface ExitReset {
     stop_drawing?: boolean;
     remove_mouse_move?: boolean;
+    reset_directions?: boolean;
 }

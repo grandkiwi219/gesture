@@ -1,10 +1,9 @@
-// import './CSS/GestureSettings.css' with { type: 'css' };
-
 import DisplayContainer from 'page/components/DisplayContainer';
-import { GCanvas, GControl, GDirs, GDisplay, GSetups } from './components/GestureComponents';
-import GridCanvas from 'page/components/GridCanvas';
 
-import { MdAddCircleOutline } from "react-icons/md";
+import { GOptions } from './components/GestureOptions';
+import { GCanvas, GControl, GDirs, GDisplay, GSetups } from './components/GestureDisplay';
+
+import GridCanvas from 'page/components/GridCanvas';
 
 
 
@@ -30,12 +29,7 @@ export default function() {
 				</GDisplay>
 			</GControl>
 
-			<>
-				<button className="opacity option generate">
-					<MdAddCircleOutline size={30} />
-				</button>
-				<div className="option grab"></div>
-			</>
+			<GOptions />
 		</DisplayContainer>
 	);
 }

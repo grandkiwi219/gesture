@@ -57,6 +57,9 @@
     border-radius: var(--paper-border-radius);
 
     background-color: var(--background-color);
+    
+    transform: translateX(0);
+    transition: transform 0.12s;
 }
 
 #naming-input:focus {
@@ -65,7 +68,7 @@
 
     border: 1px solid gray;
 
-    transition: border-color var(--transition-speed);
+    transition: border-color var(--transition-speed), transform 0.12s;
 }
 
 #naming-input.warning:focus {
@@ -113,4 +116,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.dir.translucent {
+    background-color: var(--background-color-translucent);
 }

@@ -7,7 +7,9 @@ import { exitReset } from 'src/main/process';
 import { mouseDown, mouseMove, mouseUp } from 'src/main/event';
 import { stopDrawing } from 'src/main/drawing';
 
-import '../CSS/GestureComponents.css' with { type: 'css' };
+import '../CSS/GestureDisplay.css' with { type: 'css' };
+
+import utils from 'page/utils/utils';
 
 import { MdOutlineCancel } from "react-icons/md";
 import { IoMdArrowRoundBack, IoMdArrowRoundDown, IoMdArrowRoundForward, IoMdArrowRoundUp } from "react-icons/io";
@@ -20,12 +22,8 @@ export function GControl({ children }: Props) {
 
 	const [dirsState, setDirsLegacy] = useState<direction[]>([]);
 
-	const setDirsState = useCallback((directions: direction[]) => {
-		return setDirsLegacy(directions);
-	}, []);
-
 	return (
-		<SetDirs value={setDirsState}>
+		<SetDirs value={setDirsLegacy}>
 			<Dirs value={dirsState}>
 				{children}
 			</Dirs>
@@ -35,14 +33,14 @@ export function GControl({ children }: Props) {
 
 const reset_options: ExitReset = {
 	stop_drawing: false,
-	remove_mouse_move: false
+	remove_mouse_move: false,
+	reset_directions: false
 }
 
 let gesture_context_menu = true;
 
 export function GCanvas({ children }: Props) {
 
-	const drawing_target = useRef(null);
 	const cancel = useRef<HTMLButtonElement | null>(null);
 
 	const setDirs = useContext(SetDirs);
@@ -58,7 +56,6 @@ export function GCanvas({ children }: Props) {
 		<div className='display-base display' style={{
 				position: 'relative'
 			}}
-			ref={drawing_target}
 			onMouseUp={gestureMouseUp}
 			onMouseLeave={gestureMouseLeave}
 			onMouseDown={(event) => {
@@ -74,11 +71,12 @@ export function GCanvas({ children }: Props) {
 				const is_new_dir = mouseMove((event as unknown as MouseEvent), {
 					ignoreContextMenu: () => {
 						cancel.current!.style.display = 'block';
+						variable.directions.reset();
 						setDirs([]);
 						stopDrawing();
 						gesture_context_menu = false;
 					},
-					drawing_target: drawing_target.current,
+					drawing_target: event.currentTarget,
 					show_command: false,
 					reset_options
 				});
@@ -129,7 +127,7 @@ export function GDisplay({ children }: Props) {
 	);
 }
 
-const dirEl: { [key in direction]: IconType } = {
+export const dirEl: { [key in direction]: IconType } = {
 	[direction.Right]: IoMdArrowRoundForward,
 	[direction.Left]: IoMdArrowRoundBack,
 	[direction.Up]: IoMdArrowRoundUp,
@@ -185,26 +183,30 @@ export function GSetups() {
             </div>
 
             <button className='opacity display'
-                onClick={() => {
+                onClick={async () => {
                     if (!naming.current) return;
                     
+					const key = variable.directions.data.join('');
+					if (variable.command_store.has(key)) {
+						utils.showAlert({ type: 'error', msg: '동일한 제스처가 존재합니다.' });
+						return;
+					}
+
                     if (naming.current.value) {
-                        const key = variable.directions.data.join('');
-                        if (variable.command_store.has(key)) {
-                            // 중복시 알림창
-
-                            return;
-                        }
-
                         const description = naming.current.value;
                         // 세팅창 생성
 
                         return;
                     }
                     
-                    // 알림창
                     naming.current.focus();
                     naming.current.classList.add('warning');
+					utils.showAlert({ type: 'error', msg: '제스처에 대한 설명을 작성하셔야 합니다.' });
+					naming.current.style.transform = 'translateX(-5px)';
+					await utils.setDelay(120);
+					naming.current.style.transform = 'translateX(5px)';
+					await utils.setDelay(120);
+					naming.current.style = '';
                 }}
             >
                 추가하기

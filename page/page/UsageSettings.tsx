@@ -22,18 +22,7 @@ function UsageDisplay({ children }: Props) {
         usage_context_menu = true;
         
         exitReset();
-        variable.command_store.clear();
-        setCommand();
         variable.drawing_store.preserve = false;
-
-        chrome.runtime.onMessage.addListener(mainStorageChanged);
-        function mainStorageChanged(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
-            storageChanged(message);
-        }
-
-        return () => {
-            chrome.runtime.onMessage.removeListener(mainStorageChanged);
-        }
     });
 
     return (

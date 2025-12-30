@@ -29,6 +29,10 @@ const size = {
 	display: 1000
 }
 
+const event = {
+	command_loaded: 'command_loaded'
+}
+
 enum Theme {
 	Dark = 'dark',
 	Light = 'light',
@@ -39,5 +43,6 @@ export default {
 	key,
 	state,
 	size,
+	event,
 	Theme: Theme,
 };

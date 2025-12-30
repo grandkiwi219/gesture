@@ -1,0 +1,73 @@
+.option {
+    /* max-width: var(--paper-min-width); */
+    width: 100%;
+    height: 100px;
+    
+    padding: 12px;
+
+    background-color: var(--background-color-hover) !important;
+
+    border-bottom: 1px solid var(--background-color-active);
+    border-radius: 5px;
+
+    display: flex;
+    flex-flow: row wrap;
+    gap: 10px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+button.option:active {
+    border: none;
+    border-top: 1px solid var(--background-color-active);
+}
+
+.option.grab {
+    cursor: grab;
+}
+
+.option.grabbing {
+    cursor: grabbing;
+}
+
+.option:first-child {
+    border-top-left-radius: var(--paper-border-radius);
+    border-top-right-radius: var(--paper-border-radius);
+}
+
+.option:last-child {
+    border-bottom-left-radius: var(--paper-border-radius);
+    border-bottom-right-radius: var(--paper-border-radius);
+}
+
+.option.generate {
+    height: 60px;
+    color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* in option */
+
+.option > img {
+    height: 100%;
+}
+
+.option-dirs {
+    overflow: hidden;
+    overflow-x: auto;
+
+    scrollbar-width: none;
+
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.option-dirs:-webkit-scrollbar {
+    display: none;
+}

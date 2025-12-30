@@ -52,10 +52,12 @@
 /* options */
 
 .options-container {
+    --options-container-nothing-height: 100px;
+
     flex-grow: 1;
     flex-basis: var(--paper-min-width);
 
-    height: fit-content;
+    height: var(--options-container-nothing-height);
 
     padding: var(--container-padding);
 
@@ -66,50 +68,18 @@
 
     display: flex;
     flex-flow: column wrap;
+    align-items: center;
     gap: 10px;
 }
 
-/* option */
+.options-container::after {
+    content: 'nothing!';
+    text-align: center;
+    line-height: calc(var(--options-container-nothing-height) - var(--container-padding) * 2);
 
-.option {
-    /* max-width: var(--paper-min-width); */
-    width: 100%;
-    height: 100px;
-
-    background-color: var(--background-color-hover) !important;
-
-    border-bottom: 1px solid var(--background-color-active);
-    border-radius: 5px;
-}
-
-button.option:active {
-    border: none;
-    border-top: 1px solid var(--background-color-active);
-}
-
-.option.grab {
-    cursor: grab;
-}
-
-.option.grabbing {
-    cursor: grabbing;
-}
-
-.option:first-child {
-    border-top-left-radius: var(--paper-border-radius);
-    border-top-right-radius: var(--paper-border-radius);
-}
-
-.option:last-child {
-    border-bottom-left-radius: var(--paper-border-radius);
-    border-bottom-right-radius: var(--paper-border-radius);
-}
-
-.option.generate {
-    height: 60px;
     color: gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+}
+
+.options-container:has(*) {
+    height: fit-content;
 }
