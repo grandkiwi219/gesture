@@ -134,7 +134,6 @@ export async function loadStorageChanged(
             credit: 'commands',
             data: decodeMap(bg_variable.command_store)
         }
-        console.log(message)
         chrome.tabs.query({}).then(tabs => {
             tabs.forEach(tab => {
                 if (tab.id)
