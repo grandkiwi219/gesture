@@ -1,4 +1,4 @@
-import { createContext, CSSProperties, SetStateAction, useContext, useState } from "react";
+import { createContext, CSSProperties, SetStateAction, useContext, useEffect, useState } from "react";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
 import { storage_area, store } from "src/main/consts";
@@ -74,27 +74,33 @@ function SettingScript({ state, setState }: { state: SettingGesture, setState: (
     );
 }
 
-function SettingCustomScript({ setState }: { setState: ((value: SetStateAction<SettingGesture | null>) => void) }) {
+function SettingCustomScript({ state, setState }: { state: SettingGesture, setState: ((value: SetStateAction<SettingGesture | null>) => void) }) {
 
     return (
-        <CodeEditor
-            language="js"
-            placeholder="사용자 지정 스크립트 작성이 필요합니다."
-            onChange={(evn) => {
-                setState(s => {
-                    s!.type = 'custom_script';
-                    s!.script = evn.target.value;
-                    return { ...s! };
-                });
-            }}
-            padding={15}
-            data-color-mode={localStorage.getItem(std.key.theme) as Theme || 'light'}
-            style={{
-                width: '100%',
-                height: '100%',
-                fontSize: '14px'
-            }}
-        />
+        <div style={{
+            width: '100%',
+            height: '100%',
+            overflow: 'auto'
+        }}>
+            <CodeEditor
+                value={state.script ? state.script : ''}
+                language="js"
+                placeholder="사용자 지정 스크립트 작성이 필요합니다."
+                onChange={(evn) => {
+                    setState(s => {
+                        s!.type = 'custom_script';
+                        s!.script = evn.target.value;
+                        return { ...s! };
+                    });
+                }}
+                padding={15}
+                data-color-mode={localStorage.getItem(std.key.theme) as Theme || 'light'}
+                style={{
+                    fontSize: '14px',
+                    minHeight: '100%'
+                }}
+            />
+        </div>
     );
 }
 
@@ -127,7 +133,7 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
 
             backgroundColor: 'var(--background-color)',
             borderRadius: '20px',
-            boxShadow: '0px 0px 8px rgba(128, 128, 128, 0.7)',
+            boxShadow: '0px 0px 8px var(--background-color)',
             
             display: 'flex',
             flexDirection: 'column',
@@ -179,7 +185,7 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                 </div>
             </div>
 
-            {state.type == 'custom_script' ? <SettingCustomScript setState={setState} /> : <SettingScript state={state} setState={setState} />}
+            {state.type == 'custom_script' ? <SettingCustomScript state={state} setState={setState} /> : <SettingScript state={state} setState={setState} />}
 
             <div style={{
                 width: '100%',
@@ -198,6 +204,9 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                     alignItems: 'center'
                 }}>
                     <button
+                        style={{
+                            padding: '10px 24px'
+                        }}
                         onClick={async event => {
                             if (!state.script) {
                                 utils.showAlert({
@@ -230,6 +239,8 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                                 
                                 utils.showAlert({ msg: `"${state.description}"(이)가 추가되었습니다.` });
 
+                                window.dispatchEvent(new Event(std.event.command_added));
+
                                 setState(null);
                             } catch (error) {
                                 console.error(error);
@@ -248,6 +259,9 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                     alignItems: 'center'
                 }}>
                     <button
+                        style={{
+                            padding: '1px 24px'
+                        }}
                         onClick={() => {
                             setState(null);
                         }}
@@ -263,6 +277,16 @@ export default function() {
 
     const state = useContext(SettingState);
     const setState = useContext(SettingSetter);
+
+    useEffect(() => {
+        if (state) {
+            document.documentElement.classList.add('fix');
+        }
+        else {
+            document.documentElement.classList.remove('fix');
+        }
+
+    }, [state]);
 
     return (
         <div 

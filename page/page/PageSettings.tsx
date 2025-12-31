@@ -5,11 +5,9 @@ export const pageSetting: Setting = {
 }
 
 export default function() {
-    console.log('페이지')
 
     return (
         <>
-            <div>페이지 세팅</div>
         </>
     );
 }

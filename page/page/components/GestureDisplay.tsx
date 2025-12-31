@@ -9,6 +9,7 @@ import { stopDrawing } from 'src/main/drawing';
 
 import '../CSS/GestureDisplay.css' with { type: 'css' };
 
+import std from 'page/std';
 import utils from 'page/utils/utils';
 
 import { SettingSetter } from 'page/components/Setting';
@@ -102,6 +103,7 @@ export function GCanvas({ children }: Props) {
 					cancel.current!.style.display = 'none';
 					setDirs([]);
 					exitReset();
+					window.dispatchEvent(new Event(std.event.command_added));
 				}}
 			>
 				<MdOutlineCancel size={25} />
@@ -156,6 +158,16 @@ export function GSetups() {
 
 	const setSetting = useContext(SettingSetter);
 
+	useEffect(() => {
+		window.addEventListener(std.event.command_added, commandAdded);
+
+		return () => window.removeEventListener(std.event.command_added, commandAdded);
+
+		function commandAdded() {
+			naming.current && (naming.current.value = '');
+		}
+	});
+
     return (
         <div className='display-base setups'>
 
@@ -170,19 +182,29 @@ export function GSetups() {
                             || e.metaKey
                         ) return;
 
-                        if (naming.current!.classList.contains('warning')) {
-                            naming.current?.classList.remove('warning');
-                        }
-
                         switch (e.key) {
                             case 'Escape':
-                                document.body.focus();
+                                document.documentElement.focus();
                                 break;
+							
+							case 'Enter':
+								if (e.currentTarget.value) {
+                        			setSetting({ description: e.currentTarget.value });
+								}
+								else {
+									pleaseSetDesc(e.currentTarget);
+								}
+								break;
 
                             default:
                                 break;
                         }
                     }}
+					onChange={e => {
+						if (e.currentTarget.classList.contains('warning')) {
+							e.currentTarget.classList.remove('warning');
+						}
+					}}
                 />
             </div>
 
@@ -202,19 +224,11 @@ export function GSetups() {
 					}
 
                     if (naming.current.value) {
-                        const description = naming.current.value;
-                        setSetting({ description });
+                        setSetting({ description: naming.current.value });
                         return;
                     }
                     
-                    naming.current.focus();
-                    naming.current.classList.add('warning');
-					utils.showAlert({ type: 'error', msg: '제스처에 대한 설명을 작성하셔야 합니다.' });
-					naming.current.style.transform = 'translateX(-5px)';
-					await utils.setDelay(120);
-					naming.current.style.transform = 'translateX(5px)';
-					await utils.setDelay(120);
-					naming.current.style = '';
+                    pleaseSetDesc(naming.current);
                 }}
             >
                 추가하기
@@ -222,4 +236,15 @@ export function GSetups() {
 
         </div>
     );
+}
+
+async function pleaseSetDesc(target: HTMLElement){
+	target.focus();
+	target.classList.add('warning');
+	utils.showAlert({ type: 'error', msg: '제스처에 대한 설명을 작성하셔야 합니다.' });
+	target.style.transform = 'translateX(-5px)';
+	await utils.setDelay(120);
+	target.style.transform = 'translateX(5px)';
+	await utils.setDelay(120);
+	target.style = '';
 }

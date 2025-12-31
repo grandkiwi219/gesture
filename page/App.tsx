@@ -60,8 +60,9 @@ export default function() {
 
 	useEffect(() => {
 		chrome.runtime.onMessage.addListener(mainStorageChanged);
-        function mainStorageChanged(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
-			storageChanged(message);
+        async function mainStorageChanged(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
+			await storageChanged(message);
+			
 			if (message.credit == 'commands') {
 				window.dispatchEvent(new Event(std.event.command_loaded));
 			}

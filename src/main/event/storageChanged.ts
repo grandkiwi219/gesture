@@ -3,14 +3,14 @@ import { variable } from "../variable";
 import { encodeMap } from "../utils/utils";
 import logger from "../utils/logger";
 
-export function storageChanged(message: ContentMessage, addEvent?: Function, removeEvent?: Function) {
+export async function storageChanged(message: ContentMessage, addEvent?: Function, removeEvent?: Function) {
     switch (message.credit) {
         case 'sites':
             changeSites(message.data as Sites, addEvent, removeEvent);
             break;
 
         case 'commands':
-            changeCommands(message.data as KeyObject<Gesture>);
+            await changeCommands(message.data as KeyObject<Gesture>);
             break;
 
         default:
@@ -27,8 +27,7 @@ export function changeSites(changed_sites: Sites, addEvent: Function | undefined
     }
 }
 
-export function changeCommands(changed_command_store: KeyObject<Gesture>) {
-    variable.command_store.clear();
-    setCommand();
+export async function changeCommands(changed_command_store: KeyObject<Gesture>) {
+    await setCommand();
     //variable.command_store = encodeMap<Gesture>(Object.keys(changed_command_store), changed_command_store as KeyObject<Gesture>);
 }

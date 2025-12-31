@@ -119,6 +119,119 @@ const initial_gesture: { [key: string]: Gesture } = {
         script: scripts.focus_right_tap.key,
         gesturePainting: '',
     },
+
+    drul: {
+        description: '상자에욧!',
+        type: 'custom_script',
+        script: `(function() {
+async function setDelay(time) {
+    return await new Promise(r => setTimeout(r, time));
+}
+
+async function showAlert({ type, msg = undefined }) {
+    const alert = document.createElement('div');
+    alert.classList.add('show-alert');
+    if (type) alert.classList.add(type);
+    alert.textContent = msg ?? '메세지가 할당되지 않았습니다.';
+
+    document.body.appendChild(alert);
+
+    await setDelay(100);
+    alert.classList.add('show');
+    alert.classList.add('down');
+    await setDelay(400);
+    alert.classList.add('up');
+    await setDelay(2 * 1000);
+    alert.classList.remove('show');
+    await setDelay(200);
+    alert.remove();
+
+    return true;
+}
+
+  const id = 'gesture-im-box';
+
+  const st = document.createElement('style');
+  st.id = id;
+  st.textContent=\`.show-alert {
+    --alert-down: 20px;
+    --alert-up: 10px;
+    --box-shadow: 0px 0px 8px rgba(128, 128, 128, 0.7);
+    --background-color: #0f0f0f;
+    --background-color-hover: #6464644b;
+
+    max-width: 90vw;
+    width: fit-content;
+    height: fit-content;
+
+    padding: 12px 15px;
+    border-radius: 40px;
+
+    border: 2.5px solid var(--background-color-hover);
+    background-color: var(--background-color);
+    color: white;
+
+    box-shadow: 0px 0px 2px rgba(128, 128, 128, 0.7);
+
+    position: fixed;
+    top: 0px;
+    left: 50%;
+
+    opacity: 0;
+
+    font-size: 14px;
+    text-align: center;
+    word-break: keep-all;
+
+    user-select: none;
+
+    transform: translateX(-50%) translateY(-50%);
+    transition: opacity .2s, top 0.4s ease-out, transform 0.4s ease-in-out;
+
+    z-index: 100000;
+}
+
+.show-alert.show {
+    opacity: 1;
+    transform: translateX(-50%);
+}
+
+.show-alert.down {
+    top: calc(30px + var(--alert-down));
+}
+
+.show-alert.up {
+    top: calc(30px + var(--alert-down) - var(--alert-up));
+}
+
+.show-alert.error {
+    color: #fff;
+    border-color: rgb(196, 0, 0);
+    background-color: rgb(255, 55, 55);
+    box-shadow: var(--box-shadow);
+}
+
+.show-alert.warn {
+    color: #fff;
+    border-color: rgb(179, 101, 1);
+    background-color: rgb(255, 177, 31);
+    box-shadow: var(--box-shadow);
+}
+
+.show-alert.dev {
+    color: #fff;
+    border-color: rgb(0, 52, 196);
+    background-color: rgb(48, 103, 255);
+    box-shadow: var(--box-shadow);
+}\`;
+  if (!document.getElementById(id))  {
+    document.head.appendChild(st);
+  }
+  
+  showAlert({ msg: '상자에욧!' });
+})();`,
+        gesturePainting: '',
+    }
 };
 
 export default initial_gesture;

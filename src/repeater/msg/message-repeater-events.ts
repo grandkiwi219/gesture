@@ -25,7 +25,12 @@ export function executeCustomScript(data_script: string) {
     // @ts-ignore
     const gestureTrustedScript = trustedTypes.createPolicy(`${initial}TrustedScript`, {
         // @ts-ignore
-        createScript: (string) => string.replace(/Function|eval|constructor./g, ''),
+        createScript: (string) => 
+`
+(function() {
+${string.replace(/Function|eval|constructor./g, '')}
+})();
+`,
     });
 
     const script = document.createElement('script');
