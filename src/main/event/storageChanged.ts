@@ -1,4 +1,4 @@
-import { decideThisSIte } from "../process";
+import { decideThisSIte, setCommand } from "../process";
 import { variable } from "../variable";
 import { encodeMap } from "../utils/utils";
 import logger from "../utils/logger";
@@ -28,5 +28,7 @@ export function changeSites(changed_sites: Sites, addEvent: Function | undefined
 }
 
 export function changeCommands(changed_command_store: KeyObject<Gesture>) {
-    variable.command_store = encodeMap<Gesture>(Object.keys(changed_command_store), changed_command_store as KeyObject<Gesture>);
+    variable.command_store.clear();
+    setCommand();
+    //variable.command_store = encodeMap<Gesture>(Object.keys(changed_command_store), changed_command_store as KeyObject<Gesture>);
 }
