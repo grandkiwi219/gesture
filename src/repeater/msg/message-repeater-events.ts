@@ -1,8 +1,12 @@
 import { initial } from "src/main/consts";
 import logger from "src/main/utils/logger";
-import { trustedTypes } from "trusted-types";
 
 let ignore_context_menu = false;
+
+window.addEventListener('DOMContentLoaded', () => {
+    
+})
+
 
 export async function contextMenuEvent(event: PointerEvent) {
     if (!ignore_context_menu) {
@@ -18,13 +22,14 @@ export function ignoreContextMenu(data: boolean) {
 }
 
 export function executeCustomScript(data_script: string) {
-    const TrustedScript = trustedTypes.createPolicy(`${initial}TrustedScript`, {
+    // @ts-ignore
+    const gestureTrustedScript = trustedTypes.createPolicy(`${initial}TrustedScript`, {
+        // @ts-ignore
         createScript: (string) => string.replace(/Function|eval|constructor./g, ''),
     });
 
-
     const script = document.createElement('script');
-    script.textContent = TrustedScript.createScript(data_script).toString();
+    script.textContent = gestureTrustedScript!.createScript(data_script) as unknown as string;
     const target = document.head || document.documentElement;
     target.appendChild(script);
 }
