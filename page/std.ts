@@ -33,7 +33,7 @@ const event = {
 	command_loaded: 'command_loaded'
 }
 
-enum Theme {
+export enum Theme {
 	Dark = 'dark',
 	Light = 'light',
 }

@@ -11,6 +11,8 @@ import '../CSS/GestureDisplay.css' with { type: 'css' };
 
 import utils from 'page/utils/utils';
 
+import { SettingSetter } from 'page/components/Setting';
+
 import { MdOutlineCancel } from "react-icons/md";
 import { IoMdArrowRoundBack, IoMdArrowRoundDown, IoMdArrowRoundForward, IoMdArrowRoundUp } from "react-icons/io";
 
@@ -152,6 +154,8 @@ export function GSetups() {
 
     const naming = useRef<HTMLInputElement | null>(null);
 
+	const setSetting = useContext(SettingSetter);
+
     return (
         <div className='display-base setups'>
 
@@ -185,6 +189,11 @@ export function GSetups() {
             <button className='opacity display'
                 onClick={async () => {
                     if (!naming.current) return;
+
+					if (variable.directions.data.length < 1) {
+						utils.showAlert({ type: 'dev', msg: '허용되지 않은 경로입니다.' });
+						return;
+					}
                     
 					const key = variable.directions.data.join('');
 					if (variable.command_store.has(key)) {
@@ -194,8 +203,7 @@ export function GSetups() {
 
                     if (naming.current.value) {
                         const description = naming.current.value;
-                        // 세팅창 생성
-
+                        setSetting({ description });
                         return;
                     }
                     

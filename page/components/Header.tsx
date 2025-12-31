@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 
 import './CSS/Header.css' with { type: 'css' };
 
-import { NavContext } from 'page/App';
+import { NavSetter } from 'page/App';
 
 import { initial } from 'src/main/consts';
 import std from 'page/std';
@@ -34,14 +34,14 @@ function SetTheme() {
 
 export default function() {
 
-    const nav_context = useContext(NavContext);
+    const setNavState = useContext(NavSetter);
 
     return (
         <>
             <header>
                 <button className='opacity'
                     onClick={() => {
-                        nav_context?.setNavMenuState({ type: 'execute' });
+                        setNavState({ type: 'execute' });
                     }}
                 >
                     <LuMenu size={std.size.icon} />

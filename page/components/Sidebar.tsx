@@ -3,7 +3,7 @@ import { NavLink } from 'react-router';
 
 import './CSS/Sidebar.css' with { type: 'css' };
 
-import { NavContext } from 'page/App';
+import { NavSetter, NavState } from 'page/App';
 import { gestureSetting } from 'page/page/GestureSettings';
 import { usageSetting } from 'page/page/UsageSettings';
 import { pageSetting } from 'page/page/PageSettings';
@@ -39,14 +39,15 @@ function NavA({ Icon, setting }: NavProps) {
 
 function NavControl({ children }: Props) {
 
-    const nav_context = useContext(NavContext);
+    const navState = useContext(NavState);
+    const setNavState = useContext(NavSetter);
 
     return (
-        <nav id={menu.main} className={nav_context?.navMenuState}
+        <nav id={menu.main} className={navState || ''}
             onClick={(e) => {
                 if (
-                    nav_context?.navMenuState != std.state.nav.none_open
-                    && nav_context?.navMenuState != std.state.nav.icon_open
+                    navState != std.state.nav.none_open
+                    && navState != std.state.nav.icon_open
                 ) return;
 
                 const target = e.target as HTMLElement;
@@ -58,7 +59,7 @@ function NavControl({ children }: Props) {
                     || document.getElementById(menu.bottom)!.contains(target)
                 ) return;
 
-                nav_context.setNavMenuState({ type: 'execute' });
+                setNavState({ type: 'execute' });
             }}
         >
             {children}
