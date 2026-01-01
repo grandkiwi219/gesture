@@ -260,7 +260,7 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                 }}>
                     <button
                         style={{
-                            padding: '1px 24px'
+                            padding: '10px 24px'
                         }}
                         onClick={() => {
                             setState(null);
