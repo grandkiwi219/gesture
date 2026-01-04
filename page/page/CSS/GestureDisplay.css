@@ -46,46 +46,13 @@
     align-items: center;
 }
 
-#naming-input {
-    width: 100%;
-    height: 40px;
-
-    padding: 2px 17px;
-
-    border: 1px solid var(--background-color);
-    border-bottom-color: var(--background-color-active);
-    border-radius: var(--paper-border-radius);
-
-    background-color: var(--background-color);
-    
-    transform: translateX(0);
-    transition: transform 0.12s;
-}
-
-#naming-input:focus {
-    outline: none;
-    box-shadow: none;
-
-    border: 1px solid gray;
-
-    transition: border-color var(--transition-speed), transform 0.12s;
-}
-
-#naming-input.warning:focus {
-    border-color: red;
-}
-
-#naming-input::placeholder {
-    color: rgb(117, 117, 117);
-}
-
 .setups > button {
     background-color: var(--background-color);
 }
 
 .setups > button:active {
     border: none;
-    border-top: 1px solid var(--background-color-active);
+    border-top: var(--paper-item-border);
 }
 
 /* GDirs */
@@ -107,7 +74,7 @@
 
     padding: 8px;
 
-    border-bottom: 1px solid var(--background-color-active);
+    border-bottom: var(--paper-item-border);
     border-radius: var(--paper-border-radius);
 
     color: gray;

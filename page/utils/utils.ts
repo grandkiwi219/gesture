@@ -1,3 +1,4 @@
+import { sites, storage_area } from 'src/main/consts';
 import std from '../std';
 
 function decideTheme() {
@@ -74,7 +75,7 @@ async function showAlert({ type, msg = undefined }: Alert) {
     return true;
 }
 
-export function getPosY(element: HTMLElement){ 
+function getPosY(element: HTMLElement){ 
     let posY = element.offsetTop; 
     if(element.parentElement){ 
         posY -= element.parentElement.offsetTop; 
@@ -88,5 +89,5 @@ export default {
     drawBoard,
     setDelay,
     showAlert,
-    getPosY
+    getPosY,
 }

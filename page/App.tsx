@@ -60,13 +60,23 @@ export default function() {
 
 	useEffect(() => {
 		chrome.runtime.onMessage.addListener(mainStorageChanged);
-        async function mainStorageChanged(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
+		async function mainStorageChanged(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
 			await storageChanged(message);
-			
-			if (message.credit == 'commands') {
-				window.dispatchEvent(new Event(std.event.command_loaded));
+
+			switch (message?.credit) {
+				case 'commands':
+					window.dispatchEvent(new Event(std.event.command_loaded));
+					break;
+
+				case 'sites':
+					window.dispatchEvent(new CustomEvent(std.event.site_loaded, { detail: message.data }));
+					break;
+
+				default:
+					console.error('알 수 없는 메세지:', message);
+					break;
 			}
-        }
+		}
 
 		setCommand().then(() => {
 			window.dispatchEvent(new Event(std.event.command_loaded));

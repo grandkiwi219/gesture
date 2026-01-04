@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import './CSS/DisplayContainer.css' with { type: 'css' };
 
-import { getPosY } from 'page/utils/utils';
+import utils from 'page/utils/utils';
 
 
 export default function({ children }: Props) {
@@ -14,7 +14,7 @@ export default function({ children }: Props) {
         const resize = () => {
             if (!options_container.current || !display_container.current) return;
 
-            const top = getPosY(options_container.current);
+            const top = utils.getPosY(options_container.current);
             const dis_con = display_container.current.style;
 
             if (top > 0) {

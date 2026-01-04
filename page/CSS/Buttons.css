@@ -12,6 +12,7 @@ button, nav#menu > a {
     color: var(--color);
     background-color: transparent;
     display: flex;
+    justify-content: center;
     align-items: center;
     user-select: none;
     cursor: pointer;

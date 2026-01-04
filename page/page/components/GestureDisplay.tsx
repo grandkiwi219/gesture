@@ -16,6 +16,7 @@ import { SettingSetter } from 'page/components/Setting';
 
 import { MdOutlineCancel } from "react-icons/md";
 import { IoMdArrowRoundBack, IoMdArrowRoundDown, IoMdArrowRoundForward, IoMdArrowRoundUp } from "react-icons/io";
+import Input, { pleaseInput } from 'page/components/Input';
 
 
 const SetDirs = createContext<((directions: direction[]) => void)>(() => {});
@@ -152,6 +153,8 @@ export function GDirs() {
     );
 }
 
+const GS_desc_msg = '제스처에 대한 설명을 작성하셔야 합니다.';
+
 export function GSetups() {
 
     const naming = useRef<HTMLInputElement | null>(null);
@@ -172,27 +175,16 @@ export function GSetups() {
         <div className='display-base setups'>
 
             <div className='naming'>
-                <input ref={naming} id='naming-input' type="text" 
+                <Input id='naming-input' ref={naming}
                     placeholder='설명 추가'
-                    onKeyDown={e => {
-                        if (
-                            e.altKey
-                            || e.shiftKey
-                            || e.ctrlKey
-                            || e.metaKey
-                        ) return;
-
+                    onKeyDownCase={e => {
                         switch (e.key) {
-                            case 'Escape':
-                                document.documentElement.focus();
-                                break;
-							
 							case 'Enter':
 								if (e.currentTarget.value) {
                         			setSetting({ description: e.currentTarget.value });
 								}
 								else {
-									pleaseSetDesc(e.currentTarget);
+									pleaseInput(GS_desc_msg, e.currentTarget);
 								}
 								break;
 
@@ -200,16 +192,11 @@ export function GSetups() {
                                 break;
                         }
                     }}
-					onChange={e => {
-						if (e.currentTarget.classList.contains('warning')) {
-							e.currentTarget.classList.remove('warning');
-						}
-					}}
                 />
             </div>
 
             <button className='opacity display'
-                onClick={async () => {
+                onClick={() => {
                     if (!naming.current) return;
 
 					if (variable.directions.data.length < 1) {
@@ -228,7 +215,7 @@ export function GSetups() {
                         return;
                     }
                     
-                    pleaseSetDesc(naming.current);
+                    pleaseInput(GS_desc_msg, naming.current);
                 }}
             >
                 추가하기
@@ -236,15 +223,4 @@ export function GSetups() {
 
         </div>
     );
-}
-
-async function pleaseSetDesc(target: HTMLElement){
-	target.focus();
-	target.classList.add('warning');
-	utils.showAlert({ type: 'error', msg: '제스처에 대한 설명을 작성하셔야 합니다.' });
-	target.style.transform = 'translateX(-5px)';
-	await utils.setDelay(120);
-	target.style.transform = 'translateX(5px)';
-	await utils.setDelay(120);
-	target.style = '';
 }

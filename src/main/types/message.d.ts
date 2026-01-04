@@ -8,4 +8,4 @@ interface CommandsMessage {
     data: KeyObject<Gesture>
 }
 
-type ContentMessage = SitesMessage | CommandsMessage;
+type ContentMessage = SitesMessage | CommandsMessage | null;

@@ -7,7 +7,7 @@
 
     background-color: var(--background-color-hover) !important;
 
-    border-bottom: 1px solid var(--background-color-active);
+    border-bottom: var(--paper-item-border);
     border-radius: 5px;
 
     display: flex;
@@ -21,7 +21,7 @@
 
 button.option:active {
     border: none;
-    border-top: 1px solid var(--background-color-active);
+    border-top: var(--paper-item-border);
 }
 
 .option.grab {

@@ -4,7 +4,7 @@ import { encodeMap } from "../utils/utils";
 import logger from "../utils/logger";
 
 export async function storageChanged(message: ContentMessage, addEvent?: Function, removeEvent?: Function) {
-    switch (message.credit) {
+    if (message) switch (message.credit) {
         case 'sites':
             changeSites(message.data as Sites, addEvent, removeEvent);
             break;

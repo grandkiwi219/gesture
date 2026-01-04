@@ -67,7 +67,7 @@ export async function loadStorageChanged(
     }
 
     if (changed_items.includes(sites)) {
-        const result_sites = changes[sites].newValue;
+        const result_sites = changes[sites].newValue || [];
         if (Array.isArray(result_sites)) {
             // sites 전송
             const message: ContentMessage = {

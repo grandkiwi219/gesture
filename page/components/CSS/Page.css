@@ -3,6 +3,8 @@
     --paper-min-width: 300px;
     --paper-padding: 20px;
     --paper-border-radius: 20px;
+
+    --paper-item-border: 1px solid var(--background-color-active);
 }
 
 #page {

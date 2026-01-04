@@ -31,7 +31,9 @@ const size = {
 
 const event = {
 	command_loaded: 'command_loaded',
-	command_added: 'command_added'
+	site_loaded: 'site_loaded',
+	
+	command_added: 'command_added',
 }
 
 export enum Theme {

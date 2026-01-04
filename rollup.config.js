@@ -122,10 +122,6 @@ const options_page_plugin = [
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     }),
     commonjs(),
-    replace({
-        'process.env.NODE_ENV': JSON.stringify('production'),
-        preventAssignment: true
-    }),
     terser(),
     babel({
         babelHelpers: 'bundled',
@@ -149,7 +145,11 @@ if (parseInt(process.env.DEV) < 1) {
         typescript({
             tsconfig: tsconfig_path,
             outDir: options_page_output
-        })
+        }),
+        replace({
+            'process.env.NODE_ENV': JSON.stringify('production'),
+            preventAssignment: true
+        }),
     );
 }
 
@@ -191,6 +191,10 @@ else if (parseInt(process.env.DEV)) {
         html(options_page_html),
         serve(base),
         livereload(base),
+        replace({
+            'process.env.NODE_ENV': JSON.stringify('dev'),
+            preventAssignment: true
+        }),
     ]
 
     result = options_page;
