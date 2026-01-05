@@ -73,7 +73,6 @@ export default function() {
 					break;
 
 				default:
-					console.error('알 수 없는 메세지:', message);
 					break;
 			}
 		}
