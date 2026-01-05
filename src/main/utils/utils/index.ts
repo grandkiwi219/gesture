@@ -5,7 +5,7 @@ export function calcAngleDegrees({ x, y }: Coordinate): Angle {
 function canScroll(el: Element, scrollAxis: 'scrollTop' | 'scrollLeft'): boolean {
     if (0 === el[scrollAxis]) {
         el[scrollAxis] = 1;
-        if (1 === el[scrollAxis]) {
+        if (0.8 <= el[scrollAxis] && el[scrollAxis] <= 1) {
             el[scrollAxis] = 0;
             return true;
         }
