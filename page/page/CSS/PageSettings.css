@@ -66,23 +66,30 @@
     flex-flow: column wrap;
     align-items: center;
     gap: 20px;
-
-    display: none;
 }
 
-.ps-list:has(> *) {
-    display: flex;
+.ps-list:empty::after {
+    content: 'nothing!';
+    text-align: center;
+    line-height: 30px;
+    color: gray;
 }
 
 .ps-item {
     width: 100%;
     height: fit-content;
 
+    border-bottom: var(--paper-item-border);
+
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 10px;
 }
+
+/* .ps-list > *:last-child {
+    border-bottom: none;
+} */
 
 .ps-site {
     display: flex;
