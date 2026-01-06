@@ -1,4 +1,4 @@
-import { ChangeEvent, CSSProperties, KeyboardEventHandler, RefObject } from "react";
+import { ChangeEvent, CSSProperties, HTMLInputTypeAttribute, KeyboardEventHandler, RefObject } from "react";
 
 import './CSS/Input.css' with { type: 'css' };
 
@@ -11,7 +11,9 @@ export default function({
     ref,
     className,
     style,
+    type,
     placeholder,
+    value,
     onKeyDownCase,
     onChange
 }: {
@@ -20,14 +22,17 @@ export default function({
     ref?: RefObject<any>,
     className?: string,
     style?: CSSProperties,
+    type?: HTMLInputTypeAttribute,
     placeholder?: string,
+    value?: string,
     onKeyDownCase?: KeyboardEventHandler<HTMLInputElement>,
     onChange?: ((e: ChangeEvent<HTMLInputElement>) => void)
 }) {
     return (
         <input id={id} name={name} ref={ref} className={'input ' + (className ?? '')} style={style}
-            type="text" 
+            type={type ?? 'text'} 
             placeholder={placeholder ?? '작성이 필요합니다.'}
+            defaultValue={value}
             onKeyDown={(e) => {
                 if (
                     e.altKey
@@ -50,6 +55,8 @@ export default function({
                 if (e.currentTarget.classList.contains('warning')) {
                     e.currentTarget.classList.remove('warning');
                 }
+
+
 
                 onChange && onChange(e);
             }}

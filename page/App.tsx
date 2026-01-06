@@ -72,6 +72,10 @@ export default function() {
 					window.dispatchEvent(new CustomEvent(std.event.site_loaded, { detail: [...new Set(message.data)] }));
 					break;
 
+				case 'options':
+					window.dispatchEvent(new Event(std.event.options_loaded));
+					break;
+
 				default:
 					break;
 			}

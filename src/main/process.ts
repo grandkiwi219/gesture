@@ -7,7 +7,7 @@ import { mouseMove } from "./event";
 import { storage_keys, storage_area, options } from "./consts";
 import { setInitialGesture } from "service/reset";
 import { credits, repeater_msg_event } from "src/repeater/msg/message-type";
-import { encodeMap } from "./utils/utils";
+import { encodeMap, merge } from "./utils/utils";
 
 export function mainAddEvent(addEvent: Function): (() => void) {
     return function() {
@@ -96,13 +96,13 @@ export async function setCommand(removeEvent?: Function) {
 
 export async function setOPtions() {
     await chrome.storage[storage_area].get([storage_keys.options]).then(r => {
-        decideOPtions(r[storage_keys.options]);
+        decideOptions(r[storage_keys.options]);
     });
 }
 
-export function decideOPtions(storage_options: any) {
+export function decideOptions(storage_options: any) {
     if (typeof storage_options == 'object') {
-        Object.assign(options, storage_options);
+        merge(options, storage_options);
     }
     else if (typeof storage_options != 'undefined') {
         chrome.storage[storage_area].remove([storage_keys.options]);

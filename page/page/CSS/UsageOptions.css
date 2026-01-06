@@ -1,0 +1,28 @@
+.option.usage {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.option-title {
+    width: 100%;
+    height: fit-content;
+
+    padding: 5px 10px;
+}
+
+.option-setup {
+    width: 100%;
+    height: fit-content;
+
+    padding: 5px 10px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+}
+
+.option-setup > span {
+    font-weight: 300;
+}

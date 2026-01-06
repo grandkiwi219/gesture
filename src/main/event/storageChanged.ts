@@ -1,4 +1,4 @@
-import { decideOPtions, decideThisSIte, setCommand } from "../process";
+import { decideOptions, decideThisSIte, setCommand } from "../process";
 import { variable } from "../variable";
 import { encodeMap } from "../utils/utils";
 import logger from "../utils/logger";
@@ -14,7 +14,7 @@ export async function storageChanged(message: ContentMessage, addEvent?: Functio
             break;
 
         case 'options':
-            decideOPtions(message.data);
+            decideOptions(message.data);
             break;
 
         default:

@@ -42,3 +42,22 @@ export function decodeMap<V>(map: Map<string, V>) {
     });
     return result;
 }
+
+export function merge(target: object, source: object) {
+    for (const key of Object.keys(source)) {
+        const sourceValue: any = source[key as keyof typeof source];
+        const targetValue: any = target[key as keyof typeof target];
+
+        if (Array.isArray(sourceValue)) {
+            (target[key as keyof typeof target] as any) = sourceValue;
+        } 
+        else if (sourceValue instanceof Object && targetValue instanceof Object) {
+            merge(targetValue, sourceValue);
+        } 
+        else {
+            (target[key as keyof typeof target] as any) = sourceValue;
+        }
+    }
+
+    return target;
+}

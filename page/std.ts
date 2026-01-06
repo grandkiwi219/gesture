@@ -32,6 +32,7 @@ const size = {
 const event = {
 	command_loaded: 'command_loaded',
 	site_loaded: 'site_loaded',
+	options_loaded: 'options_loaded',
 	
 	command_added: 'command_added',
 }
