@@ -65,6 +65,7 @@ function PSSetup() {
     return (
         <div className='ps-setup'>
             <Input ref={PS_input} name='ps-input' className='ps-input'
+                placeholder='차단할 주소를 작성해주세요.'
                 onKeyDownCase={e => {
                     switch (e.key) {
                         case 'Enter':
