@@ -69,7 +69,7 @@ export default function() {
 					break;
 
 				case 'sites':
-					window.dispatchEvent(new CustomEvent(std.event.site_loaded, { detail: message.data }));
+					window.dispatchEvent(new CustomEvent(std.event.site_loaded, { detail: [...new Set(message.data)] }));
 					break;
 
 				default:
