@@ -5,7 +5,7 @@ interface SitesMessage {
 
 interface CommandsMessage {
     credit: 'commands';
-    data: KeyObject<Gesture>
+    data: KeyObject<Gesture> | null
 }
 
 type ContentMessage = SitesMessage | CommandsMessage | null;

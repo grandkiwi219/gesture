@@ -132,7 +132,7 @@ export async function loadStorageChanged(
     if (changed.sites || changed.commands) {
         const message: ContentMessage = {
             credit: 'commands',
-            data: decodeMap(bg_variable.command_store)
+            data: null /* decodeMap(bg_variable.command_store) */
         }
         chrome.tabs.query({}).then(tabs => {
             tabs.forEach(tab => {
