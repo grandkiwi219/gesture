@@ -65,7 +65,7 @@
     display: flex;
     flex-flow: column wrap;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 .ps-list:empty::after {
@@ -79,6 +79,7 @@
     width: 100%;
     height: fit-content;
 
+    padding-bottom: 10px;
     border-bottom: var(--paper-item-border);
 
     display: flex;
