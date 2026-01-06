@@ -95,7 +95,7 @@ export async function loadStorageChanged(
         const new_value = changes[store].newValue as string[];
 
         if (!Array.isArray(new_value)) {
-            console.warn('키 값이 변경되었으나, 키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
+            console.warn('키 값이 변경되었으나, 스토어가 손상되었습니다. 새로 제작합니다.');
 
             setInitialGesture(true);
             return;

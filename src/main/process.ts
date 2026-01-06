@@ -99,6 +99,7 @@ export function decideThisSIte(sites: any, removeEvent?: Function) {
         if (sites.includes(location.hostname)) {
             removeEvent();
             exitReset();
+            variable.command_store.clear();
             return true;
         }
     }
