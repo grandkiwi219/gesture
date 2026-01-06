@@ -4,7 +4,7 @@ import { variable } from "./variable";
 import { scripts } from "./scripts";
 import { stopDrawing } from "./drawing";
 import { mouseMove } from "./event";
-import consts, { sites, storage_area } from "./consts";
+import { storage_keys, storage_area, options } from "./consts";
 import { setInitialGesture } from "service/reset";
 import { credits, repeater_msg_event } from "src/repeater/msg/message-type";
 import { encodeMap } from "./utils/utils";
@@ -75,11 +75,11 @@ export function getCommandData() {
 }
 
 export async function setCommand(removeEvent?: Function) {
-    return await chrome.storage[storage_area].get([consts.store, sites]).then(async results => {
-        if (decideThisSIte(results[sites], removeEvent))
+    return await chrome.storage[storage_area].get([storage_keys.store, storage_keys.sites]).then(async results => {
+        if (decideThisSIte(results[storage_keys.sites], removeEvent))
             return;
 
-        const store_keys = results[consts.store];
+        const store_keys = results[storage_keys.store];
 
         if (!Array.isArray(store_keys)) {
             logger.error('스토어가 존재하지 않거나 배열의 형태가 아닙니다.');
@@ -92,6 +92,21 @@ export async function setCommand(removeEvent?: Function) {
             variable.command_store = encodeMap<Gesture>(filtered_keys, result as KeyObject<Gesture>);
         });
     });
+}
+
+export async function setOPtions() {
+    await chrome.storage[storage_area].get([storage_keys.options]).then(r => {
+        decideOPtions(r[storage_keys.options]);
+    });
+}
+
+export function decideOPtions(storage_options: any) {
+    if (typeof storage_options == 'object') {
+        Object.assign(options, storage_options);
+    }
+    else if (typeof storage_options != 'undefined') {
+        chrome.storage[storage_area].remove([storage_keys.options]);
+    }
 }
 
 export function decideThisSIte(sites: any, removeEvent?: Function) {

@@ -5,7 +5,7 @@ import './CSS/PageSettings.css' with { type: 'css' };
 import std from 'page/std';
 import utils from 'page/utils/utils';
 
-import { regex, sites, storage_area } from 'src/main/consts';
+import { regex, storage_keys, storage_area } from 'src/main/consts';
 
 import Input, { pleaseInput } from 'page/components/Input';
 
@@ -34,13 +34,13 @@ function PSContext({ children }: Props) {
 
         window.addEventListener(std.event.site_loaded, siteLoadedEvent);
 
-        chrome.storage[storage_area].get(sites).then(re => {
-            const result = re[sites];
+        chrome.storage[storage_area].get(storage_keys.sites).then(re => {
+            const result = re[storage_keys.sites];
             if (Array.isArray(result)) {
                 setSitesState(() => [...new Set(result)]);
             }
             else {
-                chrome.storage[storage_area].remove(sites);
+                chrome.storage[storage_area].remove(storage_keys.sites);
             }
         });
 
@@ -114,15 +114,15 @@ function PSSubmitBtn({ input }: { input: RefObject<HTMLInputElement | null> }) {
 }
 
 function PSSubmit(site: string): void {
-    chrome.storage[storage_area].get(sites).then(re => {
-        if (Array.isArray(re[sites])) {
+    chrome.storage[storage_area].get(storage_keys.sites).then(re => {
+        if (Array.isArray(re[storage_keys.sites])) {
             chrome.storage[storage_area].set({
-                [sites]: [...re[sites], site]
+                [storage_keys.sites]: [...(re[storage_keys.sites] as string[]), site]
             });
         }
         else {
             chrome.storage[storage_area].set({
-                [sites]: [site]
+                [storage_keys.sites]: [site]
             });
         }
     });
@@ -170,14 +170,14 @@ function PSItem({ key, site }: { key: string, site: string }) {
             </div>
             <button
                 onClick={() => {
-                    chrome.storage[storage_area].get(sites).then(re => {
-                        if (Array.isArray(re[sites])) {
+                    chrome.storage[storage_area].get(storage_keys.sites).then(re => {
+                        if (Array.isArray(re[storage_keys.sites])) {
                             chrome.storage[storage_area].set({
-                                [sites]: re[sites].filter(s => s != site) 
+                                [storage_keys.sites]: (re[storage_keys.sites] as string[]).filter(s => s != site) 
                             });
                         }
                         else {
-                            chrome.storage[storage_area].remove(sites);
+                            chrome.storage[storage_area].remove(storage_keys.sites);
                         }
                     });
                 }}

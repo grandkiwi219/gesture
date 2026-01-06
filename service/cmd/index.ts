@@ -1,14 +1,15 @@
+import { initial_options } from "service/initial_options";
 import { setInitialGesture } from "service/reset";
 import { bg_state, bg_variable } from "service/variable";
-import { regex, sites, storage_area, store } from "src/main/consts";
+import { regex, storage_area, storage_keys } from "src/main/consts";
 import { decodeMap } from "src/main/utils/utils";
 
 export async function loadCommand() {
     bg_state.loaded_command = false;
 
-    await chrome.storage[storage_area].get([store]).then(async results => {
+    await chrome.storage[storage_area].get([storage_keys.store]).then(async results => {
 
-        const store_keys = results[store];
+        const store_keys = results[storage_keys.store];
         if (!store_keys || !Array.isArray(store_keys)) {
             console.warn('키 값들을 담아놓는 그릇이 정상적으로 존재하지 않습니다. 새로 제작합니다.');
 
@@ -31,7 +32,7 @@ export async function loadCommand() {
                     || typeof value?.script != 'string'
                     || typeof value?.type != 'string'
                 ) {
-                    chrome.storage[storage_area].set({ [store]: filtered_keys.filter(r => r != key) });
+                    chrome.storage[storage_area].set({ [storage_keys.store]: filtered_keys.filter(r => r != key) });
                     chrome.storage[storage_area].remove(key);
                     return;
                 }
@@ -45,9 +46,9 @@ export async function loadCommand() {
 }
 
 export async function loadSites() {
-    await chrome.storage[storage_area].get([sites]).then(results => {
+    await chrome.storage[storage_area].get([storage_keys.sites]).then(results => {
 
-        const result_sites = results[sites] as unknown as string[];
+        const result_sites = results[storage_keys.sites] as unknown as string[];
         if (Array.isArray(result_sites)) {
             bg_variable.sites = result_sites;
         }
@@ -66,8 +67,8 @@ export async function loadStorageChanged(
         commands: false
     }
 
-    if (changed_items.includes(sites)) {
-        const result_sites = changes[sites].newValue || [];
+    if (changed_items.includes(storage_keys.sites)) {
+        const result_sites = changes[storage_keys.sites].newValue || [];
         if (Array.isArray(result_sites)) {
             // sites 전송
             const message: ContentMessage = {
@@ -84,15 +85,51 @@ export async function loadStorageChanged(
             changed.sites = true;
         }
         
-        const ignore_index = changed_items.indexOf(sites);
+        const ignore_index = changed_items.indexOf(storage_keys.sites);
         if (ignore_index > -1) {
             changed_items.splice(ignore_index, 1);
         }
     }
 
-    if (changed_items.includes(store)) {
-        const old_value = changes[store].oldValue as string[] || [];
-        const new_value = changes[store].newValue as string[];
+    if (changed_items.includes(storage_keys.options)) {
+        const result_options = changes[storage_keys.options].newValue;
+
+        const options_check = typeof result_options == 'object' && result_options != null;
+
+        // options 전송
+        const message: ContentMessage =
+            options_check
+            ? {
+                credit: 'options',
+                data: result_options
+            }
+            : {
+                credit: 'options',
+                data: initial_options
+            }
+        chrome.tabs.query({}).then(tabs => {
+            tabs.forEach(tab => {
+                if (tab.id)
+                    chrome.tabs.sendMessage(tab.id, message);
+            });
+        });
+        chrome.runtime.sendMessage(message);
+
+        if (!options_check) {
+            bg_state.loaded_command = false;
+            await chrome.storage[storage_area].remove([storage_keys.options]);
+            bg_state.loaded_command = true;
+        }
+
+        const ignore_index = changed_items.indexOf(storage_keys.options);
+        if (ignore_index > -1) {
+            changed_items.splice(ignore_index, 1);
+        }
+    }
+
+    if (changed_items.includes(storage_keys.store)) {
+        const old_value = changes[storage_keys.store].oldValue as string[] || [];
+        const new_value = changes[storage_keys.store].newValue as string[];
 
         if (!Array.isArray(new_value)) {
             console.warn('키 값이 변경되었으나, 스토어가 손상되었습니다. 새로 제작합니다.');
@@ -116,16 +153,16 @@ export async function loadStorageChanged(
 
         const added_set = new Set(added);
         changed_items = changed_items.filter(r =>
-            r != store  // 스토어 아님
+            r != storage_keys.store  // 스토어 아님
             && !added_set.has(r)    // 추가된 거 제외
             && new_set.has(r)   // 스토어에 담긴 거 제외
         );
     }
 
-    const storage_store = await chrome.storage[storage_area].get([store]);
+    const storage_store = await chrome.storage[storage_area].get([storage_keys.store]);
 
     for (const item of changed_items) {
-        itemChecker(changes, item, storage_store[store], changed);
+        itemChecker(changes, item, storage_store[storage_keys.store], changed);
     }
 
     // command_store 전송

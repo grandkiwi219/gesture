@@ -1,4 +1,4 @@
-import { decideThisSIte, setCommand } from "../process";
+import { decideOPtions, decideThisSIte, setCommand } from "../process";
 import { variable } from "../variable";
 import { encodeMap } from "../utils/utils";
 import logger from "../utils/logger";
@@ -11,6 +11,10 @@ export async function storageChanged(message: ContentMessage, addEvent?: Functio
 
         case 'commands':
             await changeCommands(message.data as KeyObject<Gesture>);
+            break;
+
+        case 'options':
+            decideOPtions(message.data);
             break;
 
         default:

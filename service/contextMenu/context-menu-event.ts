@@ -1,4 +1,4 @@
-import consts, { regex, sites } from "src/main/consts";
+import consts, { regex, storage_keys } from "src/main/consts";
 import { context_menu_data } from "./context-menu-types";
 import { setIgnore_this_site_set } from "./context-menu-supports";
 
@@ -23,13 +23,13 @@ export function contextMenuEvent(info: chrome.contextMenus.OnClickData, tab: chr
 
             const host = non_filter_host[0];
 
-            chrome.storage[consts.storage_area].get([sites]).then(r => {
+            chrome.storage[consts.storage_area].get([storage_keys.sites]).then(r => {
 
-                const result = r[sites];
+                const result = r[storage_keys.sites];
 
                 if (!Array.isArray(result)) {
                     waiting.ignore_this_site = true;
-                    chrome.storage[consts.storage_area].set({ [sites]: [host] })
+                    chrome.storage[consts.storage_area].set({ [storage_keys.sites]: [host] })
                         .then(() => {
                             waiting.ignore_this_site = false;
                         });
@@ -38,7 +38,7 @@ export function contextMenuEvent(info: chrome.contextMenus.OnClickData, tab: chr
 
                 if (result.includes(host)) {
                     waiting.ignore_this_site = true;
-                    chrome.storage[consts.storage_area].set({ [sites]: result.filter(r => r != host) })
+                    chrome.storage[consts.storage_area].set({ [storage_keys.sites]: result.filter(r => r != host) })
                         .then(() => {
                             waiting.ignore_this_site = false;
                         });
@@ -48,7 +48,7 @@ export function contextMenuEvent(info: chrome.contextMenus.OnClickData, tab: chr
                 result.push(host);
 
                 waiting.ignore_this_site = true;
-                chrome.storage[consts.storage_area].set({ [sites]: result })
+                chrome.storage[consts.storage_area].set({ [storage_keys.sites]: result })
                     .then(() => {
                         waiting.ignore_this_site = false;
                     });
@@ -61,7 +61,7 @@ export function contextMenuEvent(info: chrome.contextMenus.OnClickData, tab: chr
 }
 
 export function contextMenuStartEvent() {
-    chrome.storage[consts.storage_area].get([sites]).then(r => {
-        setIgnore_this_site_set(r[sites]);
+    chrome.storage[consts.storage_area].get([storage_keys.sites]).then(r => {
+        setIgnore_this_site_set(r[storage_keys.sites]);
     });
 }

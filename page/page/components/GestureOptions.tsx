@@ -9,7 +9,7 @@ import std from "page/std";
 import utils from "page/utils/utils";
 
 import { variable } from "src/main/variable";
-import { direction, storage_area, store } from "src/main/consts";
+import { direction, storage_area, storage_keys } from "src/main/consts";
 
 import { MdAddCircleOutline } from "react-icons/md";
 import { MdPlaylistRemove } from "react-icons/md";
@@ -165,13 +165,13 @@ function GOption({ cmd_key, command, dirs, state }: { cmd_key: string, command: 
                 }}
                 onClick={async () => {
                     try {
-                        const legacy_data = await chrome.storage[storage_area].get([store]);
+                        const legacy_data = await chrome.storage[storage_area].get([storage_keys.store]);
 
-                        if (!Array.isArray(legacy_data[store])) {
+                        if (!Array.isArray(legacy_data[storage_keys.store])) {
                             throw new TypeError('스토어의 데이터가 배열이 아닙니다.');
                         }
 
-                        await chrome.storage[storage_area].set({ [store]: legacy_data[store].filter(r => r != cmd_key) });
+                        await chrome.storage[storage_area].set({ [storage_keys.store]: (legacy_data[storage_keys.store] as string[]).filter(r => r != cmd_key) });
 
                         await chrome.storage[storage_area].remove(cmd_key);
                         

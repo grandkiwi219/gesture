@@ -1,4 +1,4 @@
-import { drawing_elements, drawing_options } from "src/main/consts";
+import { drawing_elements, options } from "src/main/consts";
 import { variable } from "src/main/variable";
 import { decideSize, drawCommand, setDynamicSizeCanvas, setSizeCanvas } from "./supports";
 import logger from "../utils/logger";
@@ -85,9 +85,9 @@ export function continueDrawing({ x, y }: Coordinate) {
         y: y - rect.top
     }
 
-    const size = drawing_options.pen.size;
+    const size = options.pen.size;
 
-    ctx.strokeStyle = drawing_options.pen.color;
+    ctx.strokeStyle = options.pen.color;
     ctx.lineWidth = size;
 
     ctx.beginPath();
@@ -98,7 +98,7 @@ export function continueDrawing({ x, y }: Coordinate) {
         ctx.stroke();
     }
     else {
-        ctx.fillStyle = drawing_options.pen.color;
+        ctx.fillStyle = options.pen.color;
         ctx.arc(coord.x, coord.y, size / 2, 0, Math.PI * 2);
         ctx.fill();
     }

@@ -18,6 +18,7 @@ let usage_context_menu = true;
 function UsageDisplay({ children }: Props) {
 
     const drawing_target = useRef(null);
+
     useEffect(() => {
         usage_context_menu = true;
         
@@ -60,6 +61,23 @@ function UsageDisplay({ children }: Props) {
     );
 }
 
+function UsageOptions() {
+
+    
+
+    return (
+        <>
+            {}
+        </>
+    );
+}
+
+function UsageOption() {
+    return (
+        <div className='option'></div>
+    );
+}
+
 export default function() {
     return (
         <DisplayContainer>
@@ -67,9 +85,7 @@ export default function() {
                 <GridCanvas />
             </UsageDisplay>
 
-            <>
-                <div className="option"></div>
-            </>
+            <UsageOptions />
         </DisplayContainer>
     );
 }

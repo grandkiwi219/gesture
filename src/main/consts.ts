@@ -1,3 +1,4 @@
+import { initial_options } from "service/initial_options";
 import packages from "../../package.json" with { type: 'json' };
 
 export const initial: string = packages.name;
@@ -29,8 +30,11 @@ export const regex = {
 
 export const storage_area: chrome.storage.AreaName = 'local';
 
-export const store = 'store';
-export const sites = 'sites';
+export const storage_keys = {
+    store: 'store',
+    sites: 'sites',
+    options: 'options'
+}
 
 const command_size = 150;
 export const drawing_elements: {
@@ -104,12 +108,7 @@ export const drawing_elements: {
     }
 }
 
-export const drawing_options = {
-    pen: {
-        size: 4,
-        color: 'rgba(199, 199, 199, 1)'
-    }
-}
+export const options: typeof initial_options = JSON.parse(JSON.stringify(initial_options));
 
 export default {
     initial,
@@ -118,8 +117,7 @@ export default {
     direction,
     regex,
     storage_area,
-    store,
-    sites,
+    storage_keys,
     drawing_elements,
-    drawing_options
+    options
 }

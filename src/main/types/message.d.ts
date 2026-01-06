@@ -8,4 +8,9 @@ interface CommandsMessage {
     data: KeyObject<Gesture> | null
 }
 
-type ContentMessage = SitesMessage | CommandsMessage | null;
+interface OptionsMessage {
+    credit: 'options';
+    data: Object;
+}
+
+type ContentMessage = SitesMessage | OptionsMessage | CommandsMessage | null;

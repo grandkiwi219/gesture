@@ -13,7 +13,7 @@ import std from './std';
 import { navMenuReducer } from './utils/reducer';
 import { resizeNav } from './utils/decider';
 
-import { setCommand } from 'src/main/process';
+import { setCommand, setOPtions } from 'src/main/process';
 import { storageChanged } from 'src/main/event';
 
 
@@ -80,6 +80,8 @@ export default function() {
 		setCommand().then(() => {
 			window.dispatchEvent(new Event(std.event.command_loaded));
 		});
+
+		setOPtions();
 	}, []);
 
 	return (

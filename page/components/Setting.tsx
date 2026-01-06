@@ -1,7 +1,7 @@
 import { createContext, CSSProperties, SetStateAction, useContext, useEffect, useState } from "react";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
-import { storage_area, store } from "src/main/consts";
+import { storage_area, storage_keys } from "src/main/consts";
 
 import { variable } from "src/main/variable";
 import { scripts } from "src/main/scripts";
@@ -217,9 +217,9 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                             }
 
                             try {
-                                const data = await chrome.storage[storage_area].get([store]);
+                                const data = await chrome.storage[storage_area].get([storage_keys.store]);
 
-                                if (!Array.isArray(data[store])) {
+                                if (!Array.isArray(data[storage_keys.store])) {
                                     throw new TypeError('스토어의 형식이 배열이 아닙니다.');
                                 }
 
@@ -227,7 +227,7 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
 
                                 await chrome.storage[storage_area].set(
                                     {
-                                        [store]: [...data[store], cmd_key],
+                                        [storage_keys.store]: [...(data[storage_keys.store] as string[]), cmd_key],
                                         [cmd_key]: {
                                             type: state.type || 'script',
                                             script: state.script,
