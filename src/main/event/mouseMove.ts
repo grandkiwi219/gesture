@@ -32,7 +32,7 @@ export function mouseMove(event: MouseEvent,
     if (variable.position.x == -1) {
         decidePos(event);
     }
-    
+
     if (variable.initial_pos.x == -1) {
         variable.initial_pos = {
             x: event.clientX,
@@ -41,8 +41,6 @@ export function mouseMove(event: MouseEvent,
     }
 
     const distance = measureDistanceSq(event);
-
-    logger.log(distance)
 
     if (!variable.starting) {
         if (distance > consts.start_range**2) {

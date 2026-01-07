@@ -21,7 +21,6 @@ export function scriptMessage(event: MessageEvent) {
             break; */
 
         case credits.mousedown_messages:
-            logger.log(data)
             if (data.data && typeof data.data.focus == 'boolean'
                 && data.data.coord instanceof Object
                 && typeof data.data.coord.x == 'number'
