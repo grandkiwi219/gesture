@@ -27,8 +27,6 @@ export function mouseDown(event: MouseEvent,
 
     if (only_reset) return;
 
-    exitReset(reset_options);
-
     if (use_mouse_move) {
         if (variable.mouseMove)
             window.addEventListener('mousemove', variable.mouseMove, true);
@@ -46,7 +44,7 @@ export function mouseDown(event: MouseEvent,
     }
 }
 
-export function receiveMouseDown(focus: boolean = false) {
+export function receiveMouseDown() {
     exitReset();
     
     if (variable.mouseMove)

@@ -3,7 +3,7 @@ import { credits, repeater_msg_event } from "./msg/message-type";
 import logger from "src/main/utils/logger";
 
 window.addEventListener('message', event => {
-    
+
     if (event.data.event != repeater_msg_event) return;
     
     const data: RepeaterMessage | null = event.data.detail;

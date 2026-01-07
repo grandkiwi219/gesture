@@ -13,7 +13,6 @@ void function() {
                 credit: credits.mousedown_messages,
                 script: '',
                 data: {
-                    focus: window.top != window ? true : false,
                     coord: { x: event.clientX, y: event.clientY }
                 }
             }

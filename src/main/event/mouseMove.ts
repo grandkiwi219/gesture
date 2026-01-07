@@ -20,7 +20,6 @@ export function mouseMove(event: MouseEvent,
         reset_options?: ExitReset
     } = {}
 ) {
-    
 
     if (!variable.executing) return;
 
@@ -30,7 +29,7 @@ export function mouseMove(event: MouseEvent,
     }
 
     if (variable.position.x == -1) {
-        decidePos(event);
+        decidePos({ x: event.clientX, y: event.clientY });
     }
 
     if (variable.initial_pos.x == -1) {
@@ -38,6 +37,7 @@ export function mouseMove(event: MouseEvent,
             x: event.clientX,
             y: event.clientY
         }
+        console.log(1)
     }
 
     const distance = measureDistanceSq(event);
@@ -65,7 +65,7 @@ export function mouseMove(event: MouseEvent,
     if (distance <= consts.decide_range**2) return;
 
     const direction = decideDir(event);
-    decidePos(event);
+    decidePos({ x: event.clientX, y: event.clientY });
 
     const is_new_dir = variable.directions.push(direction);
 

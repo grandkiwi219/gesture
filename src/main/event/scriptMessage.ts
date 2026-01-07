@@ -21,14 +21,14 @@ export function scriptMessage(event: MessageEvent) {
             break; */
 
         case credits.mousedown_messages:
-            if (data.data && typeof data.data.focus == 'boolean'
+            if (data.data
                 && data.data.coord instanceof Object
                 && typeof data.data.coord.x == 'number'
                 && !Number.isNaN(data.data.coord.x)
                 && typeof data.data.coord.y == 'number'
                 && !Number.isNaN(data.data.coord.y)
             ) {
-                receiveMouseDown(data.data.focus);
+                receiveMouseDown();
             }
             break;
 

@@ -37,7 +37,6 @@ export function startDrawing() {
     }
 
     /* main */
-    main.tabIndex = 0;
     Object.assign(main.style, drawing_elements.main.style);
     variable.drawing_store.main = main;
 
