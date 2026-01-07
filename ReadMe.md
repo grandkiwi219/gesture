@@ -1,4 +1,4 @@
-<span color=red>현재 브랜치는 사용을 권장하지 않음</span>
+<div align=center>현재 브랜치는 사용을 권장하지 않음</div>
 
 ---
 
