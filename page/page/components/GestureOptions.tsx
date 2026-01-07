@@ -147,10 +147,16 @@ function GOption({ cmd_key, command, dirs, state }: { cmd_key: string, command: 
             <img src={command?.gesturePainting || '#'} alt={cmd_key} aria-value={state}
                 onError={event => {
                     event.currentTarget.onerror = null;
-                    event.currentTarget.style.width = '0';
+                    Object.assign(event.currentTarget.style, {
+                        width: '0',
+                        opacity: '0'
+                    });
                 }}
                 onLoad={event => {
-                    event.currentTarget.style.width = '';
+                    Object.assign(event.currentTarget.style, {
+                        width: '',
+                        opacity: ''
+                    });
                 }}
             />
 
