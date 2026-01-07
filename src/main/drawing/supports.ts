@@ -1,4 +1,4 @@
-import { variable } from "../variable";
+import { variable } from "../assets/variable";
 
 export function decideSize(target: Element | Window | null): Coordinate {
     if (target instanceof Element) {

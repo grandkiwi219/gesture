@@ -4,7 +4,7 @@ import './CSS/Header.css' with { type: 'css' };
 
 import { NavSetter } from 'page/App';
 
-import { initial } from 'src/main/consts';
+import { initial } from 'src/main/assets/consts';
 import std from 'page/std';
 
 import utils from 'page/utils/utils';

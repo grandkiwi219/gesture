@@ -5,7 +5,7 @@ import { backgroundMessageScript } from "./msg/message-script-events.js";
 import { contextMenuEvent, contextMenuStartEvent } from "./contextMenu/context-menu-event.js";
 import { createContextMenu } from "./contextMenu/context-menu-create.js";
 import { decideIgnore_this_site_title, setIgnore_this_site_set } from "./contextMenu/context-menu-supports.js";
-import { storage_keys, storage_area } from "src/main/consts.js";
+import { storage_keys, storage_area } from "src/main/assets/consts.js";
 import { loadCommand, loadSites, loadStorageChanged } from "./cmd/index.js";
 
 chrome.runtime.onInstalled.addListener(async d => {

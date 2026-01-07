@@ -1,4 +1,4 @@
-import { direction } from "../consts";
+import { direction } from "../assets/enum";
 
 export class DirectionBundle {
     private bundle: direction[] = [];

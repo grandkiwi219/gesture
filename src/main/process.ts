@@ -1,13 +1,15 @@
 import { gesture_type } from "service/consts";
 import logger from "./utils/logger";
-import { variable } from "./variable";
+import { variable } from "./assets/variable";
 import { scripts } from "./scripts";
 import { stopDrawing } from "./drawing";
 import { mouseMove } from "./event";
-import { storage_keys, storage_area, options } from "./consts";
+import { storage_keys, storage_area, options } from "./assets/consts";
 import { setInitialGesture } from "service/reset";
 import { credits, repeater_msg_event } from "src/repeater/msg/message-type";
 import { encodeMap, merge } from "./utils/utils";
+import { sendToRepeater } from "./dispatch";
+
 
 export function mainAddEvent(addEvent: Function): (() => void) {
     return function() {
@@ -142,5 +144,5 @@ function gestureCustomScript(custom_script: string) {
         data: null
     }
 
-    window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(message) }));
+    sendToRepeater(message);
 }

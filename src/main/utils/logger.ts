@@ -1,4 +1,4 @@
-import consts from '../consts';
+import consts from '../assets/consts';
 
 const logger_mark = `[${consts.initial}]`;
 

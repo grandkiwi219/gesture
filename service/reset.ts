@@ -1,5 +1,5 @@
 import initial_gesture from "./initial_gesture";
-import { storage_keys, storage_area } from "../src/main/consts";
+import { storage_keys, storage_area } from "../src/main/assets/consts";
 import { bg_state } from "./variable";
 
 export async function setInitialGesture(use_state: boolean = false) {

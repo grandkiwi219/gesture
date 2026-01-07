@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import { exitReset } from 'src/main/process';
 import { mouseDown, mouseMove, mouseUp } from 'src/main/event';
-import { variable } from 'src/main/variable';
+import { variable } from 'src/main/assets/variable';
 
 import utils from 'page/utils/utils';
 
@@ -10,7 +10,7 @@ import GridCanvas from 'page/components/GridCanvas';
 import DisplayContainer from 'page/components/DisplayContainer';
 
 import UsageOptions from './components/UsageOptions';
-import { options, storage_area, storage_keys } from 'src/main/consts';
+import { options, storage_area, storage_keys } from 'src/main/assets/consts';
 
 
 export const usageSetting: Setting = {

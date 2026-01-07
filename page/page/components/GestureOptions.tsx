@@ -8,10 +8,11 @@ import std from "page/std";
 
 import utils from "page/utils/utils";
 
-import { variable } from "src/main/variable";
-import { direction, storage_area, storage_keys } from "src/main/consts";
+import { variable } from "src/main/assets/variable";
+import { storage_area, storage_keys } from "src/main/assets/consts";
+import { direction } from "src/main/assets/enum";
 
-import { MdAddCircleOutline } from "react-icons/md";
+import { MdAddCircleOutline, MdOpacity } from "react-icons/md";
 import { MdPlaylistRemove } from "react-icons/md";
 
 
@@ -147,10 +148,16 @@ function GOption({ cmd_key, command, dirs, state }: { cmd_key: string, command: 
             <img src={command?.gesturePainting || '#'} alt={cmd_key} aria-value={state}
                 onError={event => {
                     event.currentTarget.onerror = null;
-                    event.currentTarget.style.width = '0';
+                    Object.assign(event.currentTarget.style, {
+                        width: '0',
+                        opacity: '0'
+                    });
                 }}
                 onLoad={event => {
-                    event.currentTarget.style.width = '';
+                    Object.assign(event.currentTarget.style, {
+                        width: '',
+                        opacity: ''
+                    });
                 }}
             />
 

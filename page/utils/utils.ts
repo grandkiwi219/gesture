@@ -1,4 +1,4 @@
-import { storage_keys, storage_area } from 'src/main/consts';
+import { storage_keys, storage_area } from 'src/main/assets/consts';
 import std from '../std';
 
 function decideTheme() {

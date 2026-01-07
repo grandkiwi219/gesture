@@ -1,5 +1,5 @@
-import consts from "src/main/consts";
-import { variable } from "src/main/variable";
+import consts from "src/main/assets/consts";
+import { variable } from "src/main/assets/variable";
 import { decidePos, decideDir, measureDistanceSq } from "../utils/decider";
 import { continueDrawing, showCommandDrawing, startDrawing } from "src/main/drawing";
 import { exitReset, getCommandData } from "src/main/process";
@@ -20,6 +20,8 @@ export function mouseMove(event: MouseEvent,
         reset_options?: ExitReset
     } = {}
 ) {
+    
+
     if (!variable.executing) return;
 
     if (event.buttons != 2) {
@@ -27,7 +29,20 @@ export function mouseMove(event: MouseEvent,
         return;
     }
 
+    if (variable.position.x == -1) {
+        decidePos(event);
+    }
+    
+    if (variable.initial_pos.x == -1) {
+        variable.initial_pos = {
+            x: event.clientX,
+            y: event.clientY
+        }
+    }
+
     const distance = measureDistanceSq(event);
+
+    logger.log(distance)
 
     if (!variable.starting) {
         if (distance > consts.start_range**2) {

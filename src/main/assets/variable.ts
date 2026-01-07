@@ -1,4 +1,4 @@
-import { DirectionBundle } from "./frame/Direction";
+import { DirectionBundle } from "../frame/Direction";
 
 let main_running: boolean = false;
 

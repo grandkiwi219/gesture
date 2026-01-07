@@ -1,5 +1,5 @@
 import { isScrollableX, isScrollableY } from "src/main/utils/utils";
-import { variable } from "src/main/variable";
+import { variable } from "src/main/assets/variable";
 
 export function findScrollable(target: Element | null, coord: 'x' | 'y' = 'y'): Element {
     let checkFunc;

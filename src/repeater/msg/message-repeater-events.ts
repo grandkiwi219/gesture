@@ -1,4 +1,4 @@
-import { initial } from "src/main/consts";
+import { initial } from "src/main/assets/consts";
 import logger from "src/main/utils/logger";
 
 let ignore_context_menu = false;

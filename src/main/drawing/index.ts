@@ -1,5 +1,5 @@
-import { drawing_elements, options } from "src/main/consts";
-import { variable } from "src/main/variable";
+import { drawing_elements, options } from "src/main/assets/consts";
+import { variable } from "src/main/assets/variable";
 import { decideSize, drawCommand, setDynamicSizeCanvas, setSizeCanvas } from "./supports";
 import logger from "../utils/logger";
 
@@ -37,6 +37,7 @@ export function startDrawing() {
     }
 
     /* main */
+    main.tabIndex = 0;
     Object.assign(main.style, drawing_elements.main.style);
     variable.drawing_store.main = main;
 
@@ -67,6 +68,8 @@ export function startDrawing() {
 }
 
 export function continueDrawing({ x, y }: Coordinate) {
+    if (x == -1 || y == -1) return;
+
     const canvas = variable.drawing_store.paper;
     if (!canvas || !(canvas instanceof HTMLCanvasElement)) {
         stopDrawing();

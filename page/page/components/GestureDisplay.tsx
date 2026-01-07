@@ -1,8 +1,8 @@
 import { createContext, useEffect, useRef, useState, useContext, useCallback } from 'react';
 import { IconType } from 'react-icons';
 
-import { variable } from 'src/main/variable';
-import { direction } from 'src/main/consts';
+import { variable } from 'src/main/assets/variable';
+import { direction } from 'src/main/assets/enum';
 import { exitReset } from 'src/main/process';
 import { mouseDown, mouseMove, mouseUp } from 'src/main/event';
 import { stopDrawing } from 'src/main/drawing';

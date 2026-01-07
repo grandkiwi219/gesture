@@ -1,12 +1,12 @@
-import { variable } from "src/main/variable";
+import { variable } from "src/main/assets/variable";
 import { calcAngleDegrees } from "./utils";
-import { direction } from "../consts";
+import { direction } from "../assets/enum";
 
-export function decidePos(event: MouseEvent) {
+export function decidePos({ x, y }: Coordinate) {
 
     variable.position = {
-        x: event.clientX,
-        y: event.clientY,
+        x: x,
+        y: y,
     }
 }
 

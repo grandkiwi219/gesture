@@ -83,8 +83,16 @@ const content_repeater = {
     },
     plugins: content_plugin
 }
+const content_down_detector = {
+    input: 'src/down-detector/down-detector',
+    output: {
+        ...content_output,
+        format: 'iife'
+    },
+    plugins: content_plugin
+}
 
-const contents = [content_scripts, content_repeater];
+const contents = [content_scripts, content_repeater, content_down_detector];
 
 const background_service_output = outPut('service');
 const background_service = {

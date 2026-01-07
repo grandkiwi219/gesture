@@ -1,5 +1,5 @@
 import { decideOptions, decideThisSIte, setCommand } from "../process";
-import { variable } from "../variable";
+import { variable } from "../assets/variable";
 import { encodeMap } from "../utils/utils";
 import logger from "../utils/logger";
 

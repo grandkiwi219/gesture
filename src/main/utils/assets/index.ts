@@ -1,4 +1,4 @@
-import { initial } from "src/main/consts";
+import { initial } from "src/main/assets/consts";
 
 /**
  * 입력한 파일 위치를 사이트 페이지에 삽입합니다

@@ -1,9 +1,9 @@
 import { createContext, CSSProperties, SetStateAction, useContext, useEffect, useState } from "react";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
-import { storage_area, storage_keys } from "src/main/consts";
+import { storage_area, storage_keys } from "src/main/assets/consts";
 
-import { variable } from "src/main/variable";
+import { variable } from "src/main/assets/variable";
 import { scripts } from "src/main/scripts";
 
 import std, { Theme } from "page/std";

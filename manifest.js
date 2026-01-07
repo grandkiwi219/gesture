@@ -30,14 +30,22 @@ export default {
             ],
             run_at: "document_start",
         },
-        /* {
+        {
             matches: ["<all_urls>"],
             js: [
                 "src/repeater.js"
             ],
             run_at: "document_start",
             world: "MAIN"
-        } */
+        },
+        {
+            all_frames: true,
+            matches: ["<all_urls>"],
+            js: [
+                "src/down-detector.js"
+            ],
+            run_at: "document_start",
+        }
     ],
     background: process.env.BROWSER == 'firefox'
         ? { scripts: [service_worker] }

@@ -2,12 +2,14 @@ import { contextMenuEvent, executeCustomScript, ignoreContextMenu } from "./msg/
 import { credits, repeater_msg_event } from "./msg/message-type";
 import logger from "src/main/utils/logger";
 
-window.addEventListener(repeater_msg_event, event => {
-
-    const data: RepeaterMessage = JSON.parse((event as CustomEvent).detail);
+window.addEventListener('message', event => {
+    
+    if (event.data.event != repeater_msg_event) return;
+    
+    const data: RepeaterMessage | null = event.data.detail;
 
     if (
-        typeof data != 'object'
+        !(data instanceof Object)
         || !data.credit
         || typeof data.script != 'string'
     ) return;

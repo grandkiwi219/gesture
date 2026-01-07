@@ -2,7 +2,8 @@ import { checkPrime } from "node:crypto";
 import { initial_options } from "service/initial_options";
 import { setInitialGesture } from "service/reset";
 import { bg_state, bg_variable } from "service/variable";
-import { options, regex, storage_area, storage_keys } from "src/main/consts";
+import { options, storage_area, storage_keys } from "src/main/assets/consts";
+import regex from "src/main/assets/regex";
 import { decodeMap } from "src/main/utils/utils";
 
 export async function loadCommand() {

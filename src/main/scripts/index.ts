@@ -1,7 +1,7 @@
-import { variable } from "src/main/variable";
+import { variable } from "src/main/assets/variable";
 import { excludePaper, findScrollable } from "./supports";
 import { messages } from "service/msg/message-types";
-import { direction } from "../consts";
+import { direction } from "../assets/enum";
 
 const next_page: Script = {
     key: 'next_page',

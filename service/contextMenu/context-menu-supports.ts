@@ -1,4 +1,4 @@
-import { regex } from "src/main/consts";
+import regex from "src/main/assets/regex";
 import { context_menu_data } from "./context-menu-types";
 import { bg_variable } from "service/variable";
 

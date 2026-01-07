@@ -1,7 +1,7 @@
 import std from "page/std";
 import { useEffect, useRef, useState } from "react";
 
-import { options } from "src/main/consts";
+import { options } from "src/main/assets/consts";
 import { merge } from "src/main/utils/utils";
 
 import { initial_options } from "service/initial_options";
