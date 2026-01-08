@@ -126,7 +126,7 @@ export function showCommandDrawing(description: string | undefined, gesturePaint
         return;
     }
 
-    if (gesturePainting) {
+    /* if (gesturePainting) {
         cmg.src = gesturePainting;
         cmg.style.display = 'block';
         cmg.addEventListener('error', (e) => {
@@ -134,10 +134,10 @@ export function showCommandDrawing(description: string | undefined, gesturePaint
             logger.error('cmg: ', e);
         }, { once: true });
     }
-    else {
+    else { */
         cmg.src = '';
         cmg.style.display = 'none';
-    }
+    /* } */
     cxt.textContent = description;
     cmd.style.display = 'flex';
 }
