@@ -11,7 +11,7 @@ import { loadCommand, loadSites, loadStorageChanged } from "./cmd/index.js";
 chrome.runtime.onInstalled.addListener(async d => {
     if (d.reason === 'install') {
         chrome.runtime.openOptionsPage();
-        await setInitialGesture();
+        await setInitialGesture(true);
     }
     
     // gesture-command
