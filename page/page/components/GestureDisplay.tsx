@@ -6,6 +6,7 @@ import { direction } from 'src/main/consts';
 import { exitReset } from 'src/main/process';
 import { mouseDown, mouseMove, mouseUp } from 'src/main/event';
 import { stopDrawing } from 'src/main/drawing';
+import { calcCanvasInsideCoord } from 'src/main/drawing/supports';
 
 import '../CSS/GestureDisplay.css' with { type: 'css' };
 
@@ -22,7 +23,10 @@ import Input, { pleaseInput } from 'page/components/Input';
 const SetDirs = createContext<((directions: direction[]) => void)>(() => {});
 const Dirs = createContext<direction[]>([]);
 
-export function GControl({ children }: Props) {
+const SetSvgData = createContext<(value: GesturePainting | ((prevState: GesturePainting) => GesturePainting)) => void>(() => {});
+const SvgData = createContext<GesturePainting>([]);
+
+function GDirsControl({ children }: Props) {
 
 	const [dirsState, setDirsLegacy] = useState<direction[]>([]);
 
@@ -35,6 +39,29 @@ export function GControl({ children }: Props) {
 	);
 }
 
+function GSvgDataControl({ children }: Props) {
+
+	const [svgData, setSvgData] = useState<GesturePainting>([]);
+
+	return (
+		<SetSvgData value={setSvgData}>
+			<SvgData value={svgData}>
+				{children}
+			</SvgData>
+		</SetSvgData>
+	);
+}
+
+export function GControl({ children }: Props) {
+	return (
+		<GDirsControl>
+			<GSvgDataControl>
+				{children}
+			</GSvgDataControl>
+		</GDirsControl>
+	);
+}
+
 const reset_options: ExitReset = {
 	stop_drawing: false,
 	remove_mouse_move: false,
@@ -43,31 +70,87 @@ const reset_options: ExitReset = {
 
 let gesture_context_menu = true;
 
+const null_svg_size = [640, 640];
+
 export function GCanvas({ children }: Props) {
 
 	const cancel = useRef<HTMLButtonElement | null>(null);
+	const canvas_wrap = useRef<HTMLDivElement | null>(null);
 
 	const setDirs = useContext(SetDirs);
+	const setSvgData = useContext(SetSvgData);
 
-	useEffect(() => {
+	const set_last_pos = useRef(true);
+
+	function handleSvgSize() {
+		setSvgData(s => {
+			s[0] = canvas_wrap.current ? [canvas_wrap.current.offsetWidth, canvas_wrap.current.offsetHeight] : null_svg_size;
+			return [...s];
+		});
+	}
+
+	function handleSvgData(data: Coordinate) {
+		const coord = calcCanvasInsideCoord({ x: data.x, y: data.y });
+
+		setSvgData(s => {
+			s.push([coord.x, coord.y]);
+			return [...s];
+		});
+	}
+
+ 	useEffect(() => {
 		gesture_context_menu = true;
 
 		exitReset();
 		variable.drawing_store.preserve = false;
+
+		handleSvgSize();
+		canvas_wrap.current && canvas_wrap.current.addEventListener('resize', handleSvgSize);
+
+		return () => {
+			canvas_wrap.current && canvas_wrap.current.removeEventListener('resize', handleSvgSize);
+		}
 	});
 
 	return (
-		<div className='display-base display' style={{
+		<div ref={canvas_wrap} className='display-base display' style={{
 				position: 'relative'
 			}}
-			onMouseUp={gestureMouseUp}
-			onMouseLeave={gestureMouseLeave}
+			onMouseUp={(event) => {
+				mouseUp((event as unknown as MouseEvent),
+					{
+						run: false,
+						reset_options: {
+							...reset_options,
+							execution() {
+								!set_last_pos.current && handleSvgData({ x: event.clientX, y: event.clientY });
+								set_last_pos.current = true;
+							}
+						}
+					}
+				);
+			}}
+			onMouseLeave={(event) => {
+				exitReset({
+					...reset_options,
+					execution() {
+						!set_last_pos.current && handleSvgData({ x: event.clientX, y: event.clientY });
+						set_last_pos.current = true;
+					}
+				});
+			}}
 			onMouseDown={(event) => {
 				mouseDown((event as unknown as MouseEvent), 
 					{
 						acknowledgeContextMenu: () => {},
 						use_mouse_move: false,
-						reset_options
+						reset_options: {
+							...reset_options,
+							execution() {
+								!set_last_pos.current && handleSvgData({ x: event.clientX, y: event.clientY });
+								set_last_pos.current = true;
+							}
+						}
 					}
 				);
 			}}
@@ -79,15 +162,27 @@ export function GCanvas({ children }: Props) {
 						setDirs([]);
 						stopDrawing();
 						gesture_context_menu = false;
+
+						set_last_pos.current = false;
+						setSvgData([]);
+						handleSvgSize();
 					},
 					drawing_target: event.currentTarget,
 					show_command: false,
-					reset_options
+					reset_options: {
+						...reset_options,
+						execution() {
+							!set_last_pos.current && handleSvgData({ x: event.clientX, y: event.clientY });
+							set_last_pos.current = true;
+						}
+					}
 				});
 
 				if (!is_new_dir) return;
 
 				setDirs([...variable.directions.data]);
+
+				handleSvgData({ x: variable.last_pos.x, y: variable.last_pos.y });
 			}}
 			onContextMenu={(e) => {
 				if (gesture_context_menu) return;
@@ -112,14 +207,6 @@ export function GCanvas({ children }: Props) {
 		</div>
 	);
 };
-
-function gestureMouseUp(event: any) {
-	mouseUp(event, { run: false, reset_options });
-}
-
-function gestureMouseLeave() {
-	exitReset(reset_options);
-}
 
 
 export function GDisplay({ children }: Props) {
@@ -160,6 +247,7 @@ export function GSetups() {
     const naming = useRef<HTMLInputElement | null>(null);
 
 	const setSetting = useContext(SettingSetter);
+	const svgData = useContext(SvgData);
 
 	useEffect(() => {
 		window.addEventListener(std.event.command_added, commandAdded);
@@ -211,7 +299,7 @@ export function GSetups() {
 					}
 
                     if (naming.current.value) {
-                        setSetting({ description: naming.current.value });
+                        setSetting({ description: naming.current.value, gesturePainting: svgData });
                         return;
                     }
                     

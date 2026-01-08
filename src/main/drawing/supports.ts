@@ -72,3 +72,11 @@ function preserveCanvas(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D
     setSizeCanvas(size_coord);
     ctx.putImageData(tempImage, 0, 0);
 }
+
+export function calcCanvasInsideCoord({ x, y }: Coordinate, legacy_rect?: DOMRect): Coordinate {
+    const rect = legacy_rect || (variable.drawing_store.paper as HTMLCanvasElement).getBoundingClientRect();
+    return {
+        x: x - rect.left,
+        y: y - rect.top
+    }
+}

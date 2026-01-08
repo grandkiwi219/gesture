@@ -1,4 +1,4 @@
-type GesturePainting = string;
+type GesturePainting = Array<number[]>;
 
 type GestureType = 'script' | 'custom_script';
 

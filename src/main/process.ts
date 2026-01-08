@@ -44,10 +44,14 @@ export function exitRun() {
 
 export function exitReset(
     {
-    stop_drawing = true, remove_mouse_move = true, reset_directions = true
+    stop_drawing = true, remove_mouse_move = true, reset_directions = true, execution
     }
     : ExitReset = {}
 ) {
+    if (typeof execution == 'function') {
+        execution();
+    }
+
     if (remove_mouse_move && variable.mouseMove)
         window.removeEventListener('mousemove', variable.mouseMove);
 

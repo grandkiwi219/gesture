@@ -33,91 +33,91 @@ const initial_gesture: { [key: string]: Gesture } = {
         description: scripts.next_page.description,
         type: gesture_type.script,
         script: scripts.next_page.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
     
     l: {
         description: scripts.previous_page.description,
         type: gesture_type.script,
         script: scripts.previous_page.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     u: {
         description: scripts.go_to_up.description,
         type: gesture_type.script,
         script: scripts.go_to_up.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     d: {
         description: scripts.go_to_down.description,
         type: gesture_type.script,
         script: scripts.go_to_down.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     dr: {
         description: scripts.close_tap.description,
         type: gesture_type.script,
         script: scripts.close_tap.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     rd: {
         description: scripts.minimized_window.description,
         type: gesture_type.script,
         script: scripts.minimized_window.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     ud: {
         description: scripts.refresh_tap.description,
         type: gesture_type.script,
         script: scripts.refresh_tap.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     du: {
         description: scripts.refresh_tap.description,
         type: gesture_type.script,
         script: scripts.refresh_tap.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     ru: {
         description: scripts.maximized_window.description,
         type: gesture_type.script,
         script: scripts.maximized_window.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     lu: {
         description: scripts.fullscreen_window.description,
         type: gesture_type.script,
         script: scripts.fullscreen_window.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     ld: {
         description: scripts.restore_tap.description,
         type: gesture_type.script,
         script: scripts.restore_tap.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     lr: {
         description: scripts.focus_left_tap.description,
         type: gesture_type.script,
         script: scripts.focus_left_tap.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     rl: {
         description: scripts.focus_right_tap.description,
         type: gesture_type.script,
         script: scripts.focus_right_tap.key,
-        gesturePainting: '',
+        gesturePainting: [],
     },
 
     drul: {
@@ -230,7 +230,7 @@ async function showAlert({ type, msg = undefined }) {
   
   showAlert({ msg: '상자에욧!' });
 })();`,
-        gesturePainting: '',
+        gesturePainting: [],
     }
 };
 

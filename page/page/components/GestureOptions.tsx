@@ -9,7 +9,7 @@ import std from "page/std";
 import utils from "page/utils/utils";
 
 import { variable } from "src/main/variable";
-import { direction, storage_area, storage_keys } from "src/main/consts";
+import { direction, options, storage_area, storage_keys } from "src/main/consts";
 
 import { MdAddCircleOutline } from "react-icons/md";
 import { MdPlaylistRemove } from "react-icons/md";
@@ -137,28 +137,18 @@ function GODesc({ command, dirs }: { command: Gesture, dirs: direction[] }) {
     );
 }
 
-function GOption({ cmd_key, command, dirs, state }: { cmd_key: string, command: Gesture, dirs: direction[], state: number }) {
-    
-    const option = useRef<HTMLDivElement>(null);
+function GOption({ key, cmd_key, command, dirs }: { key: string, cmd_key: string, command: Gesture, dirs: direction[] }) {
     
     return (
-        <div ref={option} className="option" key={cmd_key}>
+        <div className="option" key={key}>
 
-            <img src={command?.gesturePainting || '#'} alt={cmd_key} aria-value={state}
-                onError={event => {
-                    event.currentTarget.onerror = null;
-                    Object.assign(event.currentTarget.style, {
-                        width: '0',
-                        opacity: '0'
-                    });
-                }}
-                onLoad={event => {
-                    Object.assign(event.currentTarget.style, {
-                        width: '',
-                        opacity: ''
-                    });
-                }}
-            />
+            {
+                command?.gesturePainting && Array.isArray(command.gesturePainting) && command.gesturePainting.length > 2 && command.gesturePainting.every(na => Array.isArray(na))
+                ? <svg stroke={options.pen.color} stroke-width={options.pen.size} fill="none" viewBox={`0 0 ${command.gesturePainting![0][0]} ${command.gesturePainting![0][1]}`} style={{ height: '100%' }} stroke-linecap="round">
+                    <polyline points={command.gesturePainting!.slice(1, command.gesturePainting.length).map((na, i) => `${na[0]},${na[1]}`).join(' ')}></polyline>
+                </svg>
+                : <div style={{ width: '0' }}></div>
+            }
 
             <GODesc command={command} dirs={dirs} />
 
@@ -211,7 +201,7 @@ export function GOptions() {
                 const command = variable.command_store.get(cmd_key);
                 const dirs = cmd_key.split('') as direction[];
 
-                return (<GOption cmd_key={cmd_key} command={command!} dirs={dirs} state={state} />);
+                return (<GOption key={cmd_key + state} cmd_key={cmd_key} command={command!} dirs={dirs} />);
             })}
         </>
     );

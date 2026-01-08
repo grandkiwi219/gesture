@@ -1,6 +1,6 @@
 import { drawing_elements, options } from "src/main/consts";
 import { variable } from "src/main/variable";
-import { decideSize, drawCommand, setDynamicSizeCanvas, setSizeCanvas } from "./supports";
+import { calcCanvasInsideCoord, decideSize, drawCommand, setDynamicSizeCanvas, setSizeCanvas } from "./supports";
 import logger from "../utils/logger";
 
 export function startDrawing() {
@@ -80,10 +80,7 @@ export function continueDrawing({ x, y }: Coordinate) {
     }
 
     const rect = canvas.getBoundingClientRect();
-    const coord: Coordinate = {
-        x: x - rect.left,
-        y: y - rect.top
-    }
+    const coord = calcCanvasInsideCoord({ x, y }, rect);
 
     const size = options.pen.size;
 
