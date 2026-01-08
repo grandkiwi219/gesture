@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { svg, stagger, animate, createScope, Scope } from 'animejs';
 
 import '../CSS/GestureOPtions.css' with { type: 'css' };
 
@@ -138,13 +139,64 @@ function GODesc({ command, dirs }: { command: Gesture, dirs: direction[] }) {
 }
 
 function GOption({ key, cmd_key, command, dirs }: { key: string, cmd_key: string, command: Gesture, dirs: direction[] }) {
+
+    const svgData = useRef<SVGSVGElement>(null);
+    const root = useRef<HTMLDivElement>(null);
+    const scope = useRef<Scope>(null);
+
+    useEffect(() => {
+        if (!svgData.current) return;
+
+        scope.current = createScope({ root }).add(self => {
+
+            const drawSvg = animate(svg.createDrawable('polyline'), {
+                draw: '0 1',
+                ease: 'linear',
+                duration: 1500,
+                loop: true,
+                loopDelay: 500,
+                autoplay: false
+            });
+
+            self!.add('play', () => {
+                drawSvg.play();
+            });
+
+            self!.add('stop', () => {
+                drawSvg.complete();
+                drawSvg.cancel();
+            });
+        });
+
+        scope.current.methods.stop();
+
+        return () => {
+            scope.current && scope.current.revert();
+        }
+    });
     
     return (
-        <div className="option" key={key}>
+        <div className="option" key={key} ref={root}
+            onMouseEnter={() => {
+                if (!scope.current) return;
+                
+                scope.current.methods.play();
+            }}
+            onMouseLeave={() => {
+                if (!scope.current) return;
+
+                scope.current.methods.stop();
+            }}
+        >
 
             {
-                command?.gesturePainting && Array.isArray(command.gesturePainting) && command.gesturePainting.length > 2 && command.gesturePainting.every(na => Array.isArray(na))
-                ? <svg stroke={options.pen.color} stroke-width={options.pen.size} fill="none" viewBox={`0 0 ${command.gesturePainting![0][0]} ${command.gesturePainting![0][1]}`} style={{ height: '100%' }} stroke-linecap="round">
+                (
+                    command?.gesturePainting
+                    && Array.isArray(command.gesturePainting)
+                    && command.gesturePainting.length > 2
+                    && command.gesturePainting.every(na => Array.isArray(na))
+                )
+                ? <svg ref={svgData} stroke={options.pen.color} stroke-width={options.pen.size} fill="none" viewBox={`0 0 ${command.gesturePainting![0][0]} ${command.gesturePainting![0][1]}`} style={{ height: '100%' }} stroke-linecap="round">
                     <polyline points={command.gesturePainting!.slice(1, command.gesturePainting.length).map((na, i) => `${na[0]},${na[1]}`).join(' ')}></polyline>
                 </svg>
                 : <div style={{ width: '0' }}></div>
