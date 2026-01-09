@@ -269,7 +269,7 @@ export function GSetups() {
                         switch (e.key) {
 							case 'Enter':
 								if (e.currentTarget.value) {
-                        			setSetting({ description: e.currentTarget.value });
+                        			setSetting({ description: e.currentTarget.value, gesturePainting: svgData });
 								}
 								else {
 									pleaseInput(GS_desc_msg, e.currentTarget);
