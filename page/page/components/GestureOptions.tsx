@@ -152,7 +152,7 @@ function GOption({ key, cmd_key, command, dirs }: { key: string, cmd_key: string
             const drawSvg = animate(svg.createDrawable('polyline'), {
                 draw: '0 1',
                 ease: 'linear',
-                duration: 1500,
+                duration: cmd_key.length * 450,
                 loop: true,
                 loopDelay: 500,
                 autoplay: false
