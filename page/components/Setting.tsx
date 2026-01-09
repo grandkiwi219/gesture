@@ -61,7 +61,6 @@ function SettingScript({ state, setState }: { state: SettingGesture, setState: (
                             setState(s => {
                                 s!.type = 'script';
                                 s!.script = script.key;
-                                console.log(s)
                                 return { ...s! };
                             });
                         }}

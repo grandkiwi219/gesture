@@ -1,9 +1,9 @@
-import { checkPrime } from "node:crypto";
 import { initial_options } from "service/initial_options";
 import { setInitialGesture } from "service/reset";
 import { bg_state, bg_variable } from "service/variable";
 import { options, regex, storage_area, storage_keys } from "src/main/consts";
 import { decodeMap } from "src/main/utils/utils";
+import { sendContentMessage } from "./supports";
 
 export async function loadCommand() {
     bg_state.loaded_command = false;
@@ -76,13 +76,7 @@ export async function loadStorageChanged(
                 credit: 'sites',
                 data: result_sites
             }
-            chrome.tabs.query({}).then(tabs => {
-                tabs.forEach(tab => {
-                    if (tab.id)
-                        chrome.tabs.sendMessage(tab.id, message);
-                });
-            });
-            chrome.runtime.sendMessage(message);
+            sendContentMessage(message);
             changed.sites = true;
         }
         
@@ -108,13 +102,7 @@ export async function loadStorageChanged(
                 credit: 'options',
                 data: initial_options
             }
-        chrome.tabs.query({}).then(tabs => {
-            tabs.forEach(tab => {
-                if (tab.id)
-                    chrome.tabs.sendMessage(tab.id, message);
-            });
-        });
-        chrome.runtime.sendMessage(message);
+        sendContentMessage(message);
 
         if (!options_check) {
             bg_state.loaded_command = false;
@@ -172,13 +160,7 @@ export async function loadStorageChanged(
             credit: 'commands',
             data: null /* decodeMap(bg_variable.command_store) */
         }
-        chrome.tabs.query({}).then(tabs => {
-            tabs.forEach(tab => {
-                if (tab.id)
-                    chrome.tabs.sendMessage(tab.id, message);
-            });
-        });
-        chrome.runtime.sendMessage(message);
+        sendContentMessage(message);
     }
 }
 

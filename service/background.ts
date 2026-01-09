@@ -15,8 +15,8 @@ chrome.runtime.onInstalled.addListener(async d => {
     }
     
     // gesture-command
-    await loadSites();
-    await loadCommand();
+    // await loadSites();
+    // await loadCommand();
     
     
     // context-menu
@@ -32,8 +32,8 @@ chrome.runtime.onInstalled.addListener(async d => {
 
 chrome.runtime.onStartup.addListener(async () => {
     // gesture-command
-    await loadSites();
-    await loadCommand();
+    // await loadSites();
+    // await loadCommand();
 
 
     // context-menu

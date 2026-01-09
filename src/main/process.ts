@@ -5,7 +5,6 @@ import { scripts } from "./scripts";
 import { stopDrawing } from "./drawing";
 import { mouseMove } from "./event";
 import { storage_keys, storage_area, options } from "./consts";
-import { setInitialGesture } from "service/reset";
 import { credits, repeater_msg_event } from "src/repeater/msg/message-type";
 import { encodeMap, merge } from "./utils/utils";
 
