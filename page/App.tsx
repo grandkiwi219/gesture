@@ -20,10 +20,10 @@ import { storageChanged } from 'src/main/event';
 export const NavState = createContext<string | null>(null);
 export const NavSetter = createContext<((value: SetStateAction<any | null>) => void)>(() => {});
 
-function AppControl({ init_nav_state, init_nav_short_state, children }: AppProps) {
+function AppControl({ init_nav_short_state, children }: AppProps) {
 
 	const navShortState = useRef(init_nav_short_state);
-	const [navMenuState, setNavMenuState] = useReducer<string, any>(navMenuReducer(navShortState), init_nav_state);
+	const [navMenuState, setNavMenuState] = useReducer<string, any>(navMenuReducer(navShortState), std.state.nav.none);
 
 	useEffect(() => {
 		resizeNav(navShortState, setNavMenuState);
@@ -43,13 +43,6 @@ function AppControl({ init_nav_state, init_nav_short_state, children }: AppProps
 }
 
 export default function() {
-
-	let init_nav_state: string;
-	try {
-		init_nav_state = localStorage.getItem(std.key.nav) ?? std.state.nav.long;
-	} catch (error) {
-		init_nav_state = std.state.nav.long;
-	}
 
 	let init_nav_short_state: boolean;
 	try {
@@ -89,7 +82,7 @@ export default function() {
 	}, []);
 
 	return (
-		<AppControl init_nav_state={init_nav_state} init_nav_short_state={init_nav_short_state}>
+		<AppControl init_nav_short_state={init_nav_short_state}>
 			<Header />
 
 			<SettingControl>

@@ -3,7 +3,6 @@ interface Props {
 }
 
 interface AppProps extends Props {
-    init_nav_state: string;
     init_nav_short_state: boolean;
 }
 
