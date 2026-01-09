@@ -4,7 +4,8 @@
     --paper-padding: 20px;
     --paper-border-radius: 20px;
 
-    --paper-item-border: 1px solid var(--background-color-active);
+    --paper-item-border-size: 1px;
+    --paper-item-border: var(--paper-item-border-size) solid var(--background-color-active);
 }
 
 #page {

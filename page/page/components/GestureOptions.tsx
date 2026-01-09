@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { svg, stagger, animate, createScope, Scope } from 'animejs';
 
-import '../CSS/GestureOPtions.css' with { type: 'css' };
+import '../CSS/GestureOptions.css' with { type: 'css' };
 
 import { dirEl } from "./GestureDisplay";
 
@@ -37,10 +37,7 @@ function GODirs({ dirs }: { dirs: direction[] }) {
             {dirs.map(dir => {
                 const Icon = dirEl[dir];
                 return (
-                    <div className='dir translucent' style={{
-                        padding: '6px',
-                        paddingBottom: '5px',
-                    }}>
+                    <div className='dir translucent'>
                         <Icon size='15px' />
                     </div>
                 );
@@ -196,7 +193,14 @@ function GOption({ key, cmd_key, command, dirs }: { key: string, cmd_key: string
                     && command.gesturePainting.length > 2
                     && command.gesturePainting.every(na => Array.isArray(na))
                 )
-                ? <svg ref={svgData} stroke={options.pen.color} stroke-width={options.pen.size} fill="none" viewBox={`0 0 ${command.gesturePainting![0][0]} ${command.gesturePainting![0][1]}`} style={{ height: '100%' }} stroke-linecap="round">
+                ? <svg
+                    ref={svgData}
+                    stroke={options.pen.color}
+                    stroke-width={options.pen.size}
+                    fill="none"
+                    viewBox={`0 0 ${command.gesturePainting![0][0]} ${command.gesturePainting![0][1]}`}
+                    stroke-linecap="round"
+                >
                     <polyline points={command.gesturePainting!.slice(1, command.gesturePainting.length).map((na, i) => `${na[0]},${na[1]}`).join(' ')}></polyline>
                 </svg>
                 : <div style={{ width: '0' }}></div>
