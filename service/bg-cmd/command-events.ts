@@ -18,6 +18,11 @@ export function backgroundCommand(command: string, tab?: chrome.tabs.Tab | undef
             chrome.storage[storage_area].remove(storage_keys.options);
             break;
 
+        case command_keys.reset_sites:
+            console.log('옵션을 재설정합니다.');
+            chrome.storage[storage_area].remove(storage_keys.sites);
+            break;
+
         default:
             console.warn('알 수 없는 명령어');
             break;
