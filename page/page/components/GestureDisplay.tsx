@@ -8,6 +8,8 @@ import { mouseDown, mouseMove, mouseUp } from 'src/main/event';
 import { stopDrawing } from 'src/main/drawing';
 import { calcCanvasInsideCoord } from 'src/main/drawing/supports';
 
+import { bg_consts } from 'service/consts';
+
 import '../CSS/GestureDisplay.css' with { type: 'css' };
 
 import std from 'page/std';
@@ -70,8 +72,6 @@ const reset_options: ExitReset = {
 
 let gesture_context_menu = true;
 
-const null_svg_size = [640, 640];
-
 export function GCanvas({ children }: Props) {
 
 	const cancel = useRef<HTMLButtonElement | null>(null);
@@ -84,7 +84,7 @@ export function GCanvas({ children }: Props) {
 
 	function handleSvgSize() {
 		setSvgData(s => {
-			s[0] = canvas_wrap.current ? [canvas_wrap.current.offsetWidth, canvas_wrap.current.offsetHeight] : null_svg_size;
+			s[0] = canvas_wrap.current ? [canvas_wrap.current.offsetWidth, canvas_wrap.current.offsetHeight] : bg_consts.size.svg;
 			return [...s];
 		});
 	}

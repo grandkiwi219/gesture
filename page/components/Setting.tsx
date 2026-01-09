@@ -235,8 +235,6 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                                         }
                                     }
                                 );
-
-                                console.log(state)
                                 
                                 utils.showAlert({ msg: `"${state.description}"(이)가 추가되었습니다.` });
 

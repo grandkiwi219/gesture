@@ -6,5 +6,9 @@ export const gesture_type: { [key in GestureType]: GestureType } = {
 export const bg_consts = {
     event: {
         loaded_command: 'bg_loaded_command'
+    },
+
+    size: {
+        svg: [640, 640]
     }
 }

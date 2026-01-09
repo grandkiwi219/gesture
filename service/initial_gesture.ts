@@ -25,7 +25,7 @@
     }
 } */
 
-import { gesture_type } from "./consts";
+import { bg_consts, gesture_type } from "./consts";
 import { scripts } from "src/main/scripts";
 
 const initial_gesture: { [key: string]: Gesture } = {
@@ -33,91 +33,91 @@ const initial_gesture: { [key: string]: Gesture } = {
         description: scripts.next_page.description,
         type: gesture_type.script,
         script: scripts.next_page.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [140, 320], [500, 320]],
     },
     
     l: {
         description: scripts.previous_page.description,
         type: gesture_type.script,
         script: scripts.previous_page.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [500, 320], [140, 320]],
     },
 
     u: {
         description: scripts.go_to_up.description,
         type: gesture_type.script,
         script: scripts.go_to_up.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [320, 500], [320, 140]],
     },
 
     d: {
         description: scripts.go_to_down.description,
         type: gesture_type.script,
         script: scripts.go_to_down.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [320, 140], [320, 500]],
     },
 
     dr: {
         description: scripts.close_tap.description,
         type: gesture_type.script,
         script: scripts.close_tap.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [140, 140], [140, 500], [500, 500]],
     },
 
     rd: {
         description: scripts.minimized_window.description,
         type: gesture_type.script,
         script: scripts.minimized_window.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [140, 140], [500, 140], [500, 500]],
     },
 
     ud: {
         description: scripts.refresh_tap.description,
         type: gesture_type.script,
         script: scripts.refresh_tap.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [220, 500], [320, 140], [420, 500]],
     },
 
     du: {
         description: scripts.refresh_tap.description,
         type: gesture_type.script,
         script: scripts.refresh_tap.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [220, 140], [320, 500], [420, 140]],
     },
 
     ru: {
         description: scripts.maximized_window.description,
         type: gesture_type.script,
         script: scripts.maximized_window.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [140, 500], [500, 500], [500, 140]],
     },
 
     lu: {
         description: scripts.fullscreen_window.description,
         type: gesture_type.script,
         script: scripts.fullscreen_window.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [500, 500], [140, 500], [140, 140]],
     },
 
     ld: {
         description: scripts.restore_tap.description,
         type: gesture_type.script,
         script: scripts.restore_tap.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [500, 140], [140, 140], [140, 500]],
     },
 
     lr: {
         description: scripts.focus_left_tap.description,
         type: gesture_type.script,
         script: scripts.focus_left_tap.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [500, 420], [140, 320], [500, 220]],
     },
 
     rl: {
         description: scripts.focus_right_tap.description,
         type: gesture_type.script,
         script: scripts.focus_right_tap.key,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [140, 220], [500, 320], [140, 420]],
     },
 
     drul: {
@@ -230,7 +230,7 @@ async function showAlert({ type, msg = undefined }) {
   
   showAlert({ msg: '상자에욧!' });
 })();`,
-        gesturePainting: [],
+        gesturePainting: [bg_consts.size.svg, [140, 140], [140, 500], [500, 500], [500, 140], [140, 140]],
     }
 };
 
