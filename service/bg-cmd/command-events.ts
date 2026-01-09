@@ -7,7 +7,7 @@ export function backgroundCommand(command: string, tab?: chrome.tabs.Tab | undef
             chrome.runtime.openOptionsPage();
             break;
         case command_keys.reset:
-            console.log('옵션을 재설정합니다.');
+            console.log('제스처를 재설정합니다.');
             setInitialGesture(true);
             break;
         default:

@@ -9,6 +9,6 @@ export const commands = {
         description: "옵션 설정 페이지 열기"
     },
     [command_keys.reset]: {
-        description: "옵션 재설정"
+        description: "제스처 재설정"
     }
 }
