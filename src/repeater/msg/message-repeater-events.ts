@@ -1,12 +1,7 @@
 import { initial } from "src/main/consts";
 import logger from "src/main/utils/logger";
 
-let ignore_context_menu = false;
-
-window.addEventListener('DOMContentLoaded', () => {
-    
-})
-
+/* let ignore_context_menu = false;
 
 export async function contextMenuEvent(event: PointerEvent) {
     if (!ignore_context_menu) {
@@ -19,7 +14,7 @@ export async function contextMenuEvent(event: PointerEvent) {
 
 export function ignoreContextMenu(data: boolean) {
     ignore_context_menu = data;
-}
+} */
 
 export function executeCustomScript(data_script: string) {
     // @ts-ignore

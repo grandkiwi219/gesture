@@ -3,7 +3,7 @@ import { variable } from "src/main/variable";
 import { decidePos, decideDir, measureDistanceSq } from "../utils/decider";
 import { continueDrawing, showCommandDrawing, startDrawing } from "src/main/drawing";
 import { exitReset, getCommandData } from "src/main/process";
-import { sendIgnoreContextMenu } from "../dispatch";
+import { sendIgnoreContextMenu } from "../context-menu";
 import logger from "../utils/logger";
 
 export function mouseMove(event: MouseEvent,

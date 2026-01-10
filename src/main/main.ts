@@ -1,6 +1,6 @@
 import { mouseDown, mouseMove, mouseUp, scriptMessage, storageChanged } from "./event";
 import { scriptInjection } from "./utils/assets";
-import { messages, repeater_msg_event, script_msg_event } from "src/repeater/msg/message-type";
+import { repeater_msg_event, script_msg_event } from "src/repeater/msg/message-type";
 import { mainAddEvent, mainRemoveEvent, setCommand, setOPtions } from "./process";
 import { variable } from "./variable";
 import logger from "./utils/logger";
@@ -8,7 +8,6 @@ import logger from "./utils/logger";
 
 void function main() {
 
-    // 파이어폭스에서'도' 사용 가능케 하기 위한 최선?의 방법
     scriptInjection(document.documentElement, 'src/repeater.js');
 
     variable.mouseMove = mouseMove;
@@ -22,8 +21,6 @@ void function main() {
     });
 
     const addEvent = mainAddEvent(() => {
-        
-        window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(messages.acknowledge_context_menu) }));
 
         window.addEventListener('mousedown', mouseDown, true);
         

@@ -1,7 +1,7 @@
 import { variable } from "src/main/variable";
 import { decidePos } from "src/main/utils/decider";
 import { exitReset } from "src/main/process";
-import { sendAcknowledgeContextMenu } from '../dispatch/index';
+import { sendAcknowledgeContextMenu } from '../context-menu/index';
 import { mouseMove } from "./mouseMove";
 
 export function mouseDown(event: MouseEvent,
