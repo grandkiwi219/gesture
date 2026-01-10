@@ -1,32 +1,6 @@
-/* {
-    "r": {
-        "description": "다음 페이지"
-    },
-    "l": {
-        "description": "이전 페이지"
-    },
-    "u": {
-        "description": "맨 위로"
-    },
-    "d": {
-        "description": "맨 아래로"
-    },
-    "dr": {
-        "description": "탭 닫기"
-    },
-    "rd": {
-        "description": "창 최소화"
-    },
-    "ud": {
-        "description": "새로고침"
-    },
-    "du": {
-        "description": "새로고침"
-    }
-} */
-
 import { bg_consts, gesture_type } from "./consts";
 import { scripts } from "src/main/scripts";
+
 
 const initial_gesture: { [key: string]: Gesture } = {
     r: {
