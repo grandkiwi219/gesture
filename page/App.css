@@ -1,9 +1,3 @@
-html {
-    color: var(--color);
-    background-color: var(--background-color);
-    scrollbar-color: grey var(--background-color);
-}
-
 .show-alert {
     --alert-down: 20px;
     --alert-up: 10px;

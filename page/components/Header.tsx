@@ -13,20 +13,20 @@ import { LuMenu, LuMoon, LuSun } from "react-icons/lu";
 
 
 function SetTheme() {    
-    let [theme, setTheme] = useState(localStorage.getItem(std.key.theme));
+    let [theme, setTheme] = useState(localStorage.getItem('theme'));
 
     function clickThemeBtn() {
         localStorage.setItem(
-            std.key.theme,
-            theme != std.Theme.Dark ? std.Theme.Dark : std.Theme.Light
+            'theme',
+            theme != 'dark' ? 'dark' : 'light'
         );
-        setTheme(() => localStorage.getItem(std.key.theme))
-        utils.decideTheme();
+        setTheme(() => localStorage.getItem('theme'));
+        decideTheme();
     }
 
     return (
         <button onClick={clickThemeBtn}>
-            {theme == std.Theme.Dark ? <LuSun size={std.size.icon} /> : <LuMoon size={std.size.icon} />}
+            {theme == 'dark' ? <LuSun size={std.size.icon} /> : <LuMoon size={std.size.icon} />}
         </button>
     );
 }

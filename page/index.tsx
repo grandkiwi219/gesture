@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import "./CSS/root.css" with { type: "css" };
 import "./index.css" with { type: "css" };
 import './CSS/Buttons.css' with { type: 'css' };
 
@@ -25,5 +24,3 @@ root.render(
         
     </StrictMode>
 );
-
-utils.decideTheme();

@@ -21,3 +21,9 @@ html[theme=dark] {
     --opacity-hover: 0.75;
     --opacity-active: 0.5;
 }
+
+html {
+    color: var(--color);
+    background-color: var(--background-color);
+    scrollbar-color: grey var(--background-color);
+}

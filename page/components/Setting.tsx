@@ -75,6 +75,8 @@ function SettingScript({ state, setState }: { state: SettingGesture, setState: (
 
 function SettingCustomScript({ state, setState }: { state: SettingGesture, setState: ((value: React.SetStateAction<SettingGesture | null>) => void) }) {
 
+    const theme = localStorage.getItem('theme') == 'dark' ? 'dark' : 'light';
+
     return (
         <div style={{
             width: '100%',
@@ -93,7 +95,7 @@ function SettingCustomScript({ state, setState }: { state: SettingGesture, setSt
                     });
                 }}
                 padding={15}
-                data-color-mode={localStorage.getItem(std.key.theme) as Theme || 'light'}
+                data-color-mode={theme}
                 style={{
                     fontSize: '14px',
                     minHeight: '100%'
