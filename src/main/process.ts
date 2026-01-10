@@ -69,6 +69,10 @@ export function exitReset(
         x: -1,
         y: -1
     }
+    variable.changed_pos = {
+        x: -1,
+        y: -1
+    }
 
     if (stop_drawing) stopDrawing();
 }

@@ -52,6 +52,7 @@ export function mouseMove(event: MouseEvent,
     if (distance <= consts.decide_range**2) return;
 
     const direction = decideDir(event);
+    variable.changed_pos = JSON.parse(JSON.stringify(variable.position));
     decidePos(event);
 
     const is_new_dir = variable.directions.push(direction);

@@ -17,6 +17,10 @@ let last_pos: Coordinate = {
     x: -1,
     y: -1
 }
+let changed_pos: Coordinate = {
+    x: -1,
+    y: -1
+}
 
 let directions = new DirectionBundle();
 
@@ -40,6 +44,7 @@ export const variable = {
     position,
     initial_pos,
     last_pos,
+    changed_pos,
     directions,
     command_store,
     drawing_store,

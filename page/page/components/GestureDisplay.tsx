@@ -182,7 +182,7 @@ export function GCanvas({ children }: Props) {
 
 				setDirs([...variable.directions.data]);
 
-				handleSvgData({ x: variable.last_pos.x, y: variable.last_pos.y });
+				handleSvgData({ x: variable.changed_pos.x, y: variable.changed_pos.y });
 			}}
 			onContextMenu={(e) => {
 				if (gesture_context_menu) return;
