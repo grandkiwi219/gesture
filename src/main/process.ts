@@ -57,22 +57,11 @@ export function exitReset(
     if (reset_directions) variable.directions.reset();
     variable.starting = false;
     variable.executing = false;
-    variable.position = {
-        x: -1,
-        y: -1,
-    };
-    variable.initial_pos = {
-        x: -1,
-        y: -1,
-    };
-    variable.last_pos = {
-        x: -1,
-        y: -1
-    }
-    variable.changed_pos = {
-        x: -1,
-        y: -1
-    }
+    
+    variable.position.reset();
+    variable.initial_pos.reset();
+    variable.last_pos.reset();
+    variable.changed_pos.reset();
 
     if (stop_drawing) stopDrawing();
 }

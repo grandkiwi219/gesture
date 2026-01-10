@@ -2,10 +2,6 @@ interface Props {
     children: ReactNode
 }
 
-interface AppProps extends Props {
-    init_nav_short_state: boolean;
-}
-
 interface NavProps {
     Icon: ReactNode;
     setting: Setting;

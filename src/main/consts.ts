@@ -40,8 +40,7 @@ const command_size = 150;
 export const drawing_elements: {
     [key: string]: {
         tag: string,
-        style?: {},
-        pen?: any
+        style?: React.CSSProperties
     }
 } = {
     main: {

@@ -16,8 +16,6 @@ if (!root_element) throw new Error("root is undefined");
 
 const root = createRoot(root_element);
 
-utils.decideTheme();
-
 root.render(
     <StrictMode>
 
@@ -27,3 +25,5 @@ root.render(
         
     </StrictMode>
 );
+
+utils.decideTheme();

@@ -12,8 +12,7 @@ import utils from 'page/utils/utils';
 import { LuMenu, LuMoon, LuSun } from "react-icons/lu";
 
 
-function SetTheme() {
-    
+function SetTheme() {    
     let [theme, setTheme] = useState(localStorage.getItem(std.key.theme));
 
     function clickThemeBtn() {

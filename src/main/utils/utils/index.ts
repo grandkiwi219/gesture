@@ -1,4 +1,4 @@
-export function calcAngleDegrees({ x, y }: Coordinate): Angle {
+export function calcAngleDegrees({ x, y }: CoordinateObj): Angle {
     return (Math.atan2(y, x) * 180) / Math.PI;
 }
 

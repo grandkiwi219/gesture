@@ -1,6 +1,6 @@
 import consts from "src/main/consts";
 import { variable } from "src/main/variable";
-import { decidePos, decideDir, measureDistanceSq } from "../utils/decider";
+import { decideDir, measureDistanceSq } from "../utils/decider";
 import { continueDrawing, showCommandDrawing, startDrawing } from "src/main/drawing";
 import { exitReset, getCommandData } from "src/main/process";
 import { sendIgnoreContextMenu } from "../context-menu";
@@ -42,18 +42,21 @@ export function mouseMove(event: MouseEvent,
         startDrawing();
     }
 
-    continueDrawing({ x: event.clientX, y: event.clientY });
-
-    variable.last_pos = {
+    const current_pos: CoordinateObj = {
         x: event.clientX,
         y: event.clientY
     }
 
+    continueDrawing(current_pos);
+
+    variable.last_pos.override(current_pos);
+
     if (distance <= consts.decide_range**2) return;
 
     const direction = decideDir(event);
-    variable.changed_pos = JSON.parse(JSON.stringify(variable.position));
-    decidePos(event);
+
+    variable.changed_pos.override(variable.position);
+    variable.position.override(current_pos);
 
     const is_new_dir = variable.directions.push(direction);
 

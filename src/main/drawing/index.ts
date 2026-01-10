@@ -9,7 +9,7 @@ export function startDrawing() {
     if (!std_target) return;
 
     let target = std_target;
-    const coord: Coordinate = decideSize(target);
+    const coord: CoordinateObj = decideSize(target);
 
     if (!(target instanceof Element)) {
         target = document.documentElement;
@@ -66,7 +66,7 @@ export function startDrawing() {
     target.appendChild(main);
 }
 
-export function continueDrawing({ x, y }: Coordinate) {
+export function continueDrawing({ x, y }: CoordinateObj) {
     const canvas = variable.drawing_store.paper;
     if (!canvas || !(canvas instanceof HTMLCanvasElement)) {
         stopDrawing();

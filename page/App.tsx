@@ -1,4 +1,4 @@
-import { ActionDispatch, createContext, SetStateAction, useEffect, useReducer, useRef } from 'react';
+import { createContext, useEffect, useReducer, useRef } from 'react';
 import { HashRouter } from 'react-router-dom';
 
 import './App.css' with { type: 'css' };
@@ -18,11 +18,22 @@ import { storageChanged } from 'src/main/event';
 
 
 export const NavState = createContext<string | null>(null);
-export const NavSetter = createContext<((value: SetStateAction<any | null>) => void)>(() => {});
+export const NavSetter = createContext<((value: React.SetStateAction<any | null>) => void)>(() => {});
 
-function AppControl({ init_nav_short_state, children }: AppProps) {
+function getInitNavShort() {
+	let state: boolean;
+	try {
+		state = JSON.parse(localStorage.getItem(std.key.nav_short) ?? 'false');
+	} catch (error) {
+		state = false;
+	}
 
-	const navShortState = useRef(init_nav_short_state);
+	return state;
+}
+
+function AppControl({ children }: Props) {
+
+	const navShortState = useRef(getInitNavShort());
 	const [navMenuState, setNavMenuState] = useReducer<string, any>(navMenuReducer(navShortState), std.state.nav.none);
 
 	useEffect(() => {
@@ -43,13 +54,6 @@ function AppControl({ init_nav_short_state, children }: AppProps) {
 }
 
 export default function() {
-
-	let init_nav_short_state: boolean;
-	try {
-		init_nav_short_state = JSON.parse(localStorage.getItem(std.key.nav_short) ?? 'false');
-	} catch (error) {
-		init_nav_short_state = false;
-	}
 
 	useEffect(() => {
 		chrome.runtime.onMessage.addListener(mainStorageChanged);
@@ -82,7 +86,7 @@ export default function() {
 	}, []);
 
 	return (
-		<AppControl init_nav_short_state={init_nav_short_state}>
+		<AppControl>
 			<Header />
 
 			<SettingControl>

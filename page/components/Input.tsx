@@ -1,5 +1,3 @@
-import { ChangeEvent, CSSProperties, HTMLInputTypeAttribute, KeyboardEventHandler, RefObject } from "react";
-
 import './CSS/Input.css' with { type: 'css' };
 
 import utils from "page/utils/utils";
@@ -19,14 +17,14 @@ export default function({
 }: {
     id?: string,
     name?: string,
-    ref?: RefObject<any>,
+    ref?: React.RefObject<any>,
     className?: string,
-    style?: CSSProperties,
-    type?: HTMLInputTypeAttribute,
+    style?: React.CSSProperties,
+    type?: React.HTMLInputTypeAttribute,
     placeholder?: string,
     value?: string,
-    onKeyDownCase?: KeyboardEventHandler<HTMLInputElement>,
-    onChange?: ((e: ChangeEvent<HTMLInputElement>) => void)
+    onKeyDownCase?: React.KeyboardEventHandler<HTMLInputElement>,
+    onChange?: ((e: React.ChangeEvent<HTMLInputElement>) => void)
 }) {
     return (
         <input id={id} name={name} ref={ref} className={'input ' + (className ?? '')} style={style}

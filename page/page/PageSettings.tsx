@@ -1,4 +1,4 @@
-import { createContext, RefObject, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 import './CSS/PageSettings.css' with { type: 'css' };
 
@@ -92,7 +92,7 @@ function PSSetup() {
     );
 }
 
-function PSSubmitBtn({ input }: { input: RefObject<HTMLInputElement | null> }) {
+function PSSubmitBtn({ input }: { input: React.RefObject<HTMLInputElement | null> }) {
     return (
         <button className='ps-submit'
             onClick={() => {

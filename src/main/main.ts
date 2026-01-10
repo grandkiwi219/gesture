@@ -16,16 +16,16 @@ void function main() {
 
     const removeEvent = mainRemoveEvent(() => {
         window.removeEventListener('mousedown', mouseDown, true);
-        window.removeEventListener('mouseup', mouseUp);
+        window.removeEventListener('mouseup', mouseUp, true);
         // window.removeEventListener(script_msg_event, scriptMessage);
     });
 
     const addEvent = mainAddEvent(() => {
 
         window.addEventListener('mousedown', mouseDown, true);
-        
-        window.addEventListener('mouseup', mouseUp);
-        
+
+        window.addEventListener('mouseup', mouseUp, true);
+
         // window.addEventListener(script_msg_event, scriptMessage);
 
         setCommand(removeEvent);

@@ -1,4 +1,4 @@
-import { createContext, useEffect, useRef, useState, useContext, useCallback } from 'react';
+import { createContext, useEffect, useRef, useState, useContext } from 'react';
 import { IconType } from 'react-icons';
 
 import { variable } from 'src/main/variable';
@@ -89,7 +89,7 @@ export function GCanvas({ children }: Props) {
 		});
 	}
 
-	function handleSvgData(data: Coordinate) {
+	function handleSvgData(data: CoordinateObj) {
 		const coord = calcCanvasInsideCoord({ x: data.x, y: data.y });
 
 		setSvgData(s => {

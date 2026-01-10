@@ -1,4 +1,4 @@
-interface Coordinate {
+interface CoordinateObj {
     x: number;
     y: number;
 }

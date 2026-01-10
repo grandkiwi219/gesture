@@ -1,5 +1,5 @@
 import std from "page/std";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 
 import { options } from "src/main/consts";
 import { merge } from "src/main/utils/utils";

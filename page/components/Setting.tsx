@@ -1,4 +1,4 @@
-import { createContext, CSSProperties, SetStateAction, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
 import { storage_area, storage_keys } from "src/main/consts";
@@ -12,7 +12,7 @@ import utils from "page/utils/utils";
 
 
 export const SettingState = createContext<SettingGesture | null>(null);
-export const SettingSetter = createContext<((value: SetStateAction<SettingGesture | null>) => void)>(() => {});
+export const SettingSetter = createContext<((value: React.SetStateAction<SettingGesture | null>) => void)>(() => {});
 
 export function SettingControl({ children }: Props) {
 
@@ -27,7 +27,7 @@ export function SettingControl({ children }: Props) {
     );
 }
 
-function SettingScript({ state, setState }: { state: SettingGesture, setState: ((value: SetStateAction<SettingGesture | null>) => void) }) {
+function SettingScript({ state, setState }: { state: SettingGesture, setState: ((value: React.SetStateAction<SettingGesture | null>) => void) }) {
     return (
         <div style={{
             width: '100%',
@@ -73,7 +73,7 @@ function SettingScript({ state, setState }: { state: SettingGesture, setState: (
     );
 }
 
-function SettingCustomScript({ state, setState }: { state: SettingGesture, setState: ((value: SetStateAction<SettingGesture | null>) => void) }) {
+function SettingCustomScript({ state, setState }: { state: SettingGesture, setState: ((value: React.SetStateAction<SettingGesture | null>) => void) }) {
 
     return (
         <div style={{
@@ -103,7 +103,7 @@ function SettingCustomScript({ state, setState }: { state: SettingGesture, setSt
     );
 }
 
-const std_category: CSSProperties = {
+const std_category: React.CSSProperties = {
     width: '50%',
     height: '100%',
 
@@ -114,12 +114,12 @@ const std_category: CSSProperties = {
     cursor: 'pointer'
 }
 
-const std_category_no_active: CSSProperties = {
+const std_category_no_active: React.CSSProperties = {
     backgroundColor: 'var(--background-color-hover)',
     color: 'gray'
 }
 
-function SettingWindow({ state, setState }: { state: SettingGesture, setState: ((value: SetStateAction<SettingGesture | null>) => void) }) {
+function SettingWindow({ state, setState }: { state: SettingGesture, setState: ((value: React.SetStateAction<SettingGesture | null>) => void) }) {
     return (
         <div style={{
             maxWidth: '400px',

@@ -1,8 +1,8 @@
 import { variable } from "src/main/variable";
-import { decidePos } from "src/main/utils/decider";
 import { exitReset } from "src/main/process";
 import { sendAcknowledgeContextMenu } from '../context-menu/index';
 import { mouseMove } from "./mouseMove";
+import { Coordinate } from "../frame/Coordinate";
 
 export function mouseDown(event: MouseEvent,
     {
@@ -33,9 +33,12 @@ export function mouseDown(event: MouseEvent,
     acknowledgeContextMenu();
 
     variable.executing = true;
-    decidePos(event);
-    variable.initial_pos = {
+
+    const down_pos: CoordinateObj = {
         x: event.clientX,
         y: event.clientY
     }
+
+    variable.position.override(down_pos);
+    variable.initial_pos.override(down_pos);
 }

@@ -1,6 +1,6 @@
 import { variable } from "../variable";
 
-export function decideSize(target: Element | Window | null): Coordinate {
+export function decideSize(target: Element | Window | null): CoordinateObj {
     if (target instanceof Element) {
         return {
             x: target.clientWidth,
@@ -27,7 +27,7 @@ export function drawCommand(cvs: HTMLCanvasElement) {
     // ...
 }
 
-export function setSizeCanvas(size_coord: Coordinate) {
+export function setSizeCanvas(size_coord: CoordinateObj) {
 
     const main = variable.drawing_store.main;
     if (main instanceof HTMLElement) {
@@ -49,7 +49,7 @@ export function setSizeCanvas(size_coord: Coordinate) {
 }
 
 export async function setDynamicSizeCanvas(canvas: HTMLCanvasElement) {
-    const size_coord: Coordinate = decideSize(variable.drawing_store.target);
+    const size_coord: CoordinateObj = decideSize(variable.drawing_store.target);
 
     if (variable.drawing_store.target_is_window) {
         if (canvas.width < size_coord.x && canvas.height < size_coord.y) {
@@ -67,13 +67,13 @@ export async function setDynamicSizeCanvas(canvas: HTMLCanvasElement) {
     }
 }
 
-function preserveCanvas(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, size_coord: Coordinate) {
+function preserveCanvas(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, size_coord: CoordinateObj) {
     const tempImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
     setSizeCanvas(size_coord);
     ctx.putImageData(tempImage, 0, 0);
 }
 
-export function calcCanvasInsideCoord({ x, y }: Coordinate, legacy_rect?: DOMRect): Coordinate {
+export function calcCanvasInsideCoord({ x, y }: CoordinateObj, legacy_rect?: DOMRect): CoordinateObj {
     const rect = legacy_rect || (variable.drawing_store.paper as HTMLCanvasElement).getBoundingClientRect();
     return {
         x: x - rect.left,

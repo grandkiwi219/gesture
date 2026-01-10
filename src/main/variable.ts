@@ -1,32 +1,7 @@
+import { Coordinate } from "./frame/Coordinate";
 import { DirectionBundle } from "./frame/Direction";
 
-let main_running: boolean = false;
-
-let starting: boolean = false;
-let executing: boolean = false;
-
-let position: Coordinate = {
-    x: -1,
-    y: -1
-}
-let initial_pos: Coordinate = {
-    x: -1,
-    y: -1
-}
-let last_pos: Coordinate = {
-    x: -1,
-    y: -1
-}
-let changed_pos: Coordinate = {
-    x: -1,
-    y: -1
-}
-
-let directions = new DirectionBundle();
-
-let command_store: CommandStore = new Map();
-
-let drawing_store: Drawing = {
+const drawing_store: Drawing = {
     target: null,
     main: null,
     paper: null,
@@ -38,15 +13,19 @@ let drawing_store: Drawing = {
 };
 
 export const variable = {
-    main_running,
-    starting,
-    executing,
-    position,
-    initial_pos,
-    last_pos,
-    changed_pos,
-    directions,
-    command_store,
+    main_running: false,
+
+    starting: false,
+    executing: false,
+
+    position: new Coordinate(),
+    initial_pos: new Coordinate(),
+    last_pos: new Coordinate(),
+    changed_pos: new Coordinate(),
+
+    directions: new DirectionBundle(),
+
+    command_store: new Map() as CommandStore,
     drawing_store,
     
     mouseMove: null as null | ((ev: MouseEvent) => any)
