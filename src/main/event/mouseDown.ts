@@ -1,17 +1,14 @@
 import { variable } from "src/main/variable";
 import { exitReset } from "src/main/process";
-import { sendAcknowledgeContextMenu } from '../context-menu/index';
 import { mouseMove } from "./mouseMove";
 import { Coordinate } from "../frame/Coordinate";
 
 export function mouseDown(event: MouseEvent,
     {
-        acknowledgeContextMenu = sendAcknowledgeContextMenu,
         use_mouse_move = true,
         reset_options
     }
     : {
-        acknowledgeContextMenu?: Function,
         use_mouse_move?: boolean,
         reset_options?: ExitReset
     } = {}
@@ -29,8 +26,6 @@ export function mouseDown(event: MouseEvent,
         else
             throw new Error('mouseMove 이벤트 함수가 할당되지 않았습니다.');
     }
-
-    acknowledgeContextMenu();
 
     variable.executing = true;
 

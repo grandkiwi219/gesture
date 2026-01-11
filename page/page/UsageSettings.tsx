@@ -43,7 +43,6 @@ function UsageDisplay({ children }: Props) {
                 onMouseDown={(event) => {
                     mouseDown((event as unknown as MouseEvent), 
                         {
-                            acknowledgeContextMenu: () => usage_context_menu = true,
                             use_mouse_move: false,
                             reset_options: {
                                 remove_mouse_move: false
@@ -63,6 +62,7 @@ function UsageDisplay({ children }: Props) {
     
                     e.preventDefault();
                     e.stopPropagation();
+                    usage_context_menu = true;
                 }}
             >
                 {children}

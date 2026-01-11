@@ -142,7 +142,6 @@ export function GCanvas({ children }: Props) {
 			onMouseDown={(event) => {
 				mouseDown((event as unknown as MouseEvent), 
 					{
-						acknowledgeContextMenu: () => {},
 						use_mouse_move: false,
 						reset_options: {
 							...reset_options,
