@@ -18,15 +18,11 @@ export const usageSetting: Setting = {
     path: '/usage'
 }
 
-let usage_context_menu = true;
-
 function UsageDisplay({ children }: Props) {
 
     const drawing_target = useRef(null);
 
     useEffect(() => {
-        usage_context_menu = true;
-        
         exitReset();
         variable.drawing_store.preserve = false;
     });
@@ -52,17 +48,9 @@ function UsageDisplay({ children }: Props) {
                 }}
                 onMouseMove={(event) => {
                     mouseMove((event as unknown as MouseEvent), {
-                        ignoreContextMenu: () => usage_context_menu = false,
                         drawing_target: drawing_target.current,
                         show_command: true
                     });
-                }}
-                onContextMenu={(e) => {
-                    if (usage_context_menu) return;
-    
-                    e.preventDefault();
-                    e.stopPropagation();
-                    usage_context_menu = true;
                 }}
             >
                 {children}

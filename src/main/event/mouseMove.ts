@@ -14,7 +14,7 @@ export function mouseMove(event: MouseEvent,
         reset_options
     }
     : {
-        ignoreContextMenu?: Function
+        ignoreContextMenu?: ((setIgnoreContextMenu: Function) => void)
         drawing_target?: Element | Window | null,
         show_command?: boolean,
         reset_options?: ExitReset
@@ -32,7 +32,7 @@ export function mouseMove(event: MouseEvent,
     if (!variable.starting) {
         if (distance > consts.start_range**2) {
             variable.starting = true;
-            ignoreContextMenu();
+            ignoreContextMenu(sendIgnoreContextMenu);
         }
         return;
     }

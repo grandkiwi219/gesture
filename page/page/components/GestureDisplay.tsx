@@ -70,8 +70,6 @@ const reset_options: ExitReset = {
 	reset_directions: false
 }
 
-let gesture_context_menu = true;
-
 export function GCanvas({ children }: Props) {
 
 	const cancel = useRef<HTMLButtonElement | null>(null);
@@ -99,8 +97,6 @@ export function GCanvas({ children }: Props) {
 	}
 
  	useEffect(() => {
-		gesture_context_menu = true;
-
 		exitReset();
 		variable.drawing_store.preserve = false;
 
@@ -155,12 +151,12 @@ export function GCanvas({ children }: Props) {
 			}}
 			onMouseMove={(event) => {
 				const is_new_dir = mouseMove((event as unknown as MouseEvent), {
-					ignoreContextMenu: () => {
+					ignoreContextMenu: (setIgnoreContextMenu) => {
 						cancel.current!.style.display = 'block';
 						variable.directions.reset();
 						setDirs([]);
 						stopDrawing();
-						gesture_context_menu = false;
+						setIgnoreContextMenu();
 
 						set_last_pos.current = false;
 						setSvgData([]);
@@ -182,13 +178,6 @@ export function GCanvas({ children }: Props) {
 				setDirs([...variable.directions.data]);
 
 				handleSvgData({ x: variable.changed_pos.x, y: variable.changed_pos.y });
-			}}
-			onContextMenu={(e) => {
-				if (gesture_context_menu) return;
-
-				e.preventDefault();
-				e.stopPropagation();
-				gesture_context_menu = true;
 			}}
 		>
 			{children}
