@@ -32,9 +32,9 @@ const initial_gesture: { [key: string]: Gesture } = {
     },
 
     dr: {
-        description: scripts.close_tap.description,
+        description: scripts.close_tab.description,
         type: gesture_type.script,
-        script: scripts.close_tap.key,
+        script: scripts.close_tab.key,
         gesturePainting: [bg_consts.size.svg, [140, 140], [140, 500], [500, 500]],
     },
 
@@ -46,16 +46,16 @@ const initial_gesture: { [key: string]: Gesture } = {
     },
 
     ud: {
-        description: scripts.refresh_tap.description,
+        description: scripts.refresh_tab.description,
         type: gesture_type.script,
-        script: scripts.refresh_tap.key,
+        script: scripts.refresh_tab.key,
         gesturePainting: [bg_consts.size.svg, [220, 500], [320, 140], [420, 500]],
     },
 
     du: {
-        description: scripts.refresh_tap.description,
+        description: scripts.refresh_tab.description,
         type: gesture_type.script,
-        script: scripts.refresh_tap.key,
+        script: scripts.refresh_tab.key,
         gesturePainting: [bg_consts.size.svg, [220, 140], [320, 500], [420, 140]],
     },
 
@@ -74,23 +74,23 @@ const initial_gesture: { [key: string]: Gesture } = {
     },
 
     ld: {
-        description: scripts.restore_tap.description,
+        description: scripts.restore_tab.description,
         type: gesture_type.script,
-        script: scripts.restore_tap.key,
+        script: scripts.restore_tab.key,
         gesturePainting: [bg_consts.size.svg, [500, 140], [140, 140], [140, 500]],
     },
 
     lr: {
-        description: scripts.focus_left_tap.description,
+        description: scripts.focus_left_tab.description,
         type: gesture_type.script,
-        script: scripts.focus_left_tap.key,
+        script: scripts.focus_left_tab.key,
         gesturePainting: [bg_consts.size.svg, [500, 420], [140, 320], [500, 220]],
     },
 
     rl: {
-        description: scripts.focus_right_tap.description,
+        description: scripts.focus_right_tab.description,
         type: gesture_type.script,
-        script: scripts.focus_right_tap.key,
+        script: scripts.focus_right_tab.key,
         gesturePainting: [bg_consts.size.svg, [140, 220], [500, 320], [140, 420]],
     },
 
