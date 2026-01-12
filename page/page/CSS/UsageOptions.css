@@ -4,10 +4,10 @@
     align-items: flex-start;
 }
 
-.options.divider {
-    height: 2px !important;
-    min-height: auto !important;
-    padding: 0 !important;
+.option.divider {
+    height: 2px;
+    min-height: auto;
+    padding: 0;
 }
 
 .option-title {
