@@ -22,7 +22,7 @@ export default function({
     style?: React.CSSProperties,
     type?: React.HTMLInputTypeAttribute,
     placeholder?: string,
-    value?: string,
+    value?: any,
     onKeyDownCase?: React.KeyboardEventHandler<HTMLInputElement>,
     onChange?: ((e: React.ChangeEvent<HTMLInputElement>) => void)
 }) {

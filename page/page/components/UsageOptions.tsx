@@ -11,6 +11,37 @@ import '../CSS/UsageOptions.css' with { type: 'css' };
 import Input from "page/components/Input";
 
 
+interface UsageKey {
+    key: string;
+}
+
+interface UsageProps extends Props {
+    key: string;
+    title: string;
+    context?: string;
+}
+
+function Divider() {
+    return (
+        <div className='option divider' />
+    );
+}
+
+function UsageOption({ key, title, context, children }: UsageProps) {
+    return (
+        <div key={key} className='option usage'>
+            <div className="option-title">
+                {title}
+            </div>
+
+            <div className="option-setup">
+                {context ? <span>{context}:</span> : null}
+                {children}
+            </div>
+        </div>
+    );
+}
+
 export default function() {
 
     let legacy_options: Object = {};
@@ -32,53 +63,65 @@ export default function() {
 
     return (
         <>
-            <UsagePenSize key="size" />
+            <UsagePenSize key="pen-size" />
 
-            <UsagePenColor key="color" />
+            <UsagePenColor key="pen-color" />
+
+            <Divider />
+
+            <UsageGestureCmdDisplay key="gesture-cmd-display" />
         </>
     );
 }
 
-function UsageOption() {
+function UsagePenSize({ key }: UsageKey) {
     return (
-        <div className='option usage'></div>
+        <UsageOption key={key} title="펜 사이즈" context="사이즈">
+            <Input name="usage-pen-size" style={{ width: '70%' }} value={options.pen.size}
+                onChange={e => {
+                    options.pen.size = Number(e.currentTarget.value) || initial_options.pen.size;
+                }}
+            />
+        </UsageOption>
     );
 }
 
-function UsagePenSize({ key }: { key: string }) {
+function UsagePenColor({ key }: UsageKey) {
     return (
-        <div key={key} className='option usage'>
-            <div className="option-title">
-                펜 사이즈
-            </div>
-
-            <div className="option-setup">
-                <span>사이즈:</span>
-                <Input name="usage-pen-size" style={{ width: '70%' }} value={JSON.stringify(options.pen.size)}
-                    onChange={e => {
-                        options.pen.size = Number(e.currentTarget.value) || initial_options.pen.size;
-                    }}
-                />
-            </div>
-        </div>
+        <UsageOption key={key} title="펜 색상" context="색상">
+            <Input type="color" name="usage-pen-size" style={{ width: '50%', cursor: 'pointer' }} value={options.pen.color} placeholder="색상 선택이 필요합니다."
+                onChange={e => {
+                    options.pen.color = e.currentTarget.value || initial_options.pen.color;
+                }}
+            />
+        </UsageOption>
     );
 }
 
-function UsagePenColor({ key }: { key: string }) {
+function UsageGestureCmdDisplay({ key }: UsageKey) {
     return (
-        <div key={key} className='option usage'>
-            <div className="option-title">
-                펜 색상
-            </div>
+        <UsageOption key={key} title="제스처 명령어 설명 보기">
+            <div style={{
+                width: '100%',
+                height: 'fit-content',
 
-            <div className="option-setup">
-                <span>색상:</span>
-                <Input type="color" name="usage-pen-size" style={{ width: '50%', cursor: 'pointer' }} value={options.pen.color} placeholder="색상 선택이 필요합니다."
+                display: 'flex'
+            }}>
+                <input id="usage-gesture-cmd-display" type="checkbox" defaultChecked={options.gesture.cmd.display}
+                    style={{
+                      cursor: 'pointer'  
+                    }}
                     onChange={e => {
-                        options.pen.color = e.currentTarget.value || initial_options.pen.color;
+                        options.gesture.cmd.display = e.currentTarget.checked;
                     }}
                 />
+                <label htmlFor="usage-gesture-cmd-display" style={{
+                    padding: '0px 10px',
+                    userSelect: 'none',
+                    cursor: 'pointer',
+                    flexGrow: '1'
+                }}><span style={{ width: '100%' }}>설명 보기</span></label>
             </div>
-        </div>
+        </UsageOption>
     );
 }

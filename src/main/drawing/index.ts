@@ -116,7 +116,7 @@ export function showCommandDrawing(description: string | undefined, gesturePaint
         return;
     }
     
-    if (typeof description != 'string') {
+    if (!options.gesture.cmd.display || typeof description != 'string') {
         cmg.src = '';
         cxt.textContent = '';
         cmd.style.display = 'none';

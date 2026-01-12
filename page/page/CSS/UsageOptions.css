@@ -4,6 +4,12 @@
     align-items: flex-start;
 }
 
+.options.divider {
+    height: 2px;
+    min-height: auto;
+    padding: 0;
+}
+
 .option-title {
     width: 100%;
     height: fit-content;
@@ -23,6 +29,6 @@
     gap: 12px;
 }
 
-.option-setup > span {
+.option-setup span {
     font-weight: 300;
 }
