@@ -67,7 +67,7 @@ const content_plugin = [
         tsconfig: tsconfig_path,
         outDir: content_output_dir
     }),
-    terser(terser_options),
+    /* terser(terser_options), */
     resolve({
         browser: true,
         extensions: ['.js', '.ts']
@@ -123,7 +123,7 @@ const background_service = {
             tsconfig: tsconfig_path,
             outDir: background_service_output
         }),
-        terser(terser_options),
+        /* terser(terser_options), */
         json(),
     ]
 }
