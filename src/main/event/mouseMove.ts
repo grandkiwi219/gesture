@@ -6,7 +6,7 @@ import { exitReset, getCommandData } from "src/main/process";
 import { sendIgnoreContextMenu } from "../context-menu";
 import logger from "../utils/logger";
 
-export function mouseMove(event: MouseEvent,
+export function mouseMove(event: MouseEvent | GesCustomEvent,
     {
         ignoreContextMenu = sendIgnoreContextMenu,
         drawing_target = window,

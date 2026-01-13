@@ -10,10 +10,12 @@ import std from "page/std";
 import utils from "page/utils/utils";
 
 import { variable } from "src/main/variable";
-import { direction, options, storage_area, storage_keys } from "src/main/consts";
+import { storage_area, storage_keys } from "src/main/consts";
+import { direction } from "src/main/direction";
 
 import { MdAddCircleOutline } from "react-icons/md";
 import { MdPlaylistRemove } from "react-icons/md";
+import { options } from "src/main/enum";
 
 
 const type: { [key in GestureType]: string } = {

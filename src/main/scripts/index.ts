@@ -1,7 +1,7 @@
 import { variable } from "src/main/variable";
 import { excludePaper, findScrollable } from "./supports";
 import { messages } from "service/msg/message-types";
-import { direction } from "../consts";
+import { direction } from "../direction";
 
 
 export const scripts = {

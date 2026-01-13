@@ -1,6 +1,6 @@
 import { exitReset, exitRun } from "src/main/process";
 
-export function mouseUp(event: MouseEvent, 
+export function mouseUp(event: MouseEvent | GesCustomEvent, 
     {
         run = true,
         reset_options

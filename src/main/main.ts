@@ -1,8 +1,9 @@
-import { mouseDown, mouseMove, mouseUp, scriptMessage, storageChanged } from "./event";
+import { generatorMessage, mouseDown, mouseMove, mouseUp, scriptMessage, storageChanged } from "./event";
 import { scriptInjection } from "./utils/assets";
 import { repeater_msg_event, script_msg_event } from "src/repeater/msg/message-type";
 import { mainAddEvent, mainRemoveEvent, setCommand, setOPtions } from "./process";
 import { variable } from "./variable";
+import { gen_msg_event } from "src/generator/event";
 import logger from "./utils/logger";
 
 
@@ -17,6 +18,7 @@ void function main() {
     const removeEvent = mainRemoveEvent(() => {
         window.removeEventListener('mousedown', mouseDown, true);
         window.removeEventListener('mouseup', mouseUp, true);
+        window.removeEventListener('message', generatorMessage, true);
         // window.removeEventListener(script_msg_event, scriptMessage);
     });
 
@@ -25,6 +27,8 @@ void function main() {
         window.addEventListener('mousedown', mouseDown, true);
 
         window.addEventListener('mouseup', mouseUp, true);
+
+        window.addEventListener('message', generatorMessage, true);
 
         // window.addEventListener(script_msg_event, scriptMessage);
 

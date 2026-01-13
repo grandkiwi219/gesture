@@ -37,7 +37,15 @@ export default {
             ],
             run_at: "document_start",
             world: "MAIN"
-        } */
+        }, */
+        {
+            all_frames: true,
+            matches: ["<all_urls>"],
+            js: [
+                "src/generator.js"
+            ],
+            run_at: "document_start",
+        },
     ],
     background: process.env.BROWSER == 'firefox'
         ? { scripts: [service_worker] }

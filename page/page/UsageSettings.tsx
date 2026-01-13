@@ -10,7 +10,8 @@ import GridCanvas from 'page/components/GridCanvas';
 import DisplayContainer from 'page/components/DisplayContainer';
 
 import UsageOptions from './components/UsageOptions';
-import { options, storage_area, storage_keys } from 'src/main/consts';
+import { storage_area, storage_keys } from 'src/main/consts';
+import { options } from 'src/main/enum';
 
 
 export const usageSetting: Setting = {

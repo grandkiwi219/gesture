@@ -83,8 +83,16 @@ const content_repeater = {
     },
     plugins: content_plugin
 }
+const content_generator = {
+    input: 'src/generator/generator',
+    output: {
+        ...content_output,
+        format: 'iife'
+    },
+    plugins: content_plugin
+}
 
-const contents = [content_scripts, content_repeater];
+const contents = [content_scripts, content_repeater, content_generator];
 
 const background_service_output = outPut('service');
 const background_service = {

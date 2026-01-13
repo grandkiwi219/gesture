@@ -1,9 +1,9 @@
 import { variable } from "src/main/variable";
 import { calcAngleDegrees } from "./utils";
-import { direction } from "../consts";
+import { direction } from "../direction";
 
 
-export function decideDir(event: MouseEvent): direction {
+export function decideDir(event: MouseEvent | GesCustomEvent): direction {
     
     const triangle: CoordinateObj = {
         x: event.clientX - variable.position.x,
@@ -30,7 +30,7 @@ export function decideDir(event: MouseEvent): direction {
     }
 }
 
-export function measureDistanceSq(event: MouseEvent): number {
+export function measureDistanceSq(event: MouseEvent | GesCustomEvent): number {
 
     const current_pos: CoordinateObj = {
         x: event.clientX,

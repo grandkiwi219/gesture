@@ -2,7 +2,7 @@ import { createContext, useEffect, useRef, useState, useContext } from 'react';
 import { IconType } from 'react-icons';
 
 import { variable } from 'src/main/variable';
-import { direction } from 'src/main/consts';
+import { direction } from 'src/main/direction';
 import { exitReset } from 'src/main/process';
 import { mouseDown, mouseMove, mouseUp } from 'src/main/event';
 import { stopDrawing } from 'src/main/drawing';

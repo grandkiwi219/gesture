@@ -1,4 +1,5 @@
-import consts, { regex, storage_keys } from "src/main/consts";
+import consts, { storage_keys } from "src/main/consts";
+import { regex } from "src/main/direction";
 import { context_menu_data } from "./context-menu-types";
 import { setIgnore_this_site_set } from "./context-menu-supports";
 

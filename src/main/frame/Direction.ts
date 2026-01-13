@@ -1,4 +1,4 @@
-import { direction } from "../consts";
+import { direction } from "../direction";
 
 export class DirectionBundle {
     private bundle: direction[] = [];
@@ -21,8 +21,4 @@ export class DirectionBundle {
         const data = this.bundle;
         return data;
     }
-}
-
-export default {
-    DirectionBundle
 }

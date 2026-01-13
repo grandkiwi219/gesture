@@ -5,7 +5,8 @@ import './CSS/PageSettings.css' with { type: 'css' };
 import std from 'page/std';
 import utils from 'page/utils/utils';
 
-import { regex, storage_keys, storage_area } from 'src/main/consts';
+import { storage_keys, storage_area } from 'src/main/consts';
+import { regex } from 'src/main/direction';
 
 import Input, { pleaseInput } from 'page/components/Input';
 

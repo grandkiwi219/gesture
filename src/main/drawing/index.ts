@@ -1,4 +1,5 @@
-import { cmd_font_size, cmd_position, cmd_size, drawing_elements, options } from "src/main/consts";
+import { drawing_elements } from "src/main/consts";
+import { cmd_font_size, cmd_position, cmd_size, options } from "src/main/enum";
 import { variable } from "src/main/variable";
 import { calcCanvasInsideCoord, decideSize, drawCommand, setDynamicSizeCanvas, setSizeCanvas } from "./supports";
 import logger from "../utils/logger";
