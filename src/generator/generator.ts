@@ -1,10 +1,11 @@
 import { variable } from "src/main/variable";
-import { gen_cm_msg_event, gen_event, gen_msg_event } from "./event";
+import { gen_cm_event, gen_cm_msg_event, gen_event, gen_msg_event } from "./event";
 import consts from "src/main/consts";
 import { measureDistanceSq } from "src/main/utils/decider";
 import { startDrawing } from "src/main/drawing";
 import { exitReset } from "src/main/process";
 import { mouseDown, mouseUp } from "src/main/event";
+import { sendAcknowledgeContextMenu, sendIgnoreContextMenu } from "src/main/context-menu";
 
 void function main() {
 
@@ -46,7 +47,19 @@ void function main() {
             }
 
             case gen_cm_msg_event: {
-                
+                switch (data.event) {
+                    case gen_cm_event.ignore: {
+                        sendIgnoreContextMenu();
+                        return;
+                    }
+
+                    case gen_cm_event.acknowledge: {
+                        sendAcknowledgeContextMenu();
+                        return;
+                    }
+                    
+                    default: return;
+                }
             }
 
             default: return;
