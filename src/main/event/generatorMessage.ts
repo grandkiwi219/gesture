@@ -63,7 +63,6 @@ export function generatorMessage(event: MessageEvent) {
                 
                 default: return;
             }
-            return;
         }
 
         default: return;
