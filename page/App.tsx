@@ -82,7 +82,9 @@ export default function() {
 			window.dispatchEvent(new Event(std.event.command_loaded));
 		});
 
-		setOPtions();
+		setOPtions().then(() => {
+			window.dispatchEvent(new Event(std.event.options_loaded));
+		});
 	}, []);
 
 	return (

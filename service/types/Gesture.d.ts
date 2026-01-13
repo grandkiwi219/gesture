@@ -9,12 +9,4 @@ interface Gesture {
     script: string;
 }
 
-interface BgMsg {
-    type: string;
-    state: string;
-    data?: any;
-}
-
-interface StorageChanges {
-    [key: string]: chrome.storage.StorageChange;
-}
+// type GestureCmdPosition = 'center' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';

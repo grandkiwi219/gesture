@@ -1,5 +1,6 @@
-import { initial_options } from "service/initial_options";
+import { GestureCmdPosition, initial_options } from "service/initial_options";
 import packages from "../../package.json" with { type: 'json' };
+import { px } from "./utils/utils";
 
 export const initial: string = packages.name;
 
@@ -36,7 +37,6 @@ export const storage_keys = {
     options: 'options'
 }
 
-const command_size = 150;
 export const drawing_elements: {
     [key: string]: {
         tag: string,
@@ -68,16 +68,11 @@ export const drawing_elements: {
     command: {
         tag: 'div',
         style: {
-            width: `${command_size}px`,
-            height: `${command_size}px`,
             padding: '0',
             borderRadius: '30px',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
             backgroundColor: '#0000004b',
             textAlign: 'center',
-            zIndex: '99999',
+            zIndex: 99999,
             display: 'none',
             flexDirection: 'column',
             justifyContent: 'center',
@@ -99,11 +94,42 @@ export const drawing_elements: {
             height: 'fit-content',
             display: 'block',
             color: 'white',
-            fontSize: '14px',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
         }
+    }
+}
+
+export const cmd_size = 150;
+export const cmd_font_size = 14;
+
+const cmd_position_padding = 20;
+export const cmd_position: { [key in GestureCmdPosition]: React.CSSProperties } = {
+    [GestureCmdPosition.Center]: {
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+    },
+
+    [GestureCmdPosition.TopLeft]: {
+        top: px(cmd_position_padding),
+        left: px(cmd_position_padding)
+    },
+
+    [GestureCmdPosition.TopRight]: {
+        top: px(cmd_position_padding),
+        right: px(cmd_position_padding)
+    },
+
+    [GestureCmdPosition.BottomLeft]: {
+        bottom: px(cmd_position_padding),
+        left: px(cmd_position_padding)
+    },
+    
+    [GestureCmdPosition.BottomRight]: {
+        bottom: px(cmd_position_padding),
+        right: px(cmd_position_padding)
     }
 }
 

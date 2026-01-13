@@ -72,3 +72,40 @@ export async function pleaseInput(msg: string, target: HTMLElement){
 	await utils.setDelay(120);
 	target.style.transform = '';
 }
+
+export function InputCheckBox({
+    id,
+    name,
+    checked,
+    context,
+    style,
+    onChange
+}: {
+    id?: string,
+    name?: string,
+    checked?: boolean,
+    context: string,
+    style?: React.CSSProperties
+    onChange: ((event: React.ChangeEvent<HTMLInputElement>) => void)
+}) {
+    return (
+        <label style={{
+            width: '100%',
+            height: 'fit-content',
+
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+
+            userSelect: 'none',
+            cursor: 'pointer',
+
+            ...style
+        }}>
+            <input id={id} name={name} type="checkbox" defaultChecked={checked}
+                onChange={onChange}
+            />
+            <span style={{ width: '100%' }}>{context}</span>
+        </label>
+    );
+}

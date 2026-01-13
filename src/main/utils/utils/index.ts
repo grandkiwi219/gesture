@@ -61,3 +61,7 @@ export function merge(target: object, source: object) {
 
     return target;
 }
+
+export function px(num: number): string {
+    return `${num}px`;
+}

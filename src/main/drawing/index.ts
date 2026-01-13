@@ -1,7 +1,10 @@
-import { drawing_elements, options } from "src/main/consts";
+import { cmd_font_size, cmd_position, cmd_size, drawing_elements, options } from "src/main/consts";
 import { variable } from "src/main/variable";
 import { calcCanvasInsideCoord, decideSize, drawCommand, setDynamicSizeCanvas, setSizeCanvas } from "./supports";
 import logger from "../utils/logger";
+import { initial_options } from "service/initial_options";
+import { px } from "../utils/utils";
+import { MdHeight } from "react-icons/md";
 
 export function startDrawing() {
     const std_target = variable.drawing_store.target;
@@ -46,9 +49,32 @@ export function startDrawing() {
     shadow.appendChild(paper);
 
     setSizeCanvas(coord);
+
+    /* command setups */
+    const last_cmd_rate = !Number.isNaN(options.cmd.rate) && typeof options.cmd.rate == 'number'
+        ? options.cmd.rate
+        : initial_options.cmd.rate;
+
+    const cmdRateEquation = (num: number) => (num * last_cmd_rate) / 100;
+
     
     /* command */
-    Object.assign(command.style, drawing_elements.command.style);
+    let cp;
+    try {
+        cp = cmd_position[options.cmd.position] ?? cmd_position[initial_options.cmd.position];
+    } catch (error) {
+        cp = cmd_position[initial_options.cmd.position];
+        logger.error('options.cmd.position 의 타입이 문자열이 아닙니다.');
+    }
+    
+    const last_cmd_size = px(cmdRateEquation(cmd_size));
+
+    Object.assign(command.style, {
+        width: last_cmd_size,
+        height: last_cmd_size,
+        ...drawing_elements.command.style,
+        ...cp,
+    });
     variable.drawing_store.command = command;
     
     /* command_img */
@@ -57,7 +83,10 @@ export function startDrawing() {
     command.appendChild(command_img);
     
     /* command_text */
-    Object.assign(command_text.style, drawing_elements.command_text.style);
+    Object.assign(command_text.style, {
+        fontSize: px(cmdRateEquation(cmd_font_size)),
+        ...drawing_elements.command_text.style
+    });
     variable.drawing_store.command_text = command_text;
     command.appendChild(command_text);
 
@@ -116,7 +145,7 @@ export function showCommandDrawing(description: string | undefined, gesturePaint
         return;
     }
     
-    if (!options.gesture.cmd.display || typeof description != 'string') {
+    if (!options.cmd.visible || typeof description != 'string') {
         cmg.src = '';
         cxt.textContent = '';
         cmd.style.display = 'none';
