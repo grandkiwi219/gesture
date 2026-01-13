@@ -46,6 +46,17 @@ const erroring = chalk.hex('#ff4848ff');
 
 const tsconfig_path = './tsconfig.json';
 
+const terser_options = {
+    ecma: 2020,
+    keep_fnames: true,
+    keep_classnames: true,
+    mangle: false,
+    format: {
+        beautify: true,
+        indent_level: 1,
+    }
+}
+
 const content_output_dir = outPut('src');
 const content_output = {
     dir: content_output_dir,
@@ -56,12 +67,7 @@ const content_plugin = [
         tsconfig: tsconfig_path,
         outDir: content_output_dir
     }),
-    terser({
-        ecma: 2020,
-        keep_fnames: true,
-        keep_classnames: true,
-        mangle: false
-    }),
+    terser(terser_options),
     resolve({
         browser: true,
         extensions: ['.js', '.ts']
@@ -117,12 +123,7 @@ const background_service = {
             tsconfig: tsconfig_path,
             outDir: background_service_output
         }),
-        terser({
-            ecma: 2020,
-            keep_fnames: true,
-            keep_classnames: true,
-            mangle: false
-        }),
+        terser(terser_options),
         json(),
     ]
 }
