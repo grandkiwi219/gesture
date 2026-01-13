@@ -5,3 +5,9 @@ interface GesCustomEvent {
     clientX: number;
     clientY: number;
 }
+
+interface GenMsgEvent {
+    credit: string;
+    event: string;
+    detail?: GesCustomEvent;
+}

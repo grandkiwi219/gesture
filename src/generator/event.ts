@@ -7,3 +7,5 @@ export const gen_event = {
 }
 
 export const gen_msg_event = `${initial}-mouse-event-data`;
+
+export const gen_cm_msg_event = `${initial}-context-menu-data`;

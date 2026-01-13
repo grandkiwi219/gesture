@@ -91,7 +91,7 @@ export async function setCommand(removeEvent?: Function) {
     });
 }
 
-export async function setOPtions() {
+export async function setOptions() {
     await chrome.storage[storage_area].get([storage_keys.options]).then(r => {
         decideOptions(r[storage_keys.options]);
     });

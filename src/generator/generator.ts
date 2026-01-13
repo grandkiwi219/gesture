@@ -1,49 +1,55 @@
 import { variable } from "src/main/variable";
-import { gen_event, gen_msg_event } from "./event";
+import { gen_cm_msg_event, gen_event, gen_msg_event } from "./event";
 import consts from "src/main/consts";
 import { measureDistanceSq } from "src/main/utils/decider";
-import { startDrawing, stopDrawing } from "src/main/drawing";
+import { startDrawing } from "src/main/drawing";
 import { exitReset } from "src/main/process";
 import { mouseDown, mouseUp } from "src/main/event";
 
 void function main() {
 
-    if (window.top == window) return;
-
     window.addEventListener('message', (event: MessageEvent) => {
-
         
         const data = event.data;
 
         if (!(data instanceof Object)) return;
 
-        if (data.credit == gen_msg_event) {
-            let iframe = undefined;
+        switch (data.credit) {
+            case gen_msg_event: {
+                let iframe = undefined;
 
-            for (const el of document.getElementsByTagName('iframe')) {
-                if (el.contentWindow === event.source) {
-                    iframe = el;
-                    break;
+                for (const el of document.getElementsByTagName('iframe')) {
+                    if (el.contentWindow === event.source) {
+                        iframe = el;
+                        break;
+                    }
                 }
+
+                if (!iframe) return;
+
+                const clientRect = iframe.getBoundingClientRect();
+
+                const cleanup_detail: GesCustomEvent = {
+                    ...data.detail,
+                    clientX: data.detail.clientX + clientRect.x,
+                    clientY: data.detail.clientY + clientRect.y
+                };
+
+                window.parent.postMessage(
+                    {
+                        credit: gen_msg_event,
+                        event: data.event,
+                        detail: cleanup_detail
+                    } as GenMsgEvent,
+                '*');
+                return;
             }
 
-            if (!iframe) return;
+            case gen_cm_msg_event: {
+                
+            }
 
-            const clientRect = iframe.getBoundingClientRect();
-
-            const cleanup_detail: GesCustomEvent = {
-                ...data.detail,
-                clientX: data.detail.clientX + clientRect.x,
-                clientY: data.detail.clientY + clientRect.y
-            };
-
-            window.parent.postMessage(
-                {
-                    credit: gen_msg_event,
-                    event: data.event,
-                    detail: cleanup_detail
-                },
-            '*');
+            default: return;
         }
     });
 
@@ -87,7 +93,7 @@ void function main() {
                 variable.position.set(event.clientX, event.clientY);
             }
         }
-        
+
         sendData(event, gen_event.mousemove);
     }
 
@@ -101,8 +107,8 @@ void function main() {
                 buttons: event.buttons,
                 clientX: event.clientX,
                 clientY: event.clientY
-            } as GesCustomEvent
-        }
+            }
+        } as GenMsgEvent
 
         window.parent.postMessage(data, '*');
     };

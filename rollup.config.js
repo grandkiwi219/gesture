@@ -1,5 +1,4 @@
 import typescript from '@rollup/plugin-typescript';
-import cleanup from 'rollup-plugin-cleanup';
 import babel from '@rollup/plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -57,8 +56,11 @@ const content_plugin = [
         tsconfig: tsconfig_path,
         outDir: content_output_dir
     }),
-    cleanup({
-        extensions: ['.js', '.ts']
+    terser({
+        ecma: 2020,
+        keep_fnames: true,
+        keep_classnames: true,
+        mangle: false
     }),
     resolve({
         browser: true,
@@ -91,8 +93,16 @@ const content_generator = {
     },
     plugins: content_plugin
 }
+const content_injector = {
+    input: 'src/injector/injector',
+    output: {
+        ...content_output,
+        format: 'iife'
+    },
+    plugins: content_plugin
+}
 
-const contents = [content_scripts, content_repeater, content_generator];
+const contents = [content_scripts, content_repeater, content_generator, content_injector];
 
 const background_service_output = outPut('service');
 const background_service = {
@@ -107,8 +117,11 @@ const background_service = {
             tsconfig: tsconfig_path,
             outDir: background_service_output
         }),
-        cleanup({
-            extensions: ['.js', '.ts']
+        terser({
+            ecma: 2020,
+            keep_fnames: true,
+            keep_classnames: true,
+            mangle: false
         }),
         json(),
     ]
@@ -130,7 +143,9 @@ const options_page_plugin = [
         extensions: ['.js', '.jsx', '.ts', '.tsx']
     }),
     commonjs(),
-    terser(),
+    terser({
+        ecma: 2020
+    }),
     babel({
         babelHelpers: 'bundled',
         presets: [
