@@ -19,4 +19,8 @@ export const initial_options = {
         rate: 100,
         painting: false
     },
+
+    painting: {
+        use: true
+    }
 }

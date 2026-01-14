@@ -99,9 +99,15 @@ export default function() {
             {/* <UsageCmdPainting key="cmd-painting" /> */}
 
             <UsageCmdRate key="cmd-rate" />
+            
+            <Divider />
+
+            <UsagePaintingUse key="painting-use" />
         </UL>
     );
 }
+
+/* pen */
 
 function UsagePenSize({ key }: UsageKey) {
     return (
@@ -126,6 +132,8 @@ function UsagePenColor({ key }: UsageKey) {
         </UsageOption>
     );
 }
+
+/* cmd */
 
 function UsageCmdDisplay({ key }: UsageKey) {
     return (
@@ -163,6 +171,20 @@ function UsageCmdRate({ key }: UsageKey) {
             <Input type="number" id={key} style={{ width: '70%' }} value={options.cmd.rate}
                 onChange={e => {
                     options.cmd.rate = Number(e.currentTarget.value) || initial_options.cmd.rate;
+                }}
+            />
+        </UsageOption>
+    );
+}
+
+/* painting */
+
+function UsagePaintingUse({ key }: UsageKey) {
+    return (
+        <UsageOption key={key} title="제스처 그리기 사용">
+            <InputCheckBox id={key} checked={options.painting.use} context="그리기 사용"
+                onChange={e => {
+                    options.painting.use = e.currentTarget.checked ?? initial_options.painting.use;
                 }}
             />
         </UsageOption>

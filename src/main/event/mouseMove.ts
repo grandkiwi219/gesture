@@ -5,6 +5,7 @@ import { continueDrawing, showCommandDrawing, startDrawing } from "src/main/draw
 import { exitReset, getCommandData } from "src/main/process";
 import { sendIgnoreContextMenu } from "../context-menu";
 import logger from "../utils/logger";
+import { options } from "../enum";
 
 export function mouseMove(event: MouseEvent | GesCustomEvent,
     {
@@ -47,7 +48,7 @@ export function mouseMove(event: MouseEvent | GesCustomEvent,
         y: event.clientY
     }
 
-    continueDrawing(current_pos);
+    if (options.painting.use) continueDrawing(current_pos);
 
     variable.last_pos.override(current_pos);
 
