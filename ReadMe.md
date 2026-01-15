@@ -72,5 +72,6 @@ npm run process
 > 
 >   - 파이어폭스
 >       - flex-grow 에서 calc 로 단위 지우기가 안 먹힘
+>       - pipe 동작하지 않음
 
 ---
