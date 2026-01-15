@@ -234,6 +234,8 @@ export function GSetups() {
 
     const naming = useRef<HTMLInputElement | null>(null);
 
+	const escape_active = useRef(true);
+
 	const setSetting = useContext(SettingSetter);
 	const svgData = useContext(SvgData);
 
@@ -244,6 +246,7 @@ export function GSetups() {
 
 		function commandAdded() {
 			naming.current && (naming.current.value = '');
+			escape_active.current = true;
 		}
 	});
 
@@ -253,11 +256,16 @@ export function GSetups() {
             <div className='naming'>
                 <Input id='naming-input' ref={naming}
                     placeholder='설명 추가'
+					onEscape={() => {
+						if (escape_active.current)
+							document.documentElement.focus();
+					}}
                     onKeyDownCase={e => {
                         switch (e.key) {
 							case 'Enter':
 								if (e.currentTarget.value) {
                         			setSetting({ description: e.currentTarget.value, gesturePainting: svgData });
+									escape_active.current = false;
 								}
 								else {
 									pleaseInput(GS_desc_msg, e.currentTarget);

@@ -13,6 +13,7 @@ export default function({
     placeholder,
     value,
     onKeyDownCase,
+    onEscape,
     onChange
 }: {
     id?: string,
@@ -24,6 +25,7 @@ export default function({
     placeholder?: string,
     value?: any,
     onKeyDownCase?: React.KeyboardEventHandler<HTMLInputElement>,
+    onEscape?: React.KeyboardEventHandler<HTMLInputElement>,
     onChange?: ((e: React.ChangeEvent<HTMLInputElement>) => void)
 }) {
     return (
@@ -41,20 +43,21 @@ export default function({
 
                 switch (e.key) {
                     case 'Escape':
-                        document.documentElement.focus();
-                        break;
+                        if (onEscape)
+                            onEscape(e);
+                        else 
+                            document.documentElement.focus();
+                        return;
 
                     default:
                         onKeyDownCase && onKeyDownCase(e);
-                        break;
+                        return;
                 }
             }}
             onChange={e => {
                 if (e.currentTarget.classList.contains('warning')) {
                     e.currentTarget.classList.remove('warning');
                 }
-
-
 
                 onChange && onChange(e);
             }}
