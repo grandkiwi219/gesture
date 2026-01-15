@@ -3,7 +3,6 @@ import { scriptInjection } from "./utils/assets";
 import { repeater_msg_event, script_msg_event } from "src/repeater/msg/message-type";
 import { mainAddEvent, mainRemoveEvent, setCommand, setOptions } from "./process";
 import { variable } from "./variable";
-import { gen_msg_event } from "src/generator/event";
 import logger from "./utils/logger";
 
 

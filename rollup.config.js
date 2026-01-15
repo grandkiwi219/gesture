@@ -90,8 +90,8 @@ const content_repeater = {
     },
     plugins: content_plugin
 }
-const content_generator = {
-    input: 'src/generator/generator',
+const content_pipe = {
+    input: 'src/pipe/pipe',
     output: {
         ...content_output,
         format: 'iife'
@@ -107,7 +107,7 @@ const content_injector = {
     plugins: content_plugin
 }
 
-const contents = [content_scripts, content_repeater, content_generator, content_injector];
+const contents = [content_scripts, content_repeater, content_pipe, content_injector];
 
 const background_service_output = outPut('service');
 const background_service = {

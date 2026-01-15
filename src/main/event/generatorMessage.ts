@@ -1,4 +1,4 @@
-import { gen_cm_event, gen_cm_msg_event, gen_event, gen_msg_event } from "src/generator/event";
+import { gen_cm_event, gen_cm_msg_event, gen_event, gen_msg_event } from "src/pipe/event";
 import { variable } from "../variable";
 import { mouseDown } from "./mouseDown";
 import { mouseUp } from "./mouseUp";

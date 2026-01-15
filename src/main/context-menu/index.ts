@@ -1,4 +1,4 @@
-import { gen_cm_event, gen_cm_msg_event } from "src/generator/event";
+import { gen_cm_event, gen_cm_msg_event } from "src/pipe/event";
 
 let cm_prevent = false;
 
