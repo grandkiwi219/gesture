@@ -8,6 +8,7 @@ import { storage_keys, storage_area } from "./consts";
 import { options } from "./enum";
 import { credits, repeater_msg_event } from "src/repeater/msg/message-type";
 import { encodeMap, merge } from "./utils/utils";
+import utils from "page/utils/utils";
 
 export function mainAddEvent(addEvent: Function): (() => void) {
     return function() {
@@ -129,6 +130,7 @@ function gestureScript(script_key: string) {
         result.script();
     } catch (error) {
         logger.error(result.key, error);
+        utils.showAlert({ msg: '제스처 명령어를 실행하는 도중에 오류가 발생했습니다.' });
     }
 }
 
