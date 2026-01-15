@@ -53,6 +53,7 @@ const terser_options = {
     mangle: false,
     format: {
         beautify: true,
+        indent_level: 2,
     }
 }
 

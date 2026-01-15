@@ -12,12 +12,14 @@ export function mouseMove(event: MouseEvent | GesCustomEvent,
         ignoreContextMenu = sendIgnoreContextMenu,
         drawing_target = window,
         show_command = true,
+        use_painting = options.painting.use,
         reset_options
     }
     : {
         ignoreContextMenu?: ((setIgnoreContextMenu: Function) => void)
-        drawing_target?: Element | Window | null,
+        drawing_target?: DrawingTarget,
         show_command?: boolean,
+        use_painting?: boolean
         reset_options?: ExitReset
     } = {}
 ) {
@@ -48,7 +50,7 @@ export function mouseMove(event: MouseEvent | GesCustomEvent,
         y: event.clientY
     }
 
-    if (options.painting.use) continueDrawing(current_pos);
+    if (use_painting) continueDrawing(current_pos);
 
     variable.last_pos.override(current_pos);
 

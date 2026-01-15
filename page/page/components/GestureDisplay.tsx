@@ -20,6 +20,8 @@ import { SettingSetter } from 'page/components/Setting';
 import { MdOutlineCancel } from "react-icons/md";
 import { IoMdArrowRoundBack, IoMdArrowRoundDown, IoMdArrowRoundForward, IoMdArrowRoundUp } from "react-icons/io";
 import Input, { pleaseInput } from 'page/components/Input';
+import { options } from 'src/main/enum';
+import { json } from 'node:stream/consumers';
 
 
 const SetDirs = createContext<((directions: direction[]) => void)>(() => {});
@@ -164,6 +166,7 @@ export function GCanvas({ children }: Props) {
 					},
 					drawing_target: event.currentTarget,
 					show_command: false,
+					use_painting: true,
 					reset_options: {
 						...reset_options,
 						execution() {

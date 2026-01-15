@@ -19,8 +19,10 @@ interface Script {
     script: function(...any?): void;
 }
 
+type DrawingTarget = Element | Window | null;
+
 interface Drawing {
-    target: Element | Window | null;
+    target: DrawingTarget;
     main: Element | null;
     paper: Element | null;
     command: Element | null;
