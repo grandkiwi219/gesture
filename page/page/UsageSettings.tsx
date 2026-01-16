@@ -25,7 +25,7 @@ function UsageDisplay({ children }: Props) {
 
     useEffect(() => {
         exitReset();
-        variable.drawing_store.preserve = false;
+        // variable.drawing_store.preserve = false;
     });
 
     return (

@@ -9,6 +9,7 @@ import { scripts } from "src/main/scripts";
 import std from "page/std";
 
 import utils from "page/utils/utils";
+import { styling } from "page/utils/styling";
 
 
 export const SettingState = createContext<SettingGesture | null>(null);
@@ -122,40 +123,40 @@ const std_category_no_active: React.CSSProperties = {
 
 const SettingWindowStyle = memo(function() {
     return (
-        <style>{`
-            #setting-window {
-                max-width: 400px;
-                min-width: 300px;
-                width: 80%;
+        <style>
+            {styling('#setting-window', {
+                maxWidth: '400px',
+                minWidth: '300px',
+                width: '80%',
 
-                max-height: 600px;
-                min-height: 450px;
-                height: 80%;
+                maxHeight: '600px',
+                minHeight: '450px',
+                height: '80%',
 
-                background-color: var(--background-color);
-                border-radius: 20px;
-                box-shadow: 0px 0px 8px var(--background-color);
+                backgroundColor: 'var(--background-color)',
+                borderRadius: '20px',
+                boxShadow: '0px 0px 8px var(--background-color)',
 
-                display: flex;
-                flex-direction: column;
+                display: 'flex',
+                flexDirection: 'column',
 
-                overflow: hidden;
+                overflow: 'hidden',
 
-                use-select: none;
+                userSelect: 'none',
 
-                opacity: 0;
+                opacity: '0',
 
-                transform: translateY(20px);
+                transform: 'translateY(20px)',
 
-                transition: transform .12s, opacity .12s;
-            }
+                transition: 'transform .12s, opacity .12s'
+            })}
+            
+            {styling('#setting-window.active', {
+                opacity: '1',
 
-            #setting-window.active {
-                opacity: 1;
-
-                transform: translateY(0);
-            }
-        `}</style>
+                transform: 'translateY(0)'
+            })}
+        </style>
     );
 });
 

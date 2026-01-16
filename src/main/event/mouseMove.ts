@@ -19,7 +19,7 @@ export function mouseMove(event: MouseEvent | GesCustomEvent,
         ignoreContextMenu?: ((setIgnoreContextMenu: Function) => void)
         drawing_target?: DrawingTarget,
         show_command?: boolean,
-        use_painting?: boolean
+        use_painting?: boolean,
         reset_options?: ExitReset
     } = {}
 ) {
