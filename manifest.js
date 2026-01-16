@@ -26,7 +26,7 @@ export default {
     browser_specific_settings: {
         gecko: {
             id: `{${process.env.GECKO_ID}}`,
-            strict_min_version: "117.0"
+            strict_min_version: "136.0"
         }
     },
     content_scripts: [
