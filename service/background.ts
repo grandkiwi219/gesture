@@ -9,7 +9,7 @@ import { storage_keys, storage_area } from "src/main/consts.js";
 import { loadCommand, loadSites, loadStorageChanged } from "./cmd/index.js";
 
 chrome.runtime.onInstalled.addListener(async d => {
-    if (d.reason === 'install') {
+    if (d.reason === chrome.runtime.OnInstalledReason.INSTALL) {
         chrome.runtime.openOptionsPage();
         await setInitialGesture(true);
     }
