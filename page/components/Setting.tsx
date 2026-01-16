@@ -6,7 +6,7 @@ import { storage_area, storage_keys } from "src/main/consts";
 import { variable } from "src/main/variable";
 import { scripts } from "src/main/scripts";
 
-import std, { Theme } from "page/std";
+import std from "page/std";
 
 import utils from "page/utils/utils";
 

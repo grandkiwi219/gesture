@@ -37,16 +37,9 @@ const event = {
 	command_added: 'command_added',
 }
 
-export enum Theme {
-	Dark = 'dark',
-	Light = 'light',
-}
-
-
 export default {
 	key,
 	state,
 	size,
 	event,
-	Theme: Theme,
 };
