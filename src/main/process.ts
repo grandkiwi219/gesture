@@ -54,7 +54,7 @@ export function exitReset(
     }
 
     if (remove_mouse_move && variable.mouseMove)
-        window.removeEventListener('mousemove', variable.mouseMove);
+        window.removeEventListener('mousemove', variable.mouseMove, true);
 
     if (reset_directions) variable.directions.reset();
     variable.starting = false;
@@ -123,8 +123,6 @@ export function decideThisSIte(sites: any, removeEvent?: Function) {
 function gestureScript(script_key: string) {
     const result = scripts[script_key as keyof typeof scripts];
     if (!result) return logger.warn(script_key, '→ 본 확장프로그램이 지닌 스크립트 중에 이러한 것은 존재하지 않습니다.');
-
-    // logger.log(result);
 
     try {
         result.script();

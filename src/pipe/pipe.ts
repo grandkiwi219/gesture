@@ -66,29 +66,30 @@ void function main() {
         }
     });
 
+    const reset_options = undefined;
+
     variable.mouseMove = genMouseMove;
 
     window.addEventListener('mousedown', event => {
         sendData(event, gen_event.mousedown);
 
-        if (event.button != 2) {
-            exitReset();
-        }
-
-        mouseDown(event);
+        mouseDown(event, { reset_options });
     }, true);
 
     window.addEventListener('mouseup', event => {
         sendData(event, gen_event.mouseup);
 
-        if (event.button != 2) return;
-
-        mouseUp(event);
+        mouseUp(event, { run: false, reset_options });
     }, true);
 
     function genMouseMove(event: MouseEvent) {
+        sendData(event, gen_event.mousemove);
+
+        if (!variable.executing) return;
+
         if (event.buttons != 2) {
-            exitReset();
+            exitReset(reset_options);
+            return;
         }
 
         const distance = measureDistanceSq(event);
@@ -106,12 +107,10 @@ void function main() {
                 variable.position.set(event.clientX, event.clientY);
             }
         }
-
-        sendData(event, gen_event.mousemove);
     }
 
     function sendData(event: MouseEvent, event_name: string) {
-        const data = {
+        window.parent.postMessage({
             credit: gen_msg_event,
             event: event_name,
             detail: {
@@ -121,8 +120,6 @@ void function main() {
                 clientX: event.clientX,
                 clientY: event.clientY
             }
-        } as GenMsgEvent
-
-        window.parent.postMessage(data, '*');
+        }, '*');
     };
 }();

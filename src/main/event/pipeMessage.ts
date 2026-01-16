@@ -4,6 +4,7 @@ import { mouseDown } from "./mouseDown";
 import { mouseUp } from "./mouseUp";
 import { IoMdReturnRight } from "react-icons/io";
 import { sendAcknowledgeContextMenu, sendIgnoreContextMenu } from "../context-menu";
+import logger from "../utils/logger";
 
 export function generatorMessage(event: MessageEvent) {
     
@@ -38,7 +39,7 @@ export function generatorMessage(event: MessageEvent) {
                     return;
 
                 case gen_event.mousedown:
-                    mouseDown(cleanup_detail);
+                    mouseDown(cleanup_detail, { use_mouse_move: false });
                     return;
 
                 case gen_event.mouseup:

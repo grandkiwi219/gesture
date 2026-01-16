@@ -28,5 +28,5 @@ export const variable = {
     command_store: new Map() as CommandStore,
     drawing_store,
     
-    mouseMove: null as null | ((ev: MouseEvent | GesCustomEvent) => any) | ((ev: GesCustomEvent) => any) | ((ev: MouseEvent) => any)
+    mouseMove: null as null | ((ev: MouseEvent | GesCustomEvent) => any) | ((ev: GesCustomEvent) => any) | ((ev: MouseEvent) => any),
 }
