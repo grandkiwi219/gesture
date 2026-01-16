@@ -20,8 +20,6 @@ import { SettingSetter } from 'page/components/Setting';
 import { MdOutlineCancel } from "react-icons/md";
 import { IoMdArrowRoundBack, IoMdArrowRoundDown, IoMdArrowRoundForward, IoMdArrowRoundUp } from "react-icons/io";
 import Input, { pleaseInput } from 'page/components/Input';
-import { options } from 'src/main/enum';
-import { json } from 'node:stream/consumers';
 
 
 const SetDirs = createContext<((directions: direction[]) => void)>(() => {});
@@ -98,15 +96,26 @@ export function GCanvas({ children }: Props) {
 		});
 	}
 
+	// let max_width = -1;
+
+	function handleResize() {
+		/* if (max_width) */
+
+		handleSvgSize();
+
+		/* if (variable.starting || !variable.drawing_store.main) return; */
+	}
+
  	useEffect(() => {
 		exitReset();
 		variable.drawing_store.preserve = false;
 
 		handleSvgSize();
-		canvas_wrap.current && canvas_wrap.current.addEventListener('resize', handleSvgSize);
+		// max_width = canvas_wrap.current?.offsetWidth ?? -1;
+		canvas_wrap.current && canvas_wrap.current.addEventListener('resize', handleResize);
 
 		return () => {
-			canvas_wrap.current && canvas_wrap.current.removeEventListener('resize', handleSvgSize);
+			canvas_wrap.current && canvas_wrap.current.removeEventListener('resize', handleResize);
 		}
 	});
 
@@ -155,14 +164,19 @@ export function GCanvas({ children }: Props) {
 				const is_new_dir = mouseMove((event as unknown as MouseEvent), {
 					ignoreContextMenu: (setIgnoreContextMenu) => {
 						cancel.current!.style.display = 'block';
+
 						variable.directions.reset();
 						setDirs([]);
+						
 						stopDrawing();
+						
 						setIgnoreContextMenu();
-
+						
 						set_last_pos.current = false;
+
 						setSvgData([]);
 						handleSvgSize();
+						// max_width = -1;
 					},
 					drawing_target: event.currentTarget,
 					show_command: false,
