@@ -27,7 +27,7 @@ export function drawCommand(cvs: HTMLCanvasElement) {
     // ...
 }
 
-export function setSizeCanvas(size_coord: CoordinateObj) {
+export function setSizeCanvas(size_coord: CoordinateObj, set_paper: boolean = true) {
 
     const main = variable.drawing_store.main;
     if (main instanceof HTMLElement) {
@@ -36,26 +36,20 @@ export function setSizeCanvas(size_coord: CoordinateObj) {
     }
 
     const paper = variable.drawing_store.paper;
-    if (paper instanceof HTMLCanvasElement) {
-        paper.style.width = `${size_coord.x}px`;
-        paper.style.height = `${size_coord.y}px`;
+    if (set_paper && paper instanceof HTMLCanvasElement) {
         paper.width = size_coord.x;
         paper.height = size_coord.y;
     }
-    else if (paper instanceof HTMLElement) {
-        paper.style.width = `${size_coord.x}px`;
-        paper.style.height = `${size_coord.y}px`;
-    }
 }
 
-export async function setDynamicSizeCanvas(canvas: HTMLCanvasElement) {
+export async function setDynamicSizeCanvas(canvas: HTMLCanvasElement, set_paper?: boolean) {
     const size_coord: CoordinateObj = decideSize(variable.drawing_store.target);
 
     if (variable.drawing_store.target_is_window) {
         if (canvas.width < size_coord.x && canvas.height < size_coord.y) {
             variable.drawing_store.preserve
                 ? preserveCanvas(canvas, canvas.getContext('2d')!, size_coord)
-                : setSizeCanvas(size_coord);
+                : setSizeCanvas(size_coord, set_paper);
         }
         return;
     }
@@ -63,7 +57,7 @@ export async function setDynamicSizeCanvas(canvas: HTMLCanvasElement) {
     if (canvas.width != size_coord.x && canvas.height != size_coord.y) {
         variable.drawing_store.preserve
             ? preserveCanvas(canvas, canvas.getContext('2d')!, size_coord)
-            : setSizeCanvas(size_coord);
+            : setSizeCanvas(size_coord, set_paper);
     }
 }
 

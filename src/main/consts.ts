@@ -34,6 +34,8 @@ export const drawing_elements: {
     paper: {
         tag: 'canvas',
         style: {
+            width: '100%',
+            height: '100%',
             padding: '0',
             margin: '0',
             position: 'absolute',
