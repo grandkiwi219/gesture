@@ -112,7 +112,7 @@ export function continueDrawing({ x, y }: CoordinateObj) {
     const rect = canvas.getBoundingClientRect();
     const coord = calcCanvasInsideCoord({ x, y }, rect);
 
-    const size = options.pen.size;
+    const size = options.pen.size < 1 ? 0.1 : options.pen.size;
 
     ctx.strokeStyle = options.pen.color;
     ctx.lineWidth = size;
