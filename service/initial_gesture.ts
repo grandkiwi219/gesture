@@ -84,7 +84,7 @@ const initial_gesture: { [key: string]: Gesture } = {
         description: scripts.focus_left_tab.description,
         type: gesture_type.script,
         script: scripts.focus_left_tab.key,
-        gesturePainting: [bg_consts.size.svg, [500, 420], [140, 320], [500, 220]],
+        gesturePainting: [bg_consts.size.svg, [500, 220], [140, 320], [500, 420]],
     },
 
     rl: {
