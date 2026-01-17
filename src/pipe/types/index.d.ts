@@ -1,4 +1,4 @@
-interface GesCustomEvent {
+interface PipeCustomEvent {
     isTrusted: boolean;
     button: number;
     buttons: number;
@@ -6,8 +6,8 @@ interface GesCustomEvent {
     clientY: number;
 }
 
-interface GenMsgEvent {
+interface PipeMsgEvent {
     credit: string;
     event: string;
-    detail?: GesCustomEvent;
+    detail?: PipeCustomEvent;
 }

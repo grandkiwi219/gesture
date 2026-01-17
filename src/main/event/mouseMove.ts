@@ -7,7 +7,7 @@ import { sendIgnoreContextMenu } from "../context-menu";
 import logger from "../utils/logger";
 import { options } from "../enum";
 
-export function mouseMove(event: MouseEvent | GesCustomEvent,
+export function mouseMove(event: MouseEvent | PipeCustomEvent,
     {
         ignoreContextMenu = sendIgnoreContextMenu,
         drawing_target = window,
@@ -23,6 +23,8 @@ export function mouseMove(event: MouseEvent | GesCustomEvent,
         reset_options?: ExitReset
     } = {}
 ) {
+    if (!event.isTrusted) return;
+    
     if (!variable.executing) return;
 
     if (event.buttons != 2) {

@@ -30,7 +30,7 @@ void function main() {
 
                 const clientRect = iframe.getBoundingClientRect();
 
-                const cleanup_detail: GesCustomEvent = {
+                const cleanup_detail: PipeCustomEvent = {
                     ...data.detail,
                     clientX: data.detail.clientX + clientRect.x,
                     clientY: data.detail.clientY + clientRect.y
@@ -41,7 +41,7 @@ void function main() {
                         credit: gen_msg_event,
                         event: data.event,
                         detail: cleanup_detail
-                    } as GenMsgEvent,
+                    } as PipeMsgEvent,
                 '*');
                 return;
             }
@@ -71,18 +71,24 @@ void function main() {
     variable.mouseMove = genMouseMove;
 
     window.addEventListener('mousedown', event => {
+        if (!event.isTrusted) return;
+
         sendData(event, gen_event.mousedown);
 
         mouseDown(event, { reset_options });
     }, true);
 
     window.addEventListener('mouseup', event => {
+        if (!event.isTrusted) return;
+
         sendData(event, gen_event.mouseup);
 
         mouseUp(event, { run: false, reset_options });
     }, true);
 
     function genMouseMove(event: MouseEvent) {
+        if (!event.isTrusted) return;
+        
         sendData(event, gen_event.mousemove);
 
         if (!variable.executing) return;

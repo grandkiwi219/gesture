@@ -3,7 +3,7 @@ import { exitReset } from "src/main/process";
 import { mouseMove } from "./mouseMove";
 import { Coordinate } from "../frame/Coordinate";
 
-export function mouseDown(event: MouseEvent | GesCustomEvent,
+export function mouseDown(event: MouseEvent | PipeCustomEvent,
     {
         use_mouse_move = true,
         reset_options
@@ -13,6 +13,8 @@ export function mouseDown(event: MouseEvent | GesCustomEvent,
         reset_options?: ExitReset
     } = {}
 ) {
+    if (!event.isTrusted) return;
+
     if (event.button != 2) {
         exitReset(reset_options);
         return;

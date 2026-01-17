@@ -18,7 +18,7 @@ export function sendIgnoreContextMenu() {
 
     const iframes = document.getElementsByTagName('iframe');
 
-    const msg: GenMsgEvent = {
+    const msg: PipeMsgEvent = {
         credit: gen_cm_msg_event,
         event: gen_cm_event.ignore
     }
@@ -39,7 +39,7 @@ export function sendAcknowledgeContextMenu() {
     
     const iframes = document.getElementsByTagName('iframe');
 
-    const msg: GenMsgEvent = {
+    const msg: PipeMsgEvent = {
         credit: gen_cm_msg_event,
         event: gen_cm_event.acknowledge
     }

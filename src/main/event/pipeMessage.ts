@@ -27,7 +27,7 @@ export function generatorMessage(event: MessageEvent) {
 
             const clientRect = iframe.getBoundingClientRect();
 
-            const cleanup_detail: GesCustomEvent = {
+            const cleanup_detail: PipeCustomEvent = {
                 ...data.detail,
                 clientX: data.detail.clientX + clientRect.x,
                 clientY: data.detail.clientY + clientRect.y
@@ -35,7 +35,7 @@ export function generatorMessage(event: MessageEvent) {
 
             switch (data.event) {
                 case gen_event.mousemove:
-                    if (variable.mouseMove) (variable.mouseMove as (ev: GesCustomEvent) => void)(cleanup_detail);
+                    if (variable.mouseMove) (variable.mouseMove as (ev: PipeCustomEvent) => void)(cleanup_detail);
                     return;
 
                 case gen_event.mousedown:
