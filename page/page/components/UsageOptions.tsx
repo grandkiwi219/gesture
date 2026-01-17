@@ -114,7 +114,7 @@ function UsagePenSize({ key }: UsageKey) {
         <UsageOption key={key} title="펜 사이즈" context="사이즈">
             <Input type="number" id={key} style={{ width: '70%' }} value={options.pen.size}
                 onChange={e => {
-                    options.pen.size = Number(e.currentTarget.value) || initial_options.pen.size;
+                    options.pen.size = Number(e.currentTarget.value) ?? initial_options.pen.size;
                 }}
             />
         </UsageOption>
