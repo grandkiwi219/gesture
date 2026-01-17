@@ -16,7 +16,7 @@ export async function scriptInjection(append_target: HTMLElement, path: string) 
 
     const check_target = document.getElementById(id);
     if (check_target)
-        check_target.remove();
+        return;
 
     append_target.appendChild(script);
 

@@ -79,7 +79,7 @@ const content_scripts = {
     input: 'src/main/main',
     output: {
         ...content_output,
-        format: 'es'
+        format: 'iife'
     },
     plugins: content_plugin
 }
