@@ -48,16 +48,13 @@ void function main() {
             }
 
             case pipe_cm_msg_event: {
-                logger.log(1)
                 switch (data.event) {
                     case pipe_cm_event.ignore: {
-                        logger.log(2)
                         sendIgnoreContextMenu();
                         return;
                     }
 
                     case pipe_cm_event.acknowledge: {
-                        logger.log(3)
                         sendAcknowledgeContextMenu();
                         return;
                     }
