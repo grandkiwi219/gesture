@@ -16,7 +16,7 @@ export function mouseMove(event: MouseEvent | PipeCustomEvent,
         reset_options
     }
     : {
-        ignoreContextMenu?: ((setIgnoreContextMenu: Function) => void)
+        ignoreContextMenu?: ((setIgnoreContextMenu: typeof sendIgnoreContextMenu) => void)
         drawing_target?: DrawingTarget,
         show_command?: boolean,
         use_painting?: boolean,

@@ -1,6 +1,4 @@
-import { gen_cm_event, gen_cm_msg_event } from "src/pipe/event";
-
-let cm_prevent = false;
+import { pipe_cm_event, pipe_cm_msg_event } from "src/pipe/event";
 
 function cmPreventDefault(event: PointerEvent) {
     if (event.isTrusted) {
@@ -10,44 +8,47 @@ function cmPreventDefault(event: PointerEvent) {
     }
 }
 
-export function sendIgnoreContextMenu() {
-    if (cm_prevent) return;
+const pipe_msg: { [key: string]: PipeMsgEvent } = {
+    ignore: {
+        credit: pipe_cm_msg_event,
+        event: pipe_cm_event.ignore
+    },
 
-    cm_prevent = true;
+    acknowledge: {
+        credit: pipe_cm_msg_event,
+        event: pipe_cm_event.acknowledge
+    }
+}
+
+export function sendIgnoreContextMenu() {
     window.addEventListener('contextmenu', cmPreventDefault, true);
 
     const iframes = document.getElementsByTagName('iframe');
 
-    const msg: PipeMsgEvent = {
-        credit: gen_cm_msg_event,
-        event: gen_cm_event.ignore
-    }
-
     for (const iframe of iframes) {
-
-        iframe.contentWindow?.postMessage(msg, '*');
+        iframe.contentWindow?.postMessage(pipe_msg.ignore, '*');
     }
-
-    if (window.top != window) window.parent.postMessage(msg, '*');
 }
 
 export function sendAcknowledgeContextMenu() {
-    if (!cm_prevent) return;
-
-    cm_prevent = false;
     window.removeEventListener('contextmenu', cmPreventDefault, true);
-    
+
     const iframes = document.getElementsByTagName('iframe');
 
-    const msg: PipeMsgEvent = {
-        credit: gen_cm_msg_event,
-        event: gen_cm_event.acknowledge
-    }
-
     for (const iframe of iframes) {
-
-        iframe.contentWindow?.postMessage(msg, '*');
+        iframe.contentWindow?.postMessage(pipe_msg.acknowledge, '*');
     }
+}
 
-    if (window.top != window) window.parent.postMessage(msg, '*');
+let sent_ICM_QM = false;
+
+export function sendToTopICM() {
+    sent_ICM_QM = true;
+    window.top?.postMessage(pipe_msg.ignore, '*');
+}
+
+export function sendToTopACM() {
+    if (!sent_ICM_QM) return;
+    sent_ICM_QM = false;
+    window.top?.postMessage(pipe_msg.acknowledge, '*');
 }

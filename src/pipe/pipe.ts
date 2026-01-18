@@ -1,11 +1,12 @@
 import { variable } from "src/main/variable";
-import { gen_cm_event, gen_cm_msg_event, gen_event, gen_msg_event } from "./event";
+import { pipe_cm_event, pipe_cm_msg_event, pipe_event, pipe_msg_event } from "./event";
 import consts from "src/main/consts";
 import { measureDistanceSq } from "src/main/utils/decider";
 import { startDrawing } from "src/main/drawing";
 import { exitReset } from "src/main/process";
 import { mouseDown, mouseUp } from "src/main/event";
-import { sendAcknowledgeContextMenu, sendIgnoreContextMenu } from "src/main/context-menu";
+import { sendAcknowledgeContextMenu, sendIgnoreContextMenu, sendToTopACM, sendToTopICM } from "src/main/context-menu";
+import logger from "src/main/utils/logger";
 
 void function main() {
 
@@ -16,7 +17,7 @@ void function main() {
         if (!(data instanceof Object)) return;
 
         switch (data.credit) {
-            case gen_msg_event: {
+            case pipe_msg_event: {
                 let iframe = undefined;
 
                 for (const el of document.getElementsByTagName('iframe')) {
@@ -38,7 +39,7 @@ void function main() {
 
                 window.parent.postMessage(
                     {
-                        credit: gen_msg_event,
+                        credit: pipe_msg_event,
                         event: data.event,
                         detail: cleanup_detail
                     } as PipeMsgEvent,
@@ -46,14 +47,17 @@ void function main() {
                 return;
             }
 
-            case gen_cm_msg_event: {
+            case pipe_cm_msg_event: {
+                logger.log(1)
                 switch (data.event) {
-                    case gen_cm_event.ignore: {
+                    case pipe_cm_event.ignore: {
+                        logger.log(2)
                         sendIgnoreContextMenu();
                         return;
                     }
 
-                    case gen_cm_event.acknowledge: {
+                    case pipe_cm_event.acknowledge: {
+                        logger.log(3)
                         sendAcknowledgeContextMenu();
                         return;
                     }
@@ -66,14 +70,16 @@ void function main() {
         }
     });
 
-    const reset_options = undefined;
+    const reset_options: ExitReset = {
+        execution: sendToTopACM
+    };
 
-    variable.mouseMove = genMouseMove;
+    variable.mouseMove = pipeMouseMove;
 
     window.addEventListener('mousedown', event => {
         if (!event.isTrusted) return;
 
-        sendData(event, gen_event.mousedown);
+        sendData(event, pipe_event.mousedown);
 
         mouseDown(event, { reset_options });
     }, true);
@@ -81,16 +87,20 @@ void function main() {
     window.addEventListener('mouseup', event => {
         if (!event.isTrusted) return;
 
-        sendData(event, gen_event.mouseup);
+        sendData(event, pipe_event.mouseup);
 
         mouseUp(event, { run: false, reset_options });
     }, true);
 
-    function genMouseMove(event: MouseEvent) {
+    function pipeMouseMove(event: MouseEvent) {
         if (!event.isTrusted) return;
         
-        sendData(event, gen_event.mousemove);
+        sendData(event, pipe_event.mousemove);
 
+        accessStarting(event, sendToTopICM);
+    }
+
+    function accessStarting(event: MouseEvent, callback: (() => void)) {
         if (!variable.executing) return;
 
         if (event.buttons != 2) {
@@ -99,7 +109,7 @@ void function main() {
         }
 
         const distance = measureDistanceSq(event);
-        
+
         if (!variable.starting) {
             if (distance > consts.start_range**2) {
 
@@ -108,6 +118,8 @@ void function main() {
                 variable.drawing_store.target = window;
 
                 startDrawing();
+
+                callback();
             }
             else {
                 variable.position.set(event.clientX, event.clientY);
@@ -117,7 +129,7 @@ void function main() {
 
     function sendData(event: MouseEvent, event_name: string) {
         window.parent.postMessage({
-            credit: gen_msg_event,
+            credit: pipe_msg_event,
             event: event_name,
             detail: {
                 isTrusted: event.isTrusted,
