@@ -93,7 +93,7 @@ function NavMenu() {
 
                     {
                         !isFirefox && !isUserScriptsAvailable()
-                        ? <a href={"https://grandkiwi219.github.io/gesture/" + (chromeVersion >= 138 ? '' : '#on-developer-mode')} target='_blank'>
+                        ? <a href={std.document.doc + (chromeVersion >= 138 ? '' : '#'+std.document.on_developer_mode)} target='_blank'>
                             <NavIcon Icon={MdOutlineOpenInNew} name='사용자 지정 스크립트 안내서' />
                         </a>
                         : null

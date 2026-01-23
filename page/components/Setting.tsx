@@ -11,6 +11,13 @@ import std from "page/std";
 import utils from "page/utils/utils";
 import { styling } from "page/utils/styling";
 
+import { isUserScriptsAvailable } from "service/utils";
+
+import { isFirefox } from "src/isFirefox";
+import { chromeVersion } from "src/chromeVersion";
+
+import { MdOutlineOpenInNew } from "react-icons/md";
+
 
 export const SettingState = createContext<SettingGesture | null>(null);
 export const SettingSetter = createContext<((value: React.SetStateAction<SettingGesture | null>) => void)>(() => {});
@@ -73,9 +80,81 @@ function SettingScript({ state, setState }: { state: SettingGesture, setState: (
     );
 }
 
+function SettingCustomScriptWarn() {
+
+    const id = 'setting-custom-script-warn';
+
+    const is138up = chromeVersion >= 138;
+
+    return (
+        <>
+            <style>
+                {styling(`#${id} *`, {
+                    color: 'white'
+                })}
+
+                {styling(`#${id} > div`, {
+                    padding: '5px 20px',
+                    wordBreak: 'keep-all'
+                })}
+
+                {styling(`#${id} a`, {
+                    textDecoration: 'underline',
+
+                    cursor: 'pointer'
+                })}
+
+                {styling(`#${id} a:hover`, {
+                    opacity: '60%',
+                    transition: 'opacity var(--transition-speed)'
+                })}
+            </style>
+            <div id={id} style={{
+                width: '100%',
+                height: '20%',
+    
+                backgroundColor: 'rgb(255, 55, 55)',
+
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+            }}>
+                <div>
+                    사용자 지정 스크립트를 사용하기 위해서는 {is138up ? '사용자 스크립트 허용이 필요합니다.' : '개발자 모드가 켜져 있어야 합니다.'}
+                </div>
+                <div>
+                    {is138up
+                    ? <>
+                        <a onClick={() => {
+                            chrome.tabs.create({ url: `chrome://extensions/?id=${location.host}` });
+                        }} target="_blank">
+                            <MdOutlineOpenInNew />&nbsp;사용자 스크립트 허용
+                        </a>
+                        으
+                    </>
+                    : <a onClick={() => {
+                        chrome.tabs.create({ url: 'chrome://extensions/' });
+                    }} target="_blank">
+                        <MdOutlineOpenInNew />&nbsp;확장 프로그램 관리
+                    </a>
+                    }
+                    로 가서 설정해주시길 바랍니다.
+                </div>
+                <div>
+                    <a href={std.document.doc + (is138up ? '' : '#'+std.document.on_developer_mode)} target="_blank">
+                        <MdOutlineOpenInNew />&nbsp;만약 안내가 필요하시다면 이 곳을 눌러 확인하시길 바랍니다.
+                    </a>
+                </div>
+            </div>
+        </>
+    );
+}
+
 function SettingCustomScript({ state, setState }: { state: SettingGesture, setState: ((value: React.SetStateAction<SettingGesture | null>) => void) }) {
 
     const theme = localStorage.getItem('theme') == 'dark' ? 'dark' : 'light';
+
+    const warn_alert = !isFirefox && !isUserScriptsAvailable();
 
     return (
         <div style={{
@@ -83,24 +162,35 @@ function SettingCustomScript({ state, setState }: { state: SettingGesture, setSt
             height: '100%',
             overflow: 'auto'
         }}>
-            <CodeEditor
-                value={state.script ? state.script : ''}
-                language="js"
-                placeholder="사용자 지정 스크립트 작성이 필요합니다."
-                onChange={(evn) => {
-                    setState(s => {
-                        s!.type = 'custom_script';
-                        s!.script = evn.target.value;
-                        return { ...s! };
-                    });
-                }}
-                padding={15}
-                data-color-mode={theme}
-                style={{
-                    fontSize: '14px',
-                    minHeight: '100%'
-                }}
-            />
+            {
+                warn_alert
+                ? <SettingCustomScriptWarn />
+                : null
+            }
+            <div style={{
+                width: '100%',
+                height: warn_alert ? '80%' : '100%',
+                overflow: 'auto'
+            }}>
+                <CodeEditor
+                    value={state.script ? state.script : ''}
+                    language="js"
+                    placeholder="사용자 지정 스크립트 작성이 필요합니다."
+                    onChange={(evn) => {
+                        setState(s => {
+                            s!.type = 'custom_script';
+                            s!.script = evn.target.value;
+                            return { ...s! };
+                        });
+                    }}
+                    padding={15}
+                    data-color-mode={theme}
+                    style={{
+                        fontSize: '14px',
+                        minHeight: '100%'
+                    }}
+                />
+            </div>
         </div>
     );
 }

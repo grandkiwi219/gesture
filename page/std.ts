@@ -37,9 +37,16 @@ const event = {
 	command_added: 'command_added',
 }
 
+const document = {
+	doc: 'https://grandkiwi219.github.io/gesture/',
+	allow_user_script: 'allow-user-script',
+	on_developer_mode: 'on-developer-mode'
+}
+
 export default {
 	key,
 	state,
 	size,
 	event,
+	document
 };
