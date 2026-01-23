@@ -13,4 +13,14 @@ interface OptionsMessage {
     data: Object;
 }
 
-type ContentMessage = SitesMessage | OptionsMessage | CommandsMessage | null;
+interface ConsoleError {
+    credit: 'console-error';
+    data: ConsoleErrorData;
+}
+
+interface ConsoleErrorData {
+    type?: 'alert';
+    error: any;
+}
+
+type ContentMessage = SitesMessage | OptionsMessage | CommandsMessage | ConsoleError | null;

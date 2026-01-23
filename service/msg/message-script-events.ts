@@ -1,23 +1,28 @@
+import { isUserScriptsAvailable, sendCsMsg } from "service/utils";
 import { messages } from "./message-types";
+import { chromeVersion } from "src/chromeVersion";
 
 export function backgroundMessageScript(msg: BgMsg, sender: chrome.runtime.MessageSender, response: (response?: any) => void) {
     switch (msg.type) {
         case messages.tabs:
             tabsState(msg, sender, response);
-            break;
+            return;
 
         case messages.windows:
             if (sender.tab && sender.tab.windowId) {
                 chrome.windows.update(sender.tab.windowId, { state: msg.state as chrome.windows.UpdateInfo["state"] });
             }
-            break;
+            return;
 
-        default:
-            break;
+        case messages.custom_script:
+            customScriptState(msg, sender, response);
+            return;
+
+        default: return;
     }
 }
 
-function tabsState(msg: any, sender: chrome.runtime.MessageSender, response?: any) {
+function tabsState(msg: BgMsg, sender: chrome.runtime.MessageSender, response?: (response?: any) => void) {
     switch (msg.state) {
         case 'remove':
             if (sender.tab && sender.tab.id) {
@@ -64,3 +69,53 @@ function tabsState(msg: any, sender: chrome.runtime.MessageSender, response?: an
             break;
     }
 }
+
+function customScriptState(msg: BgMsg, sender: chrome.runtime.MessageSender, response?: (response?: any) => void) {
+    switch (msg.state) {
+        case 'MAIN': {
+            if (!sender.tab?.id) return console.error('커스텀 스크립트를 실행할 탭 위치를 찾지 못하였습니다.');
+
+            if (isUserScriptsAvailable()) {
+                const js_code =
+`
+!function() {
+
+${msg.data}
+
+}();
+`;
+
+                try {
+                    chrome.userScripts.execute({
+                        js: [{ code: js_code }],
+                        target: { tabId: sender.tab.id },
+                        world: 'MAIN',
+                    });
+                } catch (error) {
+                    console.error('커스텀 스크립트를 실행하는 도중에 오류가 발생하였습니다:', error);
+                    sendCsMsg(sender.tab.id, {
+                        credit: 'console-error',
+                        data: {
+                            type: 'alert',
+                            error: error
+                        }
+                    });
+                }
+            }
+            else {
+                sendCsMsg(sender.tab.id, {
+                    credit: 'console-error',
+                    data: {
+                        type: 'alert',
+                        error: chromeVersion >= 138 ? '사용자 스크립트 허용이 필요합니다.' : '개발자 모드를 요구합니다.'
+                    }
+                });
+            }
+
+            return;
+        }
+
+        default: return;
+    }
+}
+

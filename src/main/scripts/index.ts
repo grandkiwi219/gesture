@@ -1,7 +1,7 @@
 import { variable } from "src/main/variable";
 import { excludePaper, findScrollable } from "./supports";
 import { messages } from "service/msg/message-types";
-import { direction } from "../direction";
+import { sendBgMsg } from "../utils/utils";
 
 
 export const scripts = {
@@ -69,7 +69,7 @@ export const scripts = {
                 type: messages.tabs,
                 state: 'remove'
             }
-            chrome.runtime.sendMessage(msg);
+            sendBgMsg(msg);
         }
     },
 
@@ -89,7 +89,7 @@ export const scripts = {
                 type: messages.tabs,
                 state: 'restore'
             }
-            chrome.runtime.sendMessage(msg);
+            sendBgMsg(msg);
         }
     },
 
@@ -105,7 +105,7 @@ export const scripts = {
                     pages: 1
                 }
             }
-            chrome.runtime.sendMessage(msg);
+            sendBgMsg(msg);
         }
     },
 
@@ -121,7 +121,7 @@ export const scripts = {
                     pages: 1
                 }
             }
-            chrome.runtime.sendMessage(msg);
+            sendBgMsg(msg);
         }
     },
 
@@ -134,7 +134,7 @@ export const scripts = {
                 state: 'move',
                 data: -1
             }
-            chrome.runtime.sendMessage(msg);
+            sendBgMsg(msg);
         }
     },
 
@@ -147,7 +147,7 @@ export const scripts = {
                 state: 'move',
                 data: 1
             }
-            chrome.runtime.sendMessage(msg);
+            sendBgMsg(msg);
         }
     },
 
@@ -161,7 +161,7 @@ export const scripts = {
                 type: messages.windows,
                 state: 'minimized'
             }
-            chrome.runtime.sendMessage(msg);
+            sendBgMsg(msg);
         }
 },
 
@@ -173,7 +173,7 @@ export const scripts = {
                 type: messages.windows,
                 state: 'maximized'
             }
-            chrome.runtime.sendMessage(msg);
+            sendBgMsg(msg);
         }
     },
 
@@ -185,7 +185,7 @@ export const scripts = {
                 type: messages.windows,
                 state: 'fullscreen'
             }
-            chrome.runtime.sendMessage(msg);
+            sendBgMsg(msg);
         }
     },
 

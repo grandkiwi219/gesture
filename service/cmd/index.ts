@@ -1,10 +1,10 @@
 import { initial_options } from "service/initial_options";
 import { setInitialGesture } from "service/reset";
+import { sendAllCsMsg } from "service/utils";
 import { bg_state, bg_variable } from "service/variable";
 import { storage_area, storage_keys } from "src/main/consts";
 import { regex } from "src/main/direction";
 import { decodeMap } from "src/main/utils/utils";
-import { sendContentMessage } from "./supports";
 
 export async function loadCommand() {
     bg_state.loaded_command = false;
@@ -77,7 +77,7 @@ export async function loadStorageChanged(
                 credit: 'sites',
                 data: result_sites
             }
-            sendContentMessage(message);
+            sendAllCsMsg(message);
             changed.sites = true;
         }
         
@@ -103,7 +103,7 @@ export async function loadStorageChanged(
                 credit: 'options',
                 data: initial_options
             }
-        sendContentMessage(message);
+        sendAllCsMsg(message);
 
         if (!options_check) {
             bg_state.loaded_command = false;
@@ -161,7 +161,7 @@ export async function loadStorageChanged(
             credit: 'commands',
             data: null /* decodeMap(bg_variable.command_store) */
         }
-        sendContentMessage(message);
+        sendAllCsMsg(message);
     }
 }
 

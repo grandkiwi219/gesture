@@ -2,7 +2,7 @@ import initial_gesture from "./initial_gesture";
 import { storage_keys, storage_area } from "../src/main/consts";
 import { bg_state } from "./variable";
 import { bg_consts } from "./consts";
-import { sendContentMessage } from "./cmd/supports";
+import { sendAllCsMsg } from "./utils";
 
 export async function setInitialGesture(use_state: boolean = false) {
     if (use_state) bg_state.loaded_command = false;
@@ -30,7 +30,7 @@ export async function setInitialGesture(use_state: boolean = false) {
     })
 
     if (use_state) {
-        await sendContentMessage({ credit: 'commands', data: null });
+        await sendAllCsMsg({ credit: 'commands', data: null });
         bg_state.loaded_command = true;
     }
 }

@@ -7,8 +7,10 @@ import { mouseMove } from "./event";
 import { storage_keys, storage_area } from "./consts";
 import { options } from "./enum";
 import { credits, repeater_msg_event } from "src/repeater/msg/message-type";
-import { encodeMap, merge } from "./utils/utils";
+import { encodeMap, merge, sendBgMsg } from "./utils/utils";
 import utils from "page/utils/utils";
+import { messages } from "service/msg/message-types";
+import { isFirefox } from "src/isFirefox";
 
 export function mainAddEvent(addEvent: Function): (() => void) {
     return function() {
@@ -133,11 +135,20 @@ function gestureScript(script_key: string) {
 }
 
 function gestureCustomScript(custom_script: string) {
-    const message: RepeaterMessage = {
-        credit: credits.custom_script_message,
-        script: custom_script,
-        data: null
-    }
+    if (isFirefox) {
+        const message: RepeaterMessage = {
+            credit: credits.custom_script_message,
+            script: custom_script,
+            data: null
+        }
 
-    window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(message) }));
+        window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(message) }));
+    }
+    else {
+        sendBgMsg({
+            type: messages.custom_script,
+            state: 'MAIN',
+            data: custom_script
+        });
+    }
 }

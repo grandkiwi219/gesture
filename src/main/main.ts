@@ -4,11 +4,13 @@ import { repeater_msg_event, script_msg_event } from "src/repeater/msg/message-t
 import { mainAddEvent, mainRemoveEvent, setCommand, setOptions } from "./process";
 import { variable } from "./variable";
 import logger from "./utils/logger";
+import { backgroundMessage } from "./event/backgroundMessage";
+import { isFirefox } from "src/isFirefox";
 
 
 void function main() {
 
-    scriptInjection(document.documentElement, 'src/repeater.js');
+    if (isFirefox) scriptInjection(document.documentElement, 'src/repeater.js');
 
     variable.mouseMove = mouseMove;
 
@@ -35,9 +37,10 @@ void function main() {
     });
     addEvent();
 
-    chrome.runtime.onMessage.addListener(mainStorageChanged);
-    function mainStorageChanged(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
+    chrome.runtime.onMessage.addListener(bgMsg);
+    function bgMsg(message: ContentMessage, sender: chrome.runtime.MessageSender, sendResponse: ((response?: any) => void)) {
         storageChanged(message, addEvent, removeEvent);
+        backgroundMessage(message, sender, sendResponse);
     }
 }();
 

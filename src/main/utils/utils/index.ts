@@ -68,6 +68,10 @@ export function px(num: number): string {
     return `${num}px`;
 }
 
+export async function sendBgMsg(msg: BgMsg) {
+    await chrome.runtime.sendMessage(msg);
+}
+
 export const postMsg = isFirefox
 ? function(target: Window | null, message: any) {
     target?.postMessage(JSON.stringify(message), '*');

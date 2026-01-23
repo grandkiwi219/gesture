@@ -13,10 +13,6 @@ window.addEventListener(repeater_msg_event, event => {
     ) return;
 
     switch (data.credit) {
-        /* case credits.context_menu:
-            ignoreContextMenu(data.data);
-            break; */
-
         case credits.custom_script_message:
             executeCustomScript(data.script);
             break;
@@ -27,5 +23,3 @@ window.addEventListener(repeater_msg_event, event => {
 
     return;
 });
-
-// window.addEventListener('contextmenu', contextMenuEvent, true);

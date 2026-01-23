@@ -1,35 +1,20 @@
-import { initial } from "src/main/consts";
+import utils from "page/utils/utils";
 import logger from "src/main/utils/logger";
 
-/* let ignore_context_menu = false;
-
-export async function contextMenuEvent(event: PointerEvent) {
-    if (!ignore_context_menu) {
-       return;
-    }
-
-    event.preventDefault();
-    event.stopPropagation();
-}
-
-export function ignoreContextMenu(data: boolean) {
-    ignore_context_menu = data;
-} */
-
 export function executeCustomScript(data_script: string) {
-    // @ts-ignore
-    const gestureTrustedScript = trustedTypes.createPolicy(`${initial}TrustedScript`, {
-        // @ts-ignore
-        createScript: (string) => 
+    try {
+        const script = document.createElement('script');
+        script.textContent = 
 `
 (function() {
-${string.replace(/Function|eval|constructor./g, '')}
-})();
-`,
-    });
 
-    const script = document.createElement('script');
-    script.textContent = gestureTrustedScript!.createScript(data_script) as unknown as string;
-    const target = document.head || document.documentElement;
-    target.appendChild(script);
+${data_script}
+
+})(0);
+`;
+        const target = document.head || document.documentElement;
+        target.appendChild(script);
+    } catch (error) {
+        utils.showAlert({ msg: '이 사이트에서 사용자 지정 스크립트를 실행할 수 없습니다.', type: 'error' });
+    }
 }
