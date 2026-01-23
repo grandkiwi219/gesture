@@ -3,16 +3,19 @@ import { variable } from "../variable";
 import { mouseDown } from "./mouseDown";
 import { mouseUp } from "./mouseUp";
 import { sendAcknowledgeContextMenu, sendIgnoreContextMenu } from "../context-menu";
+import { getMsg } from "../utils/utils";
 import logger from "../utils/logger";
+import { isFirefox } from "src/isFirefox";
 
 export function pipeMessage(event: MessageEvent) {
     
-    const data = event.data;
+    const data = getMsg(event.data);
     
-    if (!(data instanceof Object)) return;
+    if (!data) return;
 
     switch (data.credit) {
         case pipe_msg_event: {
+
             let iframe = undefined;
 
             for (const el of document.getElementsByTagName('iframe')) {
@@ -38,7 +41,7 @@ export function pipeMessage(event: MessageEvent) {
                     return;
 
                 case pipe_event.mousedown:
-                    mouseDown(cleanup_detail, { use_mouse_move: false });
+                    mouseDown(cleanup_detail, { use_mouse_move: isFirefox });
                     return;
 
                 case pipe_event.mouseup:
@@ -50,6 +53,7 @@ export function pipeMessage(event: MessageEvent) {
         }
 
         case pipe_cm_msg_event: {
+
             switch (data.event) {
                 case pipe_cm_event.ignore: {
                     sendIgnoreContextMenu();

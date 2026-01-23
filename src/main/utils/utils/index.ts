@@ -1,3 +1,5 @@
+import { isFirefox } from "src/isFirefox";
+
 export function calcAngleDegrees({ x, y }: CoordinateObj): Angle {
     return (Math.atan2(y, x) * 180) / Math.PI;
 }
@@ -64,4 +66,28 @@ export function merge(target: object, source: object) {
 
 export function px(num: number): string {
     return `${num}px`;
+}
+
+export const postMsg = isFirefox
+? function(target: Window | null, message: any) {
+    target?.postMessage(JSON.stringify(message), '*');
+}
+: function(target: Window | null, message: any) {
+    target?.postMessage(message, '*');
+}
+
+export const getMsg = isFirefox
+? function(data: any) { // firefox
+    if (typeof data == 'string') {
+        const obj = JSON.parse(data);
+        return obj instanceof Object ? obj : undefined;
+    }
+    else
+        return undefined;
+}
+: function(data: any) { // chrome
+    if (data instanceof Object)
+        return data;
+    else 
+        return undefined;
 }

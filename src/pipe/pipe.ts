@@ -6,15 +6,16 @@ import { startDrawing } from "src/main/drawing";
 import { exitReset } from "src/main/process";
 import { mouseDown, mouseUp } from "src/main/event";
 import { sendAcknowledgeContextMenu, sendIgnoreContextMenu, sendToTopACM, sendToTopICM } from "src/main/context-menu";
+import { getMsg, postMsg } from "src/main/utils/utils";
 import logger from "src/main/utils/logger";
 
 void function main() {
 
     window.addEventListener('message', (event: MessageEvent) => {
         
-        const data = event.data;
+        const data = getMsg(event.data);
 
-        if (!(data instanceof Object)) return;
+        if (!data) return;
 
         switch (data.credit) {
             case pipe_msg_event: {
@@ -125,7 +126,7 @@ void function main() {
     }
 
     function sendData(event: MouseEvent, event_name: string) {
-        window.parent.postMessage({
+        postMsg(window.parent, {
             credit: pipe_msg_event,
             event: event_name,
             detail: {
@@ -135,6 +136,6 @@ void function main() {
                 clientX: event.clientX,
                 clientY: event.clientY
             }
-        }, '*');
+        });
     };
 }();

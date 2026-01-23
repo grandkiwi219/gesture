@@ -23,9 +23,7 @@ export function mouseMove(event: MouseEvent | PipeCustomEvent,
         reset_options?: ExitReset
     } = {}
 ) {
-    if (!event.isTrusted) return;
-    
-    if (!variable.executing) return;
+    if (!event.isTrusted || !variable.executing) return;
 
     if (event.buttons != 2) {
         exitReset(reset_options);

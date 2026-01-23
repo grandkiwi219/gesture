@@ -1,4 +1,6 @@
+import { isFirefox } from "src/isFirefox";
 import { pipe_cm_event, pipe_cm_msg_event } from "src/pipe/event";
+import { postMsg } from "../utils/utils";
 
 function cmPreventDefault(event: PointerEvent) {
     if (event.isTrusted) {
@@ -26,7 +28,7 @@ export function sendIgnoreContextMenu() {
     const iframes = document.getElementsByTagName('iframe');
 
     for (const iframe of iframes) {
-        iframe.contentWindow?.postMessage(pipe_msg.ignore, '*');
+        postMsg(iframe.contentWindow, pipe_msg.ignore);
     }
 }
 
@@ -36,7 +38,7 @@ export function sendAcknowledgeContextMenu() {
     const iframes = document.getElementsByTagName('iframe');
 
     for (const iframe of iframes) {
-        iframe.contentWindow?.postMessage(pipe_msg.acknowledge, '*');
+        postMsg(iframe.contentWindow, pipe_msg.acknowledge);
     }
 }
 
@@ -44,11 +46,11 @@ let sent_ICM_QM = false;
 
 export function sendToTopICM() {
     sent_ICM_QM = true;
-    window.top?.postMessage(pipe_msg.ignore, '*');
+    postMsg(window.top, pipe_msg.ignore);
 }
 
 export function sendToTopACM() {
     if (!sent_ICM_QM) return;
     sent_ICM_QM = false;
-    window.top?.postMessage(pipe_msg.acknowledge, '*');
+    postMsg(window.top, pipe_msg.acknowledge);
 }
