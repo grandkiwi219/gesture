@@ -1,6 +1,6 @@
 {
   "name": "gesture",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "This is gesture extension",
   "keywords": [
     "chrome-extension",
