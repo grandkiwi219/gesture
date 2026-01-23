@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+    <title>gesture 사용자 지정 스크립트 안내서</title>
+
+    <link rel="stylesheet" href="./theme.css">
+    <script src="./theme.js"></script>
+    
+    <link rel="stylesheet" href="./Buttons.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <style root>
+        :root {
+            --header-height: 50px;
+        }
+    </style>
+
+    <style base>
+        * {
+            box-sizing: border-box;
+
+            font-family: "Noto Sans KR", sans-serif;
+            font-weight: 400;
+        }
+
+        html {
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+
+            scroll-behavior: smooth;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+
+            font-size: 75%;
+        }
+
+        ::selection {
+            background-color: var(--selection);
+        }
+    </style>
+
+    <style header>
+        header {
+            width: 100%;
+            height: var(--header-height);
+
+            padding: 0 20px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            background-color: var(--background-color-translucent);
+            backdrop-filter: blur(16px);
+
+            border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+        }
+
+        .title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+    </style>
+
+    <style main>
+        main {
+            width: 1000px;
+            min-height: 100dvh;
+
+            margin: 0 auto;
+
+            display: flex;
+            flex-flow: column wrap;
+            justify-content: flex-start;
+        }
+    </style>
+
+    <style a>
+        a {
+            color: var(--color);
+        }
+    </style>
+
+    <style page>
+        main > section {
+            min-height: 100dvh;
+
+            padding: 0 20px;
+            padding-top: var(--header-height);
+        }
+
+        main * {
+            font-size: 16px;
+        }
+
+        .branch {
+            margin: 15px 0 20px;
+
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .line {
+            margin: 10px 0;
+        }
+
+        .order {
+            width: 27px;
+            height: 27px;
+
+            margin-right: 8px;
+
+            border-radius: 50px;
+
+            line-height: 26px;
+            text-align: center;
+
+            background-color: var(--background-color);
+
+            display: inline-block;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            filter: invert(1);
+
+            user-select: none;
+        }
+
+        img {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        u {
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div></div>
+
+        <div class="title">
+            gesture 사용자 지정 스크립트 안내서
+        </div>
+
+        <div>
+            <button id="theme-btn" onclick="toggleTheme()">
+            </button>
+
+            <script>
+                (() => {
+                    const theme = localStorage.getItem('theme');
+
+                    const theme_btn = document.getElementById('theme-btn');
+
+                    if (theme == 'light') {
+                        theme_btn.innerHTML =
+// https://icons.getbootstrap.com/icons/sun/
+`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+<path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+</svg>`;
+                    }
+                    else {
+                        theme_btn.innerHTML =
+// https://icons.getbootstrap.com/icons/moon/
+`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+  <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/>
+</svg>`;
+                    }
+                })();
+
+                function toggleTheme() {
+                    const theme = localStorage.getItem('theme');
+
+                    console.log(theme)
+
+                    const theme_btn = document.getElementById('theme-btn');
+
+                    if (theme == 'light') {
+                        document.documentElement.setAttribute('theme', 'dark');
+                        localStorage.setItem('theme', 'dark');
+                        theme_btn.innerHTML =
+// https://icons.getbootstrap.com/icons/moon/
+`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+  <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/>
+</svg>`;
+                    }
+                    else {
+                        document.documentElement.setAttribute('theme', 'light');
+                        localStorage.setItem('theme', 'light');
+                        theme_btn.innerHTML = 
+// https://icons.getbootstrap.com/icons/sun/
+`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+  <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+</svg>`;
+                    }
+                }
+            </script>
+        </div>
+    </header>
+
+    <main>
+        <section id="allow-user-script">
+            <a href="#allow-user-script">
+                <div class="branch"># 사용자 스크립트 허용하기</div>
+            </a>
+
+            <div class="line">
+                <div class="order">1</div> 확장프로그램의 제스처 설정창의 "<u>사용자 지정 스크립트</u>" 부분에 뜨는 경고창을 눌러주세요. 
+            </div>
+
+            <div class="line">
+                <div class="order">2</div> 새로 열린 확장프로그램 세부정보 페이지에서 아래 사진과 같은 부분을 찾아 "<u>사용자 스크립트 허용</u>"을 눌러 켜짐을 확인하세요.
+            </div>
+
+            <br>
+            <img src="./allowUserScripts.png" alt="allowUserScripts">
+            <br>
+            <br>
+
+            <div class="line">
+                <div class="order">3</div>다시 확장프로그램의 페이지로 돌아가서 스크립트 작성을 계속해주세요.
+            </div>
+        </section>
+
+        <section id="on-developer-mode">
+            <a href="#on-developer-mode">
+                <div class="branch"># 개발자 모드 켜기</div>
+            </a>
+
+            <div class="line">
+                <div class="order">1</div> 
+            </div>
+
+            <div class="line">
+                <div class="order">2</div> 
+            </div>
+
+            <div class="line">
+                <div class="order">3</div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
