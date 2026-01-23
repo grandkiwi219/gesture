@@ -3,7 +3,7 @@ interface Props {
 }
 
 interface NavProps {
-    Icon: ReactNode;
+    Icon: IconType;
     setting: Setting;
 }
 

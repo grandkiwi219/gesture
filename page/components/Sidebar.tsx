@@ -11,10 +11,17 @@ import { pageSetting } from 'page/page/PageSettings';
 import packages from '../../package.json' with { type: 'json' };
 import std from 'page/std';
 
+import { IconType } from 'react-icons';
 import { FaGithub } from "react-icons/fa";
 import { BsCursor } from "react-icons/bs";
 import { LuMonitor } from "react-icons/lu";
 import { IoNewspaperOutline } from "react-icons/io5";
+import { MdOutlineOpenInNew } from "react-icons/md";
+
+import { isFirefox } from 'src/isFirefox';
+import { chromeVersion } from 'src/chromeVersion';
+
+import { isUserScriptsAvailable } from 'service/utils';
 
 
 const menu = {
@@ -25,14 +32,19 @@ const menu = {
     active: 'active',
 }
 
-/* import { MdOutlineOpenInNew } from "react-icons/md";
-<MdOutlineOpenInNew /> */
+function NavIcon({ Icon, name }: { Icon: IconType, name: string }) {
+    return (
+        <>
+            <Icon size={std.size.icon}/>&nbsp;&nbsp;<span>{name}</span>
+        </>
+    );
+}
 
 function NavA({ Icon, setting }: NavProps) {
 
     return (
         <NavLink to={setting.path} className={({isActive}) => isActive ? menu.active : undefined}>
-            <Icon size={std.size.icon}/>&nbsp;&nbsp;{setting.name}
+            <NavIcon Icon={Icon} name={setting.name} />
         </NavLink>
     );
 }
@@ -78,6 +90,14 @@ function NavMenu() {
                     <NavA Icon={LuMonitor} setting={usageSetting} />
     
                     <NavA Icon={IoNewspaperOutline} setting={pageSetting} />
+
+                    {
+                        !isFirefox && !isUserScriptsAvailable()
+                        ? <a href={"https://grandkiwi219.github.io/gesture/" + (chromeVersion >= 138 ? '' : '#on-developer-mode')} target='_blank'>
+                            <NavIcon Icon={MdOutlineOpenInNew} name='사용자 지정 스크립트 안내서' />
+                        </a>
+                        : null
+                    }
                 </div>
     
                 <div id={menu.bottom}>

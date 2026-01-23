@@ -82,12 +82,13 @@ nav#menu.icon.open > #menu-wrap
     align-items: center;
     font-size: 16px;
     text-decoration: none;
-    white-space: 'nowrap';
-    overflow: 'hidden';
-    text-overflow: 'ellipsis';
     user-select: none;
     cursor: pointer;
     transition: background-color var(--transition-speed), padding var(--transition-speed);
+}
+
+#menu-top > a > span {
+    word-break: keep-all;
 }
 
 #menu-top > a:hover {
