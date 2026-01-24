@@ -243,7 +243,8 @@ const SettingIUCSStyle = memo(function() {
 
             {styling(`#${IUCS_id} *`, {
                 color: 'rgba(0, 0, 0, 0)',
-                textAlign: 'center'
+                textAlign: 'center',
+                wordBreak: 'keep-all'
             })}
 
             {styling(`#${IUCS_id}.width *`, {
