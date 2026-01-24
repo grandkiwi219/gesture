@@ -226,6 +226,8 @@ const SettingIUCSStyle = memo(function() {
 
                 borderRadius: 'var(--paper-border-radius)',
 
+                boxShadow: '0px 0px 8px var(--box-shadow-color)',
+
                 position: 'absolute',
                 top: '0',
                 left: '50%',
@@ -375,7 +377,7 @@ const SettingWindowStyle = memo(function() {
 
                 backgroundColor: 'var(--background-color)',
                 borderRadius: '20px',
-                boxShadow: '0px 0px 8px var(--background-color)',
+                boxShadow: '0px 0px 8px var(--box-shadow-color)',
 
                 display: 'flex',
                 flexDirection: 'column',
