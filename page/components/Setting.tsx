@@ -195,15 +195,9 @@ function SettingCustomScript({ state, setState }: { state: SettingGesture, setSt
     );
 }
 
-const SettingIfUseCustomScript = memo(function() {
+const IUCS_id = 'setting-if-use-custom-script';
 
-    const { type } = useContext(SettingState)!;
-
-    const id = 'setting-if-use-custom-script';
-
-    const setting_csw = useRef<HTMLDivElement>(null);
-
-    const transition_opacity = 'opacity .24s ease-in';
+const SettingIUCSStyle = memo(function() {
 
     const height = {
         width: .1,
@@ -219,6 +213,83 @@ const SettingIfUseCustomScript = memo(function() {
         width: .1,
         height: .1
     }
+
+    const transition_opacity = 'opacity .24s ease-in';
+
+    return (
+        <style>
+            {styling(`#${IUCS_id}`, {
+                width: '0',
+                height: '0',
+
+                backgroundColor: 'rgb(255, 55, 55)',
+
+                borderRadius: 'var(--paper-border-radius)',
+
+                position: 'absolute',
+                top: '0',
+                left: '50%',
+                transform: 'translateY(-110%) translateX(-50%)',
+
+                opacity: '1',
+
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+
+                overflow: 'hidden',
+            })}
+
+            {styling(`#${IUCS_id} *`, {
+                color: 'rgba(0, 0, 0, 0)',
+                textAlign: 'center'
+            })}
+
+            {styling(`#${IUCS_id}.width *`, {
+                color: 'white'
+            })}
+
+            {styling(`#${IUCS_id} > *`, {
+                overflow: 'hidden'
+            })}
+
+            {styling(`#${IUCS_id}.height`, {
+                height: 'calc(100px + 10px)',
+
+                padding: '10px 24px',
+
+                transition: `padding ${height.width}s linear, height ${height.height}s ease`
+            })}
+
+            {styling(`#${IUCS_id}.hide`, {
+                opacity: '0',
+                
+                transition: `padding ${height.width}s linear, height ${height.height}s ease, ${transition_opacity}`
+            })}
+
+            {styling(`#${IUCS_id}.width`, {
+                width: 'calc(100% + 20px)',
+                height: 'calc(100px - 10px)',
+
+                transition: `width ${width.width}s ease, height ${width.height}s ease-in, ${transition_opacity}`
+            })}
+
+            {styling(`#${IUCS_id}.stable`, {
+                width: '100%',
+                height: '100px',
+                
+                transition: `width ${stable.width}s ease-in, height ${stable.height}s ease-in, ${transition_opacity}`
+            })}
+        </style>
+    );
+});
+
+const SettingIfUseCustomScript = memo(function() {
+
+    const { type } = useContext(SettingState)!;
+
+    const setting_csw = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const tg = setting_csw.current!;
@@ -255,73 +326,9 @@ const SettingIfUseCustomScript = memo(function() {
 
     return (
         <>
-            <style>
-                {styling(`#${id}`, {
-                    width: '0',
-                    height: '0',
-
-                    backgroundColor: 'rgb(255, 55, 55)',
-
-                    borderRadius: 'var(--paper-border-radius)',
-
-                    position: 'absolute',
-                    top: '0',
-                    left: '50%',
-                    transform: 'translateY(-110%) translateX(-50%)',
-
-                    opacity: '1',
-
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-
-                    overflow: 'hidden',
-                })}
-
-                {styling(`#${id} *`, {
-                    color: 'rgba(0, 0, 0, 0)',
-                    textAlign: 'center'
-                })}
-
-                {styling(`#${id}.width *`, {
-                    color: 'white'
-                })}
-
-                {styling(`#${id} > *`, {
-                    overflow: 'hidden'
-                })}
-
-                {styling(`#${id}.height`, {
-                    height: 'calc(100px + 10px)',
-
-                    padding: '10px 24px',
-
-                    transition: `padding ${height.width}s linear, height ${height.height}s ease`
-                })}
-
-                {styling(`#${id}.hide`, {
-                    opacity: '0',
-                    
-                    transition: `padding ${height.width}s linear, height ${height.height}s ease, ${transition_opacity}`
-                })}
-
-                {styling(`#${id}.width`, {
-                    width: 'calc(100% + 20px)',
-                    height: 'calc(100px - 10px)',
-
-                    transition: `width ${width.width}s ease, height ${width.height}s ease-in, ${transition_opacity}`
-                })}
-
-                {styling(`#${id}.stable`, {
-                    width: '100%',
-                    height: '100px',
-                    
-                    transition: `width ${stable.width}s ease-in, height ${stable.height}s ease-in, ${transition_opacity}`
-                })}
-            </style>
+            <SettingIUCSStyle />
     
-            <div id={id} ref={setting_csw}>
+            <div id={IUCS_id} ref={setting_csw}>
                 <span style={{
                     fontSize: '16px'
                 }}>
