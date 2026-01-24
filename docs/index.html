@@ -119,6 +119,9 @@
 
         .line {
             margin: 10px 0;
+
+            display: flex;
+            flex-wrap: wrap;
         }
 
         .order {
@@ -134,8 +137,6 @@
 
             background-color: var(--background-color);
 
-            display: inline-block;
-
             font-size: 14px;
             font-weight: 600;
 
@@ -144,9 +145,21 @@
             user-select: none;
         }
 
+        .text {
+            flex-grow: 1;
+            height: fit-content;
+
+            word-break: keep-all;
+        }
+
         img {
+            min-width: 350px;
             width: 80%;
-            margin: 0 auto;
+            margin-left: 20px;
+        }
+
+        img.small {
+            width: 40%;
         }
 
         u {
@@ -227,11 +240,23 @@
             </a>
 
             <div class="line">
-                <div class="order">1</div> 확장프로그램의 제스처 설정창의 "<u>사용자 지정 스크립트</u>" 부분에 뜨는 경고창을 눌러주세요. 
+                <div class="order">1</div>
+                <div class="text">
+                    "<u>chrome://extensions/?id=<확장프로그램 Id></u>"로 이동해주세요.
+                    <br>
+                    또는 확장프로그램의 제스처 설정창의 "<u>사용자 지정 스크립트</u>" 부분에 뜨는 경고창을 확인해주세요.
+                </div>
             </div>
 
+            <br>
+            <img class="small" src="userScriptsWarn.png" alt="userScriptsWarn">
+
+
             <div class="line">
-                <div class="order">2</div> 새로 열린 확장프로그램 세부정보 페이지에서 아래 사진과 같은 부분을 찾아 "<u>사용자 스크립트 허용</u>"을 눌러 켜짐을 확인하세요.
+                <div class="order">2</div>
+                <div class="text">
+                    새로 열린 확장프로그램 세부정보 페이지에서 아래 사진과 같은 부분을 찾아 "<u>사용자 스크립트 허용</u>"을 눌러 켜짐을 확인하세요.
+                </div>
             </div>
 
             <br>
@@ -240,7 +265,10 @@
             <br>
 
             <div class="line">
-                <div class="order">3</div>다시 확장프로그램의 페이지로 돌아가서 스크립트 작성을 계속해주세요.
+                <div class="order">3</div>
+                <div class="text">
+                    다시 확장프로그램의 페이지로 돌아가셔서 경고창이 사라짐을 확인하시고 스크립트 작성을 계속해주세요.
+                </div>
             </div>
         </section>
 
@@ -250,15 +278,35 @@
             </a>
 
             <div class="line">
-                <div class="order">1</div> 
+                <div class="order">1</div>
+                <div class="text">
+                    "<u>chrome://extensions"로 이동해주세요.
+                    <br>
+                    또는 확장프로그램의 제스처 설정창의 "<u>사용자 지정 스크립트</u>" 부분에 뜨는 경고창을 확인해주세요.
+                </div>
             </div>
 
+            <br>
+            <img class="small" src="developerModeWarn.png" alt="developerModeWarn">
+
+
             <div class="line">
-                <div class="order">2</div> 
+                <div class="order">2</div>
+                <div class="text">
+                    새로 열린 확장프로그램 관리 페이지에서 아래 사진과 같은 부분을 찾아 "<u>개발자 모드</u>" 버튼을 눌러 켜짐을 확인하세요.
+                </div>
             </div>
+
+            <br>
+            <img src="./onDeveloperMode.png" alt="onDeveloperMode">
+            <br>
+            <br>
 
             <div class="line">
                 <div class="order">3</div>
+                <div class="text">
+                    다시 확장프로그램의 페이지로 돌아가셔서 경고창이 사라짐을 확인하시고 스크립트 작성을 계속해주세요.
+                </div>
             </div>
         </section>
     </main>
