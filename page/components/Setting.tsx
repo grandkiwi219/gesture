@@ -10,10 +10,8 @@ import std from "page/std";
 
 import utils from "page/utils/utils";
 import { styling } from "page/utils/styling";
+import { decideWarnEffect, decideWarnState } from "page/utils/decider";
 
-import { isUserScriptsAvailable } from "service/utils";
-
-import { isFirefox } from "src/isFirefox";
 import { chromeVersion } from "src/chromeVersion";
 
 import { MdOutlineOpenInNew } from "react-icons/md";
@@ -153,8 +151,12 @@ function SettingCustomScriptWarn() {
 function SettingCustomScript({ state, setState }: { state: SettingGesture, setState: ((value: React.SetStateAction<SettingGesture | null>) => void) }) {
 
     const theme = localStorage.getItem('theme') == 'dark' ? 'dark' : 'light';
+    
+    const [warnState, setWarnState] = useState<boolean>(decideWarnState());
 
-    const warn_alert = !isFirefox && !isUserScriptsAvailable();
+    useEffect(() => {
+        return new decideWarnEffect(warnState, setWarnState).execute();
+    });
 
     return (
         <div style={{
@@ -163,13 +165,13 @@ function SettingCustomScript({ state, setState }: { state: SettingGesture, setSt
             overflow: 'auto'
         }}>
             {
-                warn_alert
+                warnState
                 ? <SettingCustomScriptWarn />
                 : null
             }
             <div style={{
                 width: '100%',
-                height: warn_alert ? '80%' : '100%',
+                height: warnState ? '80%' : '100%',
                 overflow: 'auto'
             }}>
                 <CodeEditor

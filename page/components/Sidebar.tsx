@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 
 import './CSS/Sidebar.css' with { type: 'css' };
@@ -9,7 +9,9 @@ import { usageSetting } from 'page/page/UsageSettings';
 import { pageSetting } from 'page/page/PageSettings';
 
 import packages from '../../package.json' with { type: 'json' };
+
 import std from 'page/std';
+import { decideWarnEffect, decideWarnState } from 'page/utils/decider';
 
 import { IconType } from 'react-icons';
 import { FaGithub } from "react-icons/fa";
@@ -79,6 +81,25 @@ function NavControl({ children }: Props) {
     );
 }
 
+function NavUserScriptsDoc() {
+    
+    const [warnState, setWarnState] = useState<boolean>(decideWarnState());
+
+    useEffect(() => {
+        return new decideWarnEffect(warnState, setWarnState).execute();
+    });
+
+    return (
+        <a href={std.document.doc + (chromeVersion >= 138 ? '' : '#'+std.document.on_developer_mode)} target='_blank'
+            style={{
+                display: warnState ? '': 'none'
+            }}
+        >
+            <NavIcon Icon={MdOutlineOpenInNew} name='사용자 지정 스크립트 안내서' />
+        </a>
+    );
+}
+
 function NavMenu() {
     return (
         <NavControl>
@@ -91,13 +112,7 @@ function NavMenu() {
     
                     <NavA Icon={IoNewspaperOutline} setting={pageSetting} />
 
-                    {
-                        !isFirefox && !isUserScriptsAvailable()
-                        ? <a href={std.document.doc + (chromeVersion >= 138 ? '' : '#'+std.document.on_developer_mode)} target='_blank'>
-                            <NavIcon Icon={MdOutlineOpenInNew} name='사용자 지정 스크립트 안내서' />
-                        </a>
-                        : null
-                    }
+                    <NavUserScriptsDoc />
                 </div>
     
                 <div id={menu.bottom}>
