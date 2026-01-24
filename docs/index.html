@@ -64,6 +64,8 @@
             top: 0;
             left: 0;
 
+            z-index: 10;
+
             background-color: var(--background-color-translucent);
             backdrop-filter: blur(16px);
 
@@ -78,8 +80,9 @@
 
     <style main>
         main {
-            width: 1000px;
-            min-height: 100dvh;
+            max-width: 1000px;
+            width: 100%;
+            min-height: 100lvh;
 
             margin: 0 auto;
 
@@ -97,7 +100,7 @@
 
     <style page>
         main > section {
-            min-height: 100dvh;
+            min-height: 100lvh;
 
             padding: 0 20px;
             padding-top: var(--header-height);
