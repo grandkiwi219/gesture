@@ -9,16 +9,21 @@ import { storage_keys, storage_area } from "src/main/consts.js";
 import { loadCommand, loadSites, loadStorageChanged } from "./cmd/index.js";
 
 chrome.runtime.onInstalled.addListener(async d => {
-    if (d.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-        chrome.runtime.openOptionsPage();
-        await setInitialGesture(true);
+    switch (d.reason) {
+        case chrome.runtime.OnInstalledReason.INSTALL: {
+            chrome.runtime.openOptionsPage();
+            await setInitialGesture(true);
+            break;
+        }
+
+        case chrome.runtime.OnInstalledReason.UPDATE: {
+            break;
+        }
+
+        default: break;
     }
-    
-    // gesture-command
-    // await loadSites();
-    // await loadCommand();
-    
-    
+
+
     // context-menu
     createContextMenu();
 
@@ -31,10 +36,6 @@ chrome.runtime.onInstalled.addListener(async d => {
 });
 
 chrome.runtime.onStartup.addListener(async () => {
-    // gesture-command
-    // await loadSites();
-    // await loadCommand();
-
 
     // context-menu
     contextMenuStartEvent();
