@@ -99,12 +99,13 @@ function SettingCustomScriptWarn() {
                 {styling(`#${id} a`, {
                     textDecoration: 'underline',
 
+                    transition: 'opacity var(--transition-speed)',
+
                     cursor: 'pointer'
                 })}
 
                 {styling(`#${id} a:hover`, {
                     opacity: '60%',
-                    transition: 'opacity var(--transition-speed)'
                 })}
             </style>
             <div id={id} style={{
