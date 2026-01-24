@@ -1,6 +1,7 @@
 import { isUserScriptsAvailable, sendCsMsg } from "service/utils";
 import { messages } from "./message-types";
 import { chromeVersion } from "src/chromeVersion";
+import { isUserScripts } from "src/isUserScripts";
 
 export function backgroundMessageScript(msg: BgMsg, sender: chrome.runtime.MessageSender, response: (response?: any) => void) {
     switch (msg.type) {
@@ -107,7 +108,7 @@ ${msg.data}
                     credit: 'console-error',
                     data: {
                         type: 'alert',
-                        error: chromeVersion >= 138 ? '사용자 스크립트 허용이 필요합니다.' : '개발자 모드를 요구합니다.'
+                        error: isUserScripts ? '사용자 스크립트 허용이 필요합니다.' : '개발자 모드를 요구합니다.'
                     }
                 });
             }

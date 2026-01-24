@@ -5,16 +5,15 @@ import { storage_area, storage_keys } from "src/main/consts";
 
 import { variable } from "src/main/variable";
 import { scripts } from "src/main/scripts";
+import { isUserScripts } from "src/isUserScripts";
 
 import std from "page/std";
-
 import utils from "page/utils/utils";
 import { styling } from "page/utils/styling";
 import { decideWarnEffect, decideWarnState } from "page/utils/decider";
 
-import { chromeVersion } from "src/chromeVersion";
-
 import { MdOutlineOpenInNew } from "react-icons/md";
+
 
 
 export const SettingState = createContext<SettingGesture | null>(null);
@@ -82,8 +81,6 @@ function SettingCustomScriptWarn() {
 
     const id = 'setting-custom-script-warn';
 
-    const is138up = chromeVersion >= 138;
-
     return (
         <>
             <style>
@@ -119,10 +116,10 @@ function SettingCustomScriptWarn() {
                 justifyContent: 'center',
             }}>
                 <div>
-                    사용자 지정 스크립트를 사용하기 위해서는 {is138up ? '사용자 스크립트 허용이 필요합니다.' : '개발자 모드가 켜져 있어야 합니다.'}
+                    사용자 지정 스크립트를 사용하기 위해서는 {isUserScripts ? '사용자 스크립트 허용이 필요합니다.' : '개발자 모드가 켜져 있어야 합니다.'}
                 </div>
                 <div>
-                    {is138up
+                    {isUserScripts
                     ? <>
                         <a onClick={() => {
                             chrome.tabs.create({ url: `chrome://extensions/?id=${location.host}` });
@@ -140,7 +137,7 @@ function SettingCustomScriptWarn() {
                     로 가서 설정해주시길 바랍니다.
                 </div>
                 <div>
-                    <a href={std.document.doc + (is138up ? '' : '#'+std.document.on_developer_mode)} target="_blank">
+                    <a href={std.document.doc + (isUserScripts ? '' : '#'+std.document.on_developer_mode)} target="_blank">
                         <MdOutlineOpenInNew />&nbsp;만약 안내가 필요하시다면 이 곳을 눌러 확인하시길 바랍니다.
                     </a>
                 </div>
