@@ -12,7 +12,7 @@ import utils from "page/utils/utils";
 import { styling } from "page/utils/styling";
 import { decideWarnEffect, decideWarnState } from "page/utils/decider";
 
-import { MdOutlineOpenInNew } from "react-icons/md";
+import { MdHeight, MdOutlineOpenInNew } from "react-icons/md";
 
 
 
@@ -195,6 +195,148 @@ function SettingCustomScript({ state, setState }: { state: SettingGesture, setSt
     );
 }
 
+const SettingIfUseCustomScript = memo(function() {
+
+    const { type } = useContext(SettingState)!;
+
+    const id = 'setting-if-use-custom-script';
+
+    const setting_csw = useRef<HTMLDivElement>(null);
+
+    const transition_opacity = 'opacity .24s ease-in';
+
+    const height = {
+        width: .1,
+        height: .2
+    }
+
+    const width = {
+        width: .2,
+        height: .15
+    }
+
+    const stable = {
+        width: .1,
+        height: .1
+    }
+
+    useEffect(() => {
+        const tg = setting_csw.current!;
+
+        if (type != 'custom_script') {
+            tg.classList.add('hide');
+            (async () => {
+                await utils.setDelay(250);
+                if (!tg.classList.contains('hide')) return;
+                tg.className = '';
+            })();
+            return;
+        }
+
+        const empty = tg.className == '';
+
+        tg.className = '';
+
+        (async () => {
+            if (!empty) await utils.setDelay(10);
+            tg.classList.add('height');
+
+            await utils.setDelay(200);
+
+            if (!tg.classList.contains('height')) return;
+            tg.classList.add('width');
+
+            await utils.setDelay(200);
+
+            if (!tg.classList.contains('width')) return;
+            tg.classList.add('stable');
+        })();
+    }, [type]);
+
+    return (
+        <>
+            <style>
+                {styling(`#${id}`, {
+                    width: '0',
+                    height: '0',
+
+                    backgroundColor: 'rgb(255, 55, 55)',
+
+                    borderRadius: 'var(--paper-border-radius)',
+
+                    position: 'absolute',
+                    top: '0',
+                    left: '50%',
+                    transform: 'translateY(-110%) translateX(-50%)',
+
+                    opacity: '1',
+
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+
+                    overflow: 'hidden',
+                })}
+
+                {styling(`#${id} *`, {
+                    color: 'rgba(0, 0, 0, 0)',
+                    textAlign: 'center'
+                })}
+
+                {styling(`#${id}.width *`, {
+                    color: 'white'
+                })}
+
+                {styling(`#${id} > *`, {
+                    overflow: 'hidden'
+                })}
+
+                {styling(`#${id}.height`, {
+                    height: 'calc(100px + 10px)',
+
+                    padding: '10px 24px',
+
+                    transition: `padding ${height.width}s linear, height ${height.height}s ease`
+                })}
+
+                {styling(`#${id}.hide`, {
+                    opacity: '0',
+                    
+                    transition: `padding ${height.width}s linear, height ${height.height}s ease, ${transition_opacity}`
+                })}
+
+                {styling(`#${id}.width`, {
+                    width: 'calc(100% + 20px)',
+                    height: 'calc(100px - 10px)',
+
+                    transition: `width ${width.width}s ease, height ${width.height}s ease-in, ${transition_opacity}`
+                })}
+
+                {styling(`#${id}.stable`, {
+                    width: '100%',
+                    height: '100px',
+                    
+                    transition: `width ${stable.width}s ease-in, height ${stable.height}s ease-in, ${transition_opacity}`
+                })}
+            </style>
+    
+            <div id={id} ref={setting_csw}>
+                <span style={{
+                    fontSize: '16px'
+                }}>
+                    ※ 경고! ※
+                </span>
+                <span style={{
+                    fontSize: '14px'
+                }}>
+                    보안 문제에 직면하지 않기 위해 입력하실 코드를 이해할 수 있거나 신뢰할 수 있어야 합니다!
+                </span>
+            </div>
+        </>
+    );
+});
+
 const std_category: React.CSSProperties = {
     width: '50%',
     height: '100%',
@@ -221,7 +363,7 @@ const SettingWindowStyle = memo(function() {
 
                 maxHeight: '600px',
                 minHeight: '450px',
-                height: '80%',
+                height: '60%',
 
                 backgroundColor: 'var(--background-color)',
                 borderRadius: '20px',
@@ -230,7 +372,7 @@ const SettingWindowStyle = memo(function() {
                 display: 'flex',
                 flexDirection: 'column',
 
-                overflow: 'hidden',
+                // overflow: 'hidden',
 
                 userSelect: 'none',
 
@@ -293,6 +435,7 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                     <div
                         style={{
                             ...std_category,
+                            borderTopLeftRadius: 'var(--paper-border-radius)',
                             ...(state.type != 'custom_script' ? {} : std_category_no_active)
                         }}
                         onClick={() => {
@@ -310,6 +453,7 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                     <div
                         style={{
                             ...std_category,
+                            borderTopRightRadius: 'var(--paper-border-radius)',
                             ...(state.type == 'custom_script' ? {} : std_category_no_active)
                         }}
                         onClick={() => {
@@ -408,6 +552,8 @@ function SettingWindow({ state, setState }: { state: SettingGesture, setState: (
                         >취소</button>
                     </div>
                 </div>
+
+                <SettingIfUseCustomScript />
     
             </div>
         </>
