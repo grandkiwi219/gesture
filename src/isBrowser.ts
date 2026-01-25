@@ -1,3 +1,3 @@
-export const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
+export const isFirefox = navigator.userAgent.includes('Firefox');
 
-export const isChromium = !!window.chrome;
+export const isChromium = navigator.userAgent.includes('Chrome');
