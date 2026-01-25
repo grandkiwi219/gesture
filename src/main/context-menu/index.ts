@@ -1,4 +1,4 @@
-import { isFirefox } from "src/isFirefox";
+import { isFirefox } from "src/isBrowser";
 import { pipe_cm_event, pipe_cm_msg_event } from "src/pipe/event";
 import { postMsg } from "../utils/utils";
 

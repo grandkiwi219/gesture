@@ -1,16 +1,15 @@
 import { pipeMessage, mouseDown, mouseMove, mouseUp, scriptMessage, storageChanged } from "./event";
 import { scriptInjection } from "./utils/assets";
-import { repeater_msg_event, script_msg_event } from "src/repeater/msg/message-type";
 import { mainAddEvent, mainRemoveEvent, setCommand, setOptions } from "./process";
 import { variable } from "./variable";
-import logger from "./utils/logger";
 import { backgroundMessage } from "./event/backgroundMessage";
-import { isFirefox } from "src/isFirefox";
+import { isChromium } from "src/isBrowser";
+import { is135orMore } from "src/isVersion";
 
 
 void function main() {
 
-    if (isFirefox) scriptInjection(document.documentElement, 'src/repeater.js');
+    if (!isChromium || !is135orMore) scriptInjection(document.documentElement, 'src/repeater.js');
 
     variable.mouseMove = mouseMove;
 

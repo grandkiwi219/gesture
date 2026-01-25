@@ -1,4 +1,4 @@
-import { isFirefox } from "src/isFirefox";
+import { isFirefox } from "src/isBrowser";
 
 export function calcAngleDegrees({ x, y }: CoordinateObj): Angle {
     return (Math.atan2(y, x) * 180) / Math.PI;

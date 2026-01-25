@@ -20,7 +20,7 @@ import { LuMonitor } from "react-icons/lu";
 import { IoNewspaperOutline } from "react-icons/io5";
 import { MdOutlineOpenInNew } from "react-icons/md";
 
-import { isUserScripts } from 'src/isUserScripts';
+import { is138orMore } from 'src/isVersion';
 
 
 const menu = {
@@ -87,7 +87,7 @@ function NavUserScriptsDoc() {
     });
 
     return (
-        <a href={std.document.doc + (isUserScripts ? '' : '#'+std.document.on_developer_mode)} target='_blank'
+        <a href={std.document.doc + (is138orMore ? '' : '#'+std.document.on_developer_mode)} target='_blank'
             style={{
                 display: warnState ? '': 'none'
             }}

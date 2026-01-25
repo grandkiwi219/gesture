@@ -5,7 +5,7 @@ import { mouseUp } from "./mouseUp";
 import { sendAcknowledgeContextMenu, sendIgnoreContextMenu } from "../context-menu";
 import { getMsg } from "../utils/utils";
 import logger from "../utils/logger";
-import { isFirefox } from "src/isFirefox";
+import { isFirefox } from "src/isBrowser";
 
 export function pipeMessage(event: MessageEvent) {
     

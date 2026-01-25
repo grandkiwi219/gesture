@@ -10,7 +10,8 @@ import { credits, repeater_msg_event } from "src/repeater/msg/message-type";
 import { encodeMap, merge, sendBgMsg } from "./utils/utils";
 import utils from "page/utils/utils";
 import { messages } from "service/msg/message-types";
-import { isFirefox } from "src/isFirefox";
+import { isChromium } from "src/isBrowser";
+import { is135orMore } from "src/isVersion";
 
 export function mainAddEvent(addEvent: Function): (() => void) {
     return function() {
@@ -135,7 +136,14 @@ function gestureScript(script_key: string) {
 }
 
 function gestureCustomScript(custom_script: string) {
-    if (isFirefox) {
+    if (isChromium && is135orMore) {
+        sendBgMsg({
+            type: messages.custom_script,
+            state: 'MAIN',
+            data: custom_script
+        });
+    }
+    else {
         const message: RepeaterMessage = {
             credit: credits.custom_script_message,
             script: custom_script,
@@ -143,12 +151,5 @@ function gestureCustomScript(custom_script: string) {
         }
 
         window.dispatchEvent(new CustomEvent(repeater_msg_event, { detail: JSON.stringify(message) }));
-    }
-    else {
-        sendBgMsg({
-            type: messages.custom_script,
-            state: 'MAIN',
-            data: custom_script
-        });
     }
 }

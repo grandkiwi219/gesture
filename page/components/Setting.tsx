@@ -5,7 +5,7 @@ import { storage_area, storage_keys } from "src/main/consts";
 
 import { variable } from "src/main/variable";
 import { scripts } from "src/main/scripts";
-import { isUserScripts } from "src/isUserScripts";
+import { is138orMore } from "src/isVersion";
 
 import std from "page/std";
 import utils from "page/utils/utils";
@@ -116,10 +116,10 @@ function SettingCustomScriptWarn() {
                 justifyContent: 'center',
             }}>
                 <div>
-                    사용자 지정 스크립트를 사용하기 위해서는 {isUserScripts ? '사용자 스크립트 허용이 필요합니다.' : '개발자 모드가 켜져 있어야 합니다.'}
+                    사용자 지정 스크립트를 사용하기 위해서는 {is138orMore ? '사용자 스크립트 허용이 필요합니다.' : '개발자 모드가 켜져 있어야 합니다.'}
                 </div>
                 <div>
-                    {isUserScripts
+                    {is138orMore
                     ? <>
                         <a onClick={() => {
                             chrome.tabs.create({ url: `chrome://extensions/?id=${location.host}` });
@@ -137,7 +137,7 @@ function SettingCustomScriptWarn() {
                     로 가서 설정해주시길 바랍니다.
                 </div>
                 <div>
-                    <a href={std.document.doc + (isUserScripts ? '' : '#'+std.document.on_developer_mode)} target="_blank">
+                    <a href={std.document.doc + (is138orMore ? '' : '#'+std.document.on_developer_mode)} target="_blank">
                         <MdOutlineOpenInNew />&nbsp;만약 안내가 필요하시다면 이 곳을 눌러 확인하시길 바랍니다.
                     </a>
                 </div>

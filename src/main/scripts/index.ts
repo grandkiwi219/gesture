@@ -59,6 +59,40 @@ export const scripts = {
         }
     },
 
+    go_to_left: {
+        key: 'go_to_left',
+        description: '맨 왼쪽으로',
+        script: function() {
+            const targets = document.elementsFromPoint(variable.initial_pos.x, variable.initial_pos.y);
+
+            const target = targets.find(excludePaper) ?? null;
+
+            let scrollable_el = findScrollable(target, 'x');
+
+            scrollable_el.scroll({
+                left: 0,
+                behavior: 'instant'
+            });
+        }
+    },
+
+    go_to_right: {
+        key: 'go_to_right',
+        description: '맨 오른쪽으로',
+        script: function() {
+            const targets = document.elementsFromPoint(variable.initial_pos.x, variable.initial_pos.y);
+
+            const target = targets.find(excludePaper) ?? null;
+
+            let scrollable_el = findScrollable(target, 'x');
+
+            scrollable_el.scroll({
+                left: scrollable_el.scrollWidth,
+                behavior: 'instant'
+            });
+        }
+    },
+
     /* tab */
 
     close_tab: {
@@ -163,7 +197,7 @@ export const scripts = {
             }
             sendBgMsg(msg);
         }
-},
+    },
 
     maximized_window: {
         key: 'maximized_window',

@@ -1,7 +1,8 @@
 import { isUserScriptsAvailable, sendCsMsg } from "service/utils";
 import { messages } from "./message-types";
 import { chromeVersion } from "src/chromeVersion";
-import { isUserScripts } from "src/isUserScripts";
+import { is135orMore, is138orMore } from "src/isVersion";
+import { isChromium } from "src/isBrowser";
 
 export function backgroundMessageScript(msg: BgMsg, sender: chrome.runtime.MessageSender, response: (response?: any) => void) {
     switch (msg.type) {
@@ -104,11 +105,15 @@ ${msg.data}
                 }
             }
             else {
+                const error_msg = isChromium
+                ? (is138orMore ? '사용자 스크립트 허용이 필요합니다.' : (is135orMore ? '개발자 모드를 요구합니다.' : '버전이 135 버전 미만이므로 사용이 불가능합니다.'))
+                : '크로미윰 기반 브라우저가 아닙니다.'
+
                 sendCsMsg(sender.tab.id, {
                     credit: 'console-error',
                     data: {
                         type: 'alert',
-                        error: isUserScripts ? '사용자 스크립트 허용이 필요합니다.' : '개발자 모드를 요구합니다.'
+                        error: error_msg
                     }
                 });
             }

@@ -1,7 +1,8 @@
 import std from "page/std";
 import { ActionDispatch, RefObject } from "react";
 import { isUserScriptsAvailable } from "service/utils";
-import { isFirefox } from "src/isFirefox";
+import { isChromium, isFirefox } from "src/isBrowser";
+import { is135orMore } from "src/isVersion";
 
 export function resizeNav(navShortState: RefObject<boolean>, setNavMenuState: ActionDispatch<any>) {
     const width = window.innerWidth;
@@ -23,7 +24,7 @@ export function resizeNav(navShortState: RefObject<boolean>, setNavMenuState: Ac
     }
 }
 
-export const decideWarnState = () => !isFirefox && !isUserScriptsAvailable();
+export const decideWarnState = () => isChromium && is135orMore && !isUserScriptsAvailable();
 
 export class decideWarnEffect {
     private warnState = false;
@@ -35,7 +36,7 @@ export class decideWarnEffect {
     }
 
     execute() {
-        if (isFirefox) return;
+        if (!isChromium || !is135orMore) return;
 
         const vcEvent = () => {
             const currentWarnState = decideWarnState();

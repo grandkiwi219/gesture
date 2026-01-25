@@ -8,12 +8,12 @@ dotenv.config();
 const service_worker = "service/background.js";
 
 const chrome_obj = {
-    minimum_chrome_version: "120"
+    minimum_chrome_version: "88"
 }
 
 const firefox_obj = {}
 
-const addtional_obj = process.env.BROWSER == 'firefox'
+const additional_obj = process.env.BROWSER == 'firefox'
 ? firefox_obj
 : chrome_obj;
 
@@ -26,7 +26,7 @@ export default {
     browser_specific_settings: {
         gecko: {
             id: `{${process.env.GECKO_ID}}`,
-            strict_min_version: "136.0"
+            strict_min_version: "109"
         }
     },
     content_scripts: [
@@ -98,5 +98,5 @@ export default {
             matches: ["<all_urls>"]
         }
     ],
-    ...addtional_obj
+    ...additional_obj
 }
