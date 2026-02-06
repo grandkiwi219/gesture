@@ -5,7 +5,7 @@ import { measureDistanceSq } from "src/main/utils/decider";
 import { startDrawing } from "src/main/drawing";
 import { exitReset } from "src/main/process";
 import { mouseDown, mouseUp } from "src/main/event";
-import { sendAcknowledgeContextMenu, sendIgnoreContextMenu, sendToTopACM, sendToTopICM } from "src/main/context-menu";
+import { sendAcknowledgeContextMenu, sendIgnoreContextMenu, sendToTopACM, sendToTopICM } from "src/main/pipeMessages";
 import { getMsg, postMsg } from "src/main/utils/utils";
 import logger from "src/main/utils/logger";
 

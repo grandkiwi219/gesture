@@ -3,7 +3,7 @@ import { variable } from "src/main/variable";
 import { decideDir, measureDistanceSq } from "../utils/decider";
 import { continueDrawing, showCommandDrawing, startDrawing } from "src/main/drawing";
 import { exitReset, getCommandData } from "src/main/process";
-import { sendIgnoreContextMenu } from "../context-menu";
+import { sendIgnoreContextMenu } from "../pipeMessages";
 import logger from "../utils/logger";
 import { options } from "../enum";
 

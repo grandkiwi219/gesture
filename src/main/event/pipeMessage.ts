@@ -1,8 +1,8 @@
-import { pipe_cm_event, pipe_cm_msg_event, pipe_event, pipe_msg_event } from "src/pipe/event";
+import { pipe_cm_event, pipe_cm_msg_event, pipe_event, pipe_gen_msg_event, pipe_msg_event } from "src/pipe/event";
 import { variable } from "../variable";
 import { mouseDown } from "./mouseDown";
 import { mouseUp } from "./mouseUp";
-import { sendAcknowledgeContextMenu, sendIgnoreContextMenu } from "../context-menu";
+import { sendAcknowledgeContextMenu, sendIgnoreContextMenu } from "../pipeMessages";
 import { getMsg } from "../utils/utils";
 import logger from "../utils/logger";
 import { isFirefox } from "src/isBrowser";
@@ -14,6 +14,11 @@ export function pipeMessage(event: MessageEvent) {
     if (!data) return;
 
     switch (data.credit) {
+        case pipe_gen_msg_event: {
+            
+            return;
+        }
+
         case pipe_msg_event: {
 
             let iframe = undefined;

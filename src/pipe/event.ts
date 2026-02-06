@@ -6,6 +6,8 @@ export const pipe_event = {
     mousemove: `${initial}-mousemove`
 }
 
+export const pipe_gen_msg_event = `${initial}-generation-event-data`;
+
 export const pipe_msg_event = `${initial}-mouse-event-data`;
 
 export const pipe_cm_msg_event = `${initial}-context-menu-data`;
