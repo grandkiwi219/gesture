@@ -95,6 +95,18 @@ export const scripts = {
 
     /* tab */
 
+    new_tab: {
+        key: 'new_tab',
+        description: '새 탭 열기',
+        script: async function() {
+            const msg: BgMsg = {
+                type: messages.tabs,
+                state: 'create'
+            }
+            sendBgMsg(msg);
+        }
+    },
+
     close_tab: {
         key: 'close_tab',
         description: '탭 닫기',
@@ -186,6 +198,33 @@ export const scripts = {
     },
 
     /* window */
+
+    new_window: {
+        key: 'new_window',
+        description: '새 창 열기',
+        script: async function() {
+            const msg: BgMsg = {
+                type: messages.windows,
+                state: 'create'
+            }
+            sendBgMsg(msg);
+        }
+    },
+    
+    new_secret_window: {
+        key: 'new_secret_window',
+        description: '새 시크릿 창 열기',
+        script: async function() {
+            const msg: BgMsg = {
+                type: messages.windows,
+                state: 'create',
+                data: {
+                    secret: true
+                }
+            }
+            sendBgMsg(msg);
+        }
+    },
 
     minimized_window: {
         key: 'minimized_window',

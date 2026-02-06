@@ -5,27 +5,52 @@ import { is135orMore, is138orMore } from "src/isVersion";
 import { isChromium } from "src/isBrowser";
 
 export function backgroundMessageScript(msg: BgMsg, sender: chrome.runtime.MessageSender, response: (response?: any) => void) {
-    switch (msg.type) {
-        case messages.tabs:
-            tabsState(msg, sender, response);
-            return;
+    try {
+        switch (msg.type) {
+            case messages.tabs:
+                tabsState(msg, sender, response);
+                return;
+    
+            case messages.windows:
+                windowsState(msg, sender, response);
+                return;
+    
+            case messages.custom_script:
+                customScriptState(msg, sender, response);
+                return;
+    
+            default: return;
+        }
+    } catch (error) {
+        console.error(error);
+        // sender.tab?.id
+    }
+}
 
-        case messages.windows:
+function windowsState(msg: BgMsg, sender: chrome.runtime.MessageSender, response?: (response?: any) => void) {
+    switch (msg.state) {
+        case 'create' :
+            chrome.windows.create({
+                incognito: !!msg.data.secret,
+                url: typeof msg.data.url == 'string' ? msg.data.url : undefined
+            });
+            break;
+
+        default:
             if (sender.tab && sender.tab.windowId) {
                 chrome.windows.update(sender.tab.windowId, { state: msg.state as chrome.windows.UpdateInfo["state"] });
             }
-            return;
-
-        case messages.custom_script:
-            customScriptState(msg, sender, response);
-            return;
-
-        default: return;
     }
 }
 
 function tabsState(msg: BgMsg, sender: chrome.runtime.MessageSender, response?: (response?: any) => void) {
     switch (msg.state) {
+        case 'create':
+            chrome.tabs.create({
+                url: typeof msg.data.url == 'string' ? msg.data.url : undefined 
+            });
+            break;
+
         case 'remove':
             if (sender.tab && sender.tab.id) {
                 chrome.tabs.remove(sender.tab.id);
