@@ -3,9 +3,6 @@ import packages from "../../package.json" with { type: 'json' };
 
 export const initial: string = packages.name;
 
-export const start_range: number = 3;
-export const decide_range: number = 20;
-
 export const storage_area: chrome.storage.AreaName = 'local';
 
 export const storage_keys = {
@@ -82,8 +79,6 @@ export const drawing_elements: {
 
 export default {
     initial,
-    start_range,
-    decide_range,
     storage_area,
     storage_keys,
     drawing_elements

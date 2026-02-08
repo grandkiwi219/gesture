@@ -8,6 +8,7 @@ import { mouseDown, mouseUp } from "src/main/event";
 import { sendAcknowledgeContextMenu, sendIgnoreContextMenu, sendToTopACM, sendToTopICM } from "src/main/pipeMessages";
 import { getMsg, postMsg } from "src/main/utils/utils";
 import logger from "src/main/utils/logger";
+import { options } from "src/main/enum";
 
 void function main() {
 
@@ -109,7 +110,7 @@ void function main() {
         const distance = measureDistanceSq(event);
 
         if (!variable.starting) {
-            if (distance > consts.start_range**2) {
+            if (distance > options.range.start**2) {
 
                 variable.starting = true;
 

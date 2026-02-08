@@ -26,5 +26,10 @@ export const initial_options = {
 
     painting: {
         use: true
+    },
+
+    range: {
+        start: 2,
+        decide: 10
     }
 }
