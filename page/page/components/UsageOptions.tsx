@@ -90,7 +90,7 @@ export default function() {
 
             <UsagePenColor key="pen-color" />
 
-            <Divider />
+                    <Divider />
 
             <UsageCmdDisplay key="cmd-display" />
 
@@ -100,9 +100,15 @@ export default function() {
 
             <UsageCmdRate key="cmd-rate" />
             
-            <Divider />
+                    <Divider />
 
             <UsagePaintingUse key="painting-use" />
+
+                    <Divider />
+
+            <UsageRangeStart key="range-start" />
+
+            <UsageRangeDecide key="range-decide" />
         </UL>
     );
 }
@@ -188,5 +194,31 @@ function UsagePaintingUse({ key }: UsageKey) {
                 }}
             />
         </UsageOption>
+    );
+}
+
+/* range */
+
+function UsageRangeStart({ key }: UsageKey) {
+    return (
+        <UsageOption key={key} title="제스처 시작 범위" context="범위">
+            <Input type="number" id={key} style={{ width: '70%' }} value={options.range.start}
+                onChange={e => {
+                    options.range.start = Number(e.currentTarget.value) || initial_options.range.start;
+                }}
+            />
+        </UsageOption>
+    );
+}
+
+function UsageRangeDecide({ key }: UsageKey) {
+    return (
+        <UsageOption key={key} title="제스처 새로운 방향 감지 범위" context="범위">
+            <Input type="number" id={key} style={{ width: '70%' }} value={options.range.decide}
+                onChange={e => {
+                    options.range.decide = Number(e.currentTarget.value) || initial_options.range.decide;
+                }}
+            />
+        </UsageOption>  
     );
 }

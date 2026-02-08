@@ -29,7 +29,7 @@ export const initial_options = {
     },
 
     range: {
-        start: 2,
-        decide: 10
+        start: 3,
+        decide: 20
     }
 }
