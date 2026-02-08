@@ -1,6 +1,5 @@
 import { isUserScriptsAvailable, sendCsMsg } from "service/utils";
 import { messages } from "./message-types";
-import { chromeVersion } from "src/chromeVersion";
 import { is135orMore, is138orMore } from "src/isVersion";
 import { isChromium } from "src/isBrowser";
 
@@ -31,8 +30,8 @@ function windowsState(msg: BgMsg, sender: chrome.runtime.MessageSender, response
     switch (msg.state) {
         case 'create' :
             chrome.windows.create({
-                incognito: !!msg.data.secret,
-                url: typeof msg.data.url == 'string' ? msg.data.url : undefined
+                incognito: !!msg.data?.secret,
+                url: typeof msg.data?.url == 'string' ? msg.data.url : undefined
             });
             break;
 
@@ -47,7 +46,7 @@ function tabsState(msg: BgMsg, sender: chrome.runtime.MessageSender, response?: 
     switch (msg.state) {
         case 'create':
             chrome.tabs.create({
-                url: typeof msg.data.url == 'string' ? msg.data.url : undefined 
+                url: typeof msg.data?.url == 'string' ? msg.data.url : undefined 
             });
             break;
 

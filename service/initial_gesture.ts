@@ -31,20 +31,6 @@ const initial_gesture: { [key: string]: Gesture } = {
         gesturePainting: [bg_consts.size.svg, [320, 140], [320, 500]],
     },
 
-    dr: {
-        description: scripts.close_tab.description,
-        type: gesture_type.script,
-        script: scripts.close_tab.key,
-        gesturePainting: [bg_consts.size.svg, [140, 140], [140, 500], [500, 500]],
-    },
-
-    rd: {
-        description: scripts.minimized_window.description,
-        type: gesture_type.script,
-        script: scripts.minimized_window.key,
-        gesturePainting: [bg_consts.size.svg, [140, 140], [500, 140], [500, 500]],
-    },
-
     ud: {
         description: scripts.refresh_tab.description,
         type: gesture_type.script,
@@ -57,6 +43,41 @@ const initial_gesture: { [key: string]: Gesture } = {
         type: gesture_type.script,
         script: scripts.refresh_tab.key,
         gesturePainting: [bg_consts.size.svg, [220, 140], [320, 500], [420, 140]],
+    },
+
+    ul: {
+        description: scripts.new_tab.description,
+        type: gesture_type.script,
+        script: scripts.new_tab.key,
+        gesturePainting: [bg_consts.size.svg, [500, 500], [500, 140], [140, 140]],
+    },
+
+    ur: {
+        description: scripts.new_window.description,
+        type: gesture_type.script,
+        script: scripts.new_window.key,
+        gesturePainting: [bg_consts.size.svg, [140, 500], [140, 140], [500, 140]],
+    },
+
+    dl: {
+        description: scripts.new_secret_window.description,
+        type: gesture_type.script,
+        script: scripts.new_secret_window.key,
+        gesturePainting: [bg_consts.size.svg, [500, 140], [500, 500], [140, 500]],
+    },
+
+    dr: {
+        description: scripts.close_tab.description,
+        type: gesture_type.script,
+        script: scripts.close_tab.key,
+        gesturePainting: [bg_consts.size.svg, [140, 140], [140, 500], [500, 500]],
+    },
+
+    rd: {
+        description: scripts.minimized_window.description,
+        type: gesture_type.script,
+        script: scripts.minimized_window.key,
+        gesturePainting: [bg_consts.size.svg, [140, 140], [500, 140], [500, 500]],
     },
 
     ru: {
