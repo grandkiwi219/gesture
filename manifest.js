@@ -50,12 +50,15 @@ export default {
         }, */
         {
             all_frames: true,
+            match_about_blank: true,
             match_origin_as_fallback: true,
             matches: ["<all_urls>"],
             js: [
                 "src/injector.js"
             ],
-            run_at: "document_start",
+            run_at: process.env.BROWSER == 'firefox'
+                ? "document_end"
+                : "document_start",
         },
     ],
     background: process.env.BROWSER == 'firefox'
