@@ -1,4 +1,4 @@
-import { pipe_cm_event, pipe_cm_msg_event, pipe_event, pipe_gen_msg_event, pipe_msg_event } from "src/pipe/event";
+import { pipe_cm_event, pipe_cm_msg_event, pipe_event, pipe_msg_event } from "src/pipe/event";
 import { variable } from "../variable";
 import { mouseDown } from "./mouseDown";
 import { mouseUp } from "./mouseUp";
@@ -7,6 +7,8 @@ import { getMsg } from "../utils/utils";
 import logger from "../utils/logger";
 import { isFirefox } from "src/isBrowser";
 
+let cached_WTIE: WindowTopIndependentElement | undefined = undefined;
+
 export function pipeMessage(event: MessageEvent) {
     
     const data = getMsg(event.data);
@@ -14,25 +16,33 @@ export function pipeMessage(event: MessageEvent) {
     if (!data) return;
 
     switch (data.credit) {
-        case pipe_gen_msg_event: {
-            
-            return;
-        }
-
         case pipe_msg_event: {
 
-            let iframe = undefined;
+            let WTIE: WindowTopIndependentElement | undefined = cached_WTIE?.contentWindow === event.source
+                ? cached_WTIE
+                : undefined;
 
-            for (const el of document.getElementsByTagName('iframe')) {
-                if (el.contentWindow === event.source) {
-                    iframe = el;
-                    break;
+            findWTIE: 
+            if (!WTIE) {
+                for (const el of document.getElementsByTagName('iframe')) {
+                    if (el.contentWindow === event.source) {
+                        WTIE = cached_WTIE = el;
+                        break findWTIE;
+                    }
                 }
+
+                for (const el of document.getElementsByTagName('frame')) {
+                    if (el.contentWindow === event.source) {
+                        WTIE = cached_WTIE = el;
+                        break findWTIE;
+                    }
+                }
+
+                cached_WTIE = undefined;
+                return;
             }
 
-            if (!iframe) return;
-
-            const clientRect = iframe.getBoundingClientRect();
+            const clientRect = WTIE.getBoundingClientRect();
 
             const cleanup_detail: PipeCustomEvent = {
                 ...data.detail,

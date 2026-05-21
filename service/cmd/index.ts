@@ -4,7 +4,6 @@ import { sendAllCsMsg } from "service/utils";
 import { bg_state, bg_variable } from "service/variable";
 import { storage_area, storage_keys } from "src/main/consts";
 import { regex } from "src/main/direction";
-import { decodeMap } from "src/main/utils/utils";
 
 export async function loadCommand() {
     bg_state.loaded_command = false;

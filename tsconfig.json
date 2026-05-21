@@ -13,11 +13,13 @@
     "outDir": "./output",
     "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
     "jsx": "react-jsx",
+    "ignoreDeprecations": "6.0",
     "moduleResolution": "node",
     "baseUrl": "./",
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "typeRoots": ["./node_modules/@types", "src/main/types", "src/repeater/types", "./page/types", "./service/types"]
+    "typeRoots": ["./node_modules/@types", "src/main/types", "src/repeater/types", "./page/types", "./service/types"],
+    "types": ["chrome"]
   },
   "include": ["src/**/*", "page/**/*", "service/**/*"],
   "exclude": ["node_modules"]

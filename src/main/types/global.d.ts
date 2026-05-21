@@ -43,3 +43,6 @@ interface ExitReset {
     reset_directions?: boolean;
     execution?: (() => void);
 }
+
+/* Element Type */
+type WindowTopIndependentElement = HTMLIFrameElement | HTMLFrameElement;

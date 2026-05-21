@@ -12,6 +12,8 @@ import { options } from "src/main/enum";
 
 void function main() {
 
+    let cached_WTIE: WindowTopIndependentElement | undefined = undefined;
+
     window.addEventListener('message', (event: MessageEvent) => {
         
         const data = getMsg(event.data);
@@ -20,18 +22,31 @@ void function main() {
 
         switch (data.credit) {
             case pipe_msg_event: {
-                let iframe = undefined;
+                let WTIE: WindowTopIndependentElement | undefined = cached_WTIE?.contentWindow === event.source
+                    ? cached_WTIE
+                    : undefined;
 
-                for (const el of document.getElementsByTagName('iframe')) {
-                    if (el.contentWindow === event.source) {
-                        iframe = el;
-                        break;
+                findWTIE: 
+                if (!WTIE) {
+                    for (const el of document.getElementsByTagName('iframe')) {
+                        if (el.contentWindow === event.source) {
+                            WTIE = cached_WTIE = el;
+                            break findWTIE;
+                        }
                     }
+
+                    for (const el of document.getElementsByTagName('frame')) {
+                        if (el.contentWindow === event.source) {
+                            WTIE = cached_WTIE = el;
+                            break findWTIE;
+                        }
+                    }
+
+                    cached_WTIE = undefined;
+                    return;
                 }
 
-                if (!iframe) return;
-
-                const clientRect = iframe.getBoundingClientRect();
+                const clientRect = WTIE.getBoundingClientRect();
 
                 const cleanup_detail: PipeCustomEvent = {
                     ...data.detail,
