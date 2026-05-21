@@ -1,10 +1,13 @@
 import { scripts } from "src/main/scripts";
 import logger from "src/main/utils/logger";
 
+/**
+ * @deprecated
+ */
 export function scriptMessageRun(script: string, use: boolean) {
     if (!use || typeof use != 'boolean') return;
 
-    const result_key = Object.keys(scripts).find(r => r == script);
+    const result_key = Object.keys(scripts).find(r => r === script);
 
     if (!result_key) return;
 

@@ -31,7 +31,7 @@ function windowsState(msg: BgMsg, sender: chrome.runtime.MessageSender, response
         case 'create' :
             chrome.windows.create({
                 incognito: !!msg.data?.secret,
-                url: typeof msg.data?.url == 'string' ? msg.data.url : undefined
+                url: typeof msg.data?.url === 'string' ? msg.data.url : undefined
             });
             break;
 
@@ -46,7 +46,7 @@ function tabsState(msg: BgMsg, sender: chrome.runtime.MessageSender, response?: 
     switch (msg.state) {
         case 'create':
             chrome.tabs.create({
-                url: typeof msg.data?.url == 'string' ? msg.data.url : undefined 
+                url: typeof msg.data?.url === 'string' ? msg.data.url : undefined 
             });
             break;
 

@@ -5,7 +5,6 @@ import { calcCanvasInsideCoord, decideSize, drawCommand, setDynamicSizeCanvas, s
 import logger from "../utils/logger";
 import { initial_options } from "service/initial_options";
 import { px } from "../utils/utils";
-import { MdHeight } from "react-icons/md";
 
 export function startDrawing() {
     const std_target = variable.drawing_store.target;
@@ -27,7 +26,7 @@ export function startDrawing() {
 
     const shadow = main.attachShadow({ mode: "open" });
     
-    if (std_target instanceof Window || std_target == document.documentElement) {
+    if (std_target instanceof Window || std_target === document.documentElement) {
         variable.drawing_store.target_is_window = true;
 
         main.style.position = 'fixed';
@@ -52,7 +51,7 @@ export function startDrawing() {
     setSizeCanvas(coord);
 
     /* command setups */
-    const last_cmd_rate = !Number.isNaN(options.cmd.rate) && typeof options.cmd.rate == 'number'
+    const last_cmd_rate = !Number.isNaN(options.cmd.rate) && typeof options.cmd.rate === 'number'
         ? options.cmd.rate
         : initial_options.cmd.rate;
 
@@ -146,7 +145,7 @@ export function showCommandDrawing(description: string | undefined, gesturePaint
         return;
     }
     
-    if (!options.cmd.visible || typeof description != 'string') {
+    if (!options.cmd.visible || typeof description !== 'string') {
         cmg.src = '';
         cxt.textContent = '';
         cmd.style.display = 'none';

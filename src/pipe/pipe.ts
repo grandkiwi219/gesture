@@ -117,7 +117,7 @@ void function main() {
     function accessStarting(event: MouseEvent, callback: (() => void)) {
         if (!variable.executing) return;
 
-        if (event.buttons != 2) {
+        if (event.buttons !== 2) {
             exitReset(reset_options);
             return;
         }

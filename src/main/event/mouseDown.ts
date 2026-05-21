@@ -15,7 +15,7 @@ export function mouseDown(event: MouseEvent | PipeCustomEvent,
 ) {
     if (!event.isTrusted) return;
 
-    if (event.button != 2) {
+    if (event.button !== 2) {
         exitReset(reset_options);
         return;
     }

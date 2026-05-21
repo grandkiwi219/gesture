@@ -103,7 +103,7 @@ export async function setDynamicSizeCanvas(canvas: HTMLCanvasElement, set_paper?
         return;
     }
 
-    if (canvas.width != size_coord.x && canvas.height != size_coord.y) {
+    if (canvas.width !== size_coord.x && canvas.height !== size_coord.y) {
         variable.drawing_store.preserve
             ? preserveCanvas(canvas, canvas.getContext('2d')!, size_coord)
             : setSizeCanvas(size_coord, set_paper);

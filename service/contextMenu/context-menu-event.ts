@@ -39,7 +39,7 @@ export function contextMenuEvent(info: chrome.contextMenus.OnClickData, tab: chr
 
                 if (result.includes(host)) {
                     waiting.ignore_this_site = true;
-                    chrome.storage[consts.storage_area].set({ [storage_keys.sites]: result.filter(r => r != host) })
+                    chrome.storage[consts.storage_area].set({ [storage_keys.sites]: result.filter(r => r !== host) })
                         .then(() => {
                             waiting.ignore_this_site = false;
                         });

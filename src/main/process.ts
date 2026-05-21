@@ -52,7 +52,7 @@ export function exitReset(
     }
     : ExitReset = {}
 ) {
-    if (typeof execution == 'function') {
+    if (typeof execution === 'function') {
         execution();
     }
 
@@ -87,7 +87,7 @@ export async function setCommand(removeEvent?: Function) {
             return;
         }
 
-        const filtered_keys = store_keys.filter((r) => typeof r == 'string');
+        const filtered_keys = store_keys.filter((r) => typeof r === 'string');
 
         await chrome.storage[storage_area].get(filtered_keys).then(result => {
             variable.command_store = encodeMap<Gesture>(filtered_keys, result as KeyObject<Gesture>);

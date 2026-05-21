@@ -4,7 +4,7 @@ export class DirectionBundle {
     private bundle: direction[] = [];
 
     push(direction: direction): boolean {
-        if (this.bundle.at(-1) == direction) {
+        if (this.bundle.at(-1) === direction) {
             return false;
         }
         else {

@@ -6,7 +6,7 @@ export function mouseUp(event: MouseEvent | PipeCustomEvent,
         reset_options
     }: MouseExit = {}
 ) {
-    if (!event.isTrusted || event.button != 2) return;
+    if (!event.isTrusted || event.button !== 2) return;
     if (run) exitRun();
     exitReset(reset_options);
 }

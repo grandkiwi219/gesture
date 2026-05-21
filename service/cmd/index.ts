@@ -19,7 +19,7 @@ export async function loadCommand() {
             return;
         }
 
-        const filtered_keys = store_keys.filter((r) => typeof r == 'string');
+        const filtered_keys = store_keys.filter((r) => typeof r === 'string');
 
         bg_variable.command_store.clear();
 
@@ -33,7 +33,7 @@ export async function loadCommand() {
                     || typeof value?.script != 'string'
                     || typeof value?.type != 'string'
                 ) {
-                    chrome.storage[storage_area].set({ [storage_keys.store]: filtered_keys.filter(r => r != key) });
+                    chrome.storage[storage_area].set({ [storage_keys.store]: filtered_keys.filter(r => r !== key) });
                     chrome.storage[storage_area].remove(key);
                     return;
                 }
